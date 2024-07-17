@@ -9,5 +9,5 @@ class Empleado(db.Model):
     telefono = db.Column(db.String(20))
     email= db.Column(db.String(255))
 
-    perros = db.relationship('Perro', secondary= 'cuidado')
+    perros = db.relationship('Perro', secondary= 'cuidado')#perro_empleado relacion tabla intermedia = cuidado
     
