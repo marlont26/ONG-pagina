@@ -15,3 +15,5 @@ class Perro(db.Model):
     
     #relacion con la tabla empleado a traves de la tabla Cuiddado que es la intermedia
     empleados = db.relationship('Empleado', secondary='cuidado')#empleado_perro relacion para la tabla intermedia = cuidado
+    #esta tabla se relaciona con solicitudAdopcion
+    

@@ -9,6 +9,6 @@ class SolicitudAdopcion(db.Model):
     comentarios = db.Column(db.String(255))
     
     empleado = db.Column(db.Integer, db.Foreignkey('empleado.idEmpleado'))
-    adoptante= db.Column(db.Integer, db.Foreignkey('solicitud_adopcion.idSolicitud'))  
+    adoptante= db.Column(db.Integer, db.Foreignkey('adoptante.idAdoptante'))  
     perro = db.Column(db.Integer, db.Foreignkey('perro.idPerro'))
 
