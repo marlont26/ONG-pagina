@@ -17,7 +17,7 @@ def login():
             flash("Login successful!", "success")
             return redirect(url_for('auth.dashboard'))
         
-        flash('Invalid credentials. Please try again.', 'danger')
+        flash('Invalid credentials. Please try again.', 'danger')   
     
     if current_user.is_authenticated:
         return redirect(url_for('auth.dashboard'))

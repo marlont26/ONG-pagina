@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editar caninos</title>
+</head>
+<body>
+    <h1>Editar caninos</h1>
+
+    <form action="{{ url_for('perro.edit', id=perro.idPerro) }}" method="post">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="{{ perro.nombre }}" required>
+        
+        <label for="raza">Raza</label>
+        <input type="text" id="raza" name="raza" value="{{ perro.raza }}">
+        
+        <label for="edad">Edad</label>
+        <input type="number" id="edad" name="edad" value="{{ perro.edad }}">
+        
+        <label for="estadoSalud">Estado de Salud</label>
+        <input type="text" id="estadoSalud" name="estadoSalud" value="{{ perro.estadoSalud }}">
+        
+        <label for="estado"> Estado</label>  
+        <select   id="estado" name="estado">
+            <option value="en adopcion">EN ADOPCION</option>
+            <option value="en proceso de adopcion">EN PROCESO DE ADOPCION</option>
+            <option value="adoptado">ADOPTADO</option>
+        </select>
+
+        <label for="color">Color</label>
+        <input type="text" id="color" name="color" value="{{ perro.color}}">
+
+        <label for="foto">Foto</label>
+        <input type="file" id="file-upload" name="foto">
+        
+
+        <label for="fechaIngreso">Fecha de Ingreso</label>
+        <input type="date" id="fechaIngreso" name="fechaIngreso" value="{{ perro.fechaIngreso }}">
+        
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion">{{ perro.descripcion }}</textarea>
+        
+        <button type="submit">Guardar Cambios</button>
+    </form>
+
+</body>
+</html>

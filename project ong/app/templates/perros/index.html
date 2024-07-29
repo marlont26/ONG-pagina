@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>en adopcion</title>
+</head>
+<body>
+    <div class="header">
+        <h1>disponibles en adopcion</h1>
+    </div>
+    <div class="container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <th>Estado de salud</th>
+                <th>estado</th>#adoptado #en adopcion
+                <th>color</th>
+                <th>foto</th>
+                <th>Fecha ingreso</th>
+                <th>descripcion</th>
+                <th>Acciones</th>
+            </tr>
+            {% for perro in perros}
+            <tr>
+                <td>{{perro.idPerro}}</td>
+                <td>{{perro.nombre}}</td>
+                <td>{{perro.raza}}</td>
+                <td>{{perro.edad}}</td>
+                <td>{{perro.estadoSalud}}</td>
+                <td>{{perro.estado}}</td>
+                <td>{{perro.color}}</td>
+                <td>{{perro.fechaIngreso}}</td>
+                <td>{{perro.foto}}</td>
+                <td>{{perro.descripcion}}</td>
+    
+                <td>
+                    <a href="{{url_for('perro.edit', id=perro.idPerro)}}">editar</a>
+                    <a href="{{url_for('perro.delet', id=perro.idPerro)}}">eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{url_for('perro.add')}}"><button> añadir canino</button></a>
+        <a href="{{ url_for('dashboard') }}"><button>Volver</button></a>
+    </div>
+</body>
+</html>

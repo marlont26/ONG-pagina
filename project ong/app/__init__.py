@@ -13,4 +13,4 @@ def create_app():
     app.register_blueprint(author_routes.bp)
     app.register_blueprint(book_routes.bp)
 
-    return app
+    return app  
