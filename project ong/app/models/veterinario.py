@@ -9,3 +9,11 @@ class Veterinario(db.Model):
     telefono= db.Column(db.Integer)
     email= db.Column(db.String(255))
     especialidad=db.Column(db.String(255))
+
+
+    visitas_medicas = db.relationship('VisitaMedica', back_populates='veterinario')
+
+
+
+
+

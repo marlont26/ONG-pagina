@@ -10,3 +10,5 @@ class Donante(db.Model):
     pais = db.Column(db.String(255), nullable=False)
     ciudad = db.Column(db.String(255), nullable=False)
     direccion = db.Column(db.String(50), nullable=False)
+
+    donaciones = db.relationship('Donacion', back_populates='donante')

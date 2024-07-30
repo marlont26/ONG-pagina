@@ -3,12 +3,14 @@ from app import db
 class SolicitudAdopcion(db.Model):
     __tablename__ = 'solicitud_adopcion'
     idSolicitud=db.Column(db.Integer, primary_key= True, autoincrement= True)
+    idAdoptante = db.Column(db.Integer, db.ForeingKey('adoptante.idAdoptante'))
+    idPerro = db.Column(db.Integer, db.ForeingKey('perro.idPerro'))
     fechaSolicitud = db.Column(db.Date)
     estado = db.Column(db.String(255))
-    fechaAdopcion= db.Column(db.Date)
+    idEmpleado = db.Column(db.Integer, db.ForeningKey('emleado.idEmpleado'))
     comentarios = db.Column(db.String(255))
+    #relaciones con otras tabas
     
-    empleado = db.Column(db.Integer, db.Foreignkey('empleado.idEmpleado'))
-    adoptante= db.Column(db.Integer, db.Foreignkey('adoptante.idAdoptante'))  
-    perro = db.Column(db.Integer, db.Foreignkey('perro.idPerro'))
-
+    adoptante = db.relationship('Adoptante', back_populates='solicitudes_adopcion')
+    perro = db.relationship('Perro', back_populates='solicitudes_adopcion')
+    empleado = db.relationship('Empleado', back_populates='solicitudes_adopcion')

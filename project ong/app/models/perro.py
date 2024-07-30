@@ -14,6 +14,9 @@ class Perro(db.Model):
     descripcion= db.Column(db.String(255))
     
     #relacion con la tabla empleado a traves de la tabla Cuiddado que es la intermedia
-    empleados = db.relationship('Empleado', secondary='cuidado')#empleado_perro relacion para la tabla intermedia = cuidado
+    # #empleado_perro relacion para la tabla intermedia = cuidado
     #esta tabla se relaciona con solicitudAdopcion
-    
+    visitas_medicas = db.relationship('VisitaMedica', back_populates='perro')
+    adopciones = db.relationship('Adopcion', back_populates='perro')
+    solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='perro')
+    cuidados = db.relationship('Cuidado', back_populates='perro')
