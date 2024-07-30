@@ -1,33 +1,75 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models.perro import Perro
+from app.models import Perro
 from app import db
 
-bp = Blueprint('perro', __name__)
+bp_perro = Blueprint('perro', __name__)
 
-@bp.route('/perro')
+@bp_perro.route('/')
 def index():
-    data = Perro.query.all()
-    return render_template('perros/index.html', perros=data)
+    perros = Perro.query.all()
+    return render_template('perros/index.html', perros=perros)
 
-@bp.route('/add', methods=['GET','POST'])
+@bp_perro.route('/add', methods=['GET', 'POST'])
 def add():
-    if request.method =='POST':
+    if request.method == 'POST':
         nombre = request.form['nombre']
         raza = request.form['raza']
         edad = request.form['edad']
-        estadoSalud = request.form['estadoSalud']
         estado = request.form['estado']
+        estadoSalud = request.form['estado_salud']
         color = request.form['color']
-        fechaIngreso = request.form['fechaIngreso']
-        foto = request.form['foto']
+        foto= request.form['foto']
+        fechaIngreso = request.form['fecha_ingreso']
         descripcion = request.form['descripcion']
-
-        new_perro = Perro(nombre=nombre, raza=raza, edad=edad, estadoSalud=estadoSalud, estado=estado, color=color, fechaIngreso=fechaIngreso, foto=foto, descripcion=descripcion)
+        
+        new_perro = Perro(
+            nombre=nombre,
+            raza=raza,
+            edad=edad,
+            estadoSalud=estadoSalud,
+            fechaIngreso=fechaIngreso,
+            descripcion=descripcion,
+            estado=estado,
+            color=color,
+            foto=foto
+        )
         db.session.add(new_perro)
         db.session.commit()
-
+        
         return redirect(url_for('perro.index'))
-    data = 
+    return render_template('perros/create.html')
+
+@bp_perro.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    perro = Perro.query.get_or_404(id)
+
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estado_salud = request.form['estado_salud']
+        perro.fecha_ingreso = request.form['fecha_ingreso']
+        perro.descripcion = request.form['descripcion']
+        
+        db.session.commit()
+        
+        return redirect(url_for('perro.index'))
+
+    return render_template('perros/edit.html', perro=perro)
+
+@bp_perro.route('/delete/<int:id>')
+def delete(id):
+    perro = Perro.query.get_or_404(id)
+    
+    db.session.delete(perro)
+    db.session.commit()
+
+    return redirect(url_for('perro.index'))
+
+@bp_perro.route('/show/<int:id>')
+def show(id):
+    perro = Perro.query.get_or_404(id)
+    return render_template('perros/show.html', perro=perro)
 
 
         
