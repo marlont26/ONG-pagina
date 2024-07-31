@@ -5,7 +5,7 @@ class Empleado(db.Model):
     idEmpleado = db.Column(db.Integer, primary_key= True, autoincrement=True)
     nombre= db.Column(db.String(255), nullable= True)
     apellido= db.Column(db.String(255), nullable=True)
-    cargo = db.Column(db.string(155))
+    puesto = db.Column(db.string(155))
     telefono = db.Column(db.String(20))
     email= db.Column(db.String(255))
 #perro_empleado relacion tabla intermedia = cuidado
