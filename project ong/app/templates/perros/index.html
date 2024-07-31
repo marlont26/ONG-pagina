@@ -1,27 +1,33 @@
 {% extends "base.html" %}
-{% block title %}Solicitudes de Adopción{% endblock %}
+{% block title %}Perros{% endblock %}
 {% block content %}
-    <h1>Solicitudes de Adopción</h1>
+    <h1>Perros</h1>
+    <a href="{{ url_for('perro.add') }}">Añadir Perro</a>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>ID Adoptante</th>
-                <th>ID Perro</th>
-                <th>Estado</th>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <th>Estado de Salud</th>
+                <th>Fecha de Ingreso</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for solicitud in solicitudes %}
+            {% for perro in perros %}
                 <tr>
-                    <td>{{ solicitud.idSolicitud }}</td>
-                    <td>{{ solicitud.idAdoptante }}</td>
-                    <td>{{ solicitud.idPerro }}</td>
-                    <td>{{ solicitud.estado }}</td>
+                    <td>{{ perro.idPerro }}</td>
+                    <td>{{ perro.nombre }}</td>
+                    <td>{{ perro.raza }}</td>
+                    <td>{{ perro.edad }}</td>
+                    <td>{{ perro.estadoSalud }}</td>
+                    <td>{{ perro.fechaIngreso }}</td>
                     <td>
-                        <a href="{{ url_for('solicitud_adopcion.aprobar', id=solicitud.idSolicitud) }}">Aprobar</a>
-                        <a href="{{ url_for('solicitud_adopcion.rechazar', id=solicitud.idSolicitud) }}">Rechazar</a>
+                        <a href="{{ url_for('perro.show', id=perro.idPerro) }}">Ver</a>
+                        <a href="{{ url_for('perro.edit', id=perro.idPerro) }}">Editar</a>
+                        <a href="{{ url_for('perro.delete', id=perro.idPerro) }}">Eliminar</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -7,7 +7,7 @@ bp_solicitud_adopcion = Blueprint('solicitud_adopcion', __name__)
 @bp_solicitud_adopcion.route('/')
 def index():
     solicitudes = SolicitudAdopcion.query.all()
-    return render_template('solicitudes_adopcion/index.html', solicitudes=solicitudes)
+    return render_template('solicitudesadopciones/index.html', solicitudes=solicitudes)
 
 @bp_solicitud_adopcion.route('/aprobar/<int:id>')
 def aprobar(id):
