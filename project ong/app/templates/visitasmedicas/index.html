@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Visitas Médicas{% endblock %}
+{% block content %}
+    <h1>Visitas Médicas</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Perro</th>
+            <th>Veterinario</th>
+            <th>Acciones</th>
+        </tr>
+        {% for visita in visitas %}
+        <tr>
+            <td>{{ visita.id }}</td>
+            <td>{{ visita.fecha }}</td>
+            <td>{{ visita.descripcion }}</td>
+            <td>{{ visita.perro.nombre }}</td>
+            <td>{{ visita.veterinario.nombre }} {{ visita.veterinario.apellido }}</td>
+            <td>
+                <a href="{{ url_for('visita_medica.show', id=visita.id) }}">Ver</a>
+                <a href="{{ url_for('visita_medica.edit', id=visita.id) }}">Editar</a>
+                <a href="{{ url_for('visita_medica.delete', id=visita.id) }}" onclick="return confirm('¿Estás seguro de eliminar esta visita?')">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('visita_medica.add') }}">Agregar Nueva Visita</a>
+    <a href="{{ url_for('empleado.index') }}">Volver a Empleados</a>
+{% endblock %}

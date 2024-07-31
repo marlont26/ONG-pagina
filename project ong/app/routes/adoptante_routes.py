@@ -88,7 +88,7 @@ def show(id):
             adoptante.telefono = request.form['telefono']
             adoptante.email = request.form['email']
             db.session.commit()
-            return redirect(url_for('adoptante.show', id=adoptante.idAdoptante'))
+            return redirect(url_for('adoptante.show', id=adoptante.idAdoptante))
 
     perros = Perro.query.all()
     return render_template('adoptantes/show.html', adoptante=adoptante, perros=perros)

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Editar Donación{% endblock %}
+{% block content %}
+    <h1>Editar Donación</h1>
+    <form method="POST">
+        <label for="monto">Monto:</label>
+        <input type="text" name="monto" id="monto" value="{{ donacion.monto }}" required>
+        <br>
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" id="fecha" value="{{ donacion.fecha }}" required>
+        <br>
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" id="descripcion">{{ donacion.descripcion }}</textarea>
+        <br>
+        <label for="donante_id">Donante:</label>
+        <select name="donante_id" id="donante_id" required>
+            {% for donante in donantes %}
+            <option value="{{ donante.id }}" {% if donante.id == donacion.donante_id %}selected{% endif %}>{{ donante.nombre }} {{ donante.apellido }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Actualizar">
+    </form>
+    <a href="{{ url_for('donacion.index') }}">Volver</a>
+{% endblock %}

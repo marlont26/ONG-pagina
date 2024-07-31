@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Lista de Veterinarios{% endblock %}
+{% block content %}
+    <h1>Lista de Veterinarios</h1>
+    <a href="{{ url_for('veterinario.add') }}">Agregar Nuevo Veterinario</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Especialidad</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+        {% for veterinario in veterinarios %}
+        <tr>
+            <td>{{ veterinario.id }}</td>
+            <td>{{ veterinario.nombre }}</td>
+            <td>{{ veterinario.apellido }}</td>
+            <td>{{ veterinario.especialidad }}</td>
+            <td>{{ veterinario.telefono }}</td>
+            <td>{{ veterinario.email }}</td>
+            <td>
+                <a href="{{ url_for('veterinario.show', id=veterinario.id) }}">Ver</a>
+                <a href="{{ url_for('veterinario.edit', id=veterinario.id) }}">Editar</a>
+                <a href="{{ url_for('veterinario.delete', id=veterinario.id) }}" onclick="return confirm('¿Estás seguro de eliminar este veterinario?')">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

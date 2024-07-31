@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Editar Visita Médica{% endblock %}
+{% block content %}
+    <h1>Editar Visita Médica</h1>
+    <form method="POST">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" value="{{ visita.fecha }}" required>
+        <br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required>{{ visita.descripcion }}</textarea>
+        <br>
+
+        <label for="perro_id">Perro:</label>
+        <select id="perro_id" name="perro_id" required>
+            {% for perro in perros %}
+            <option value="{{ perro.idPerro }}" {% if perro.idPerro == visita.perro_id %}selected{% endif %}>{{ perro.nombre }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="veterinario_id">Veterinario:</label>
+        <select id="veterinario_id" name="veterinario_id" required>
+            {% for veterinario in veterinarios %}
+            <option value="{{ veterinario.id }}" {% if veterinario.id == visita.veterinario_id %}selected{% endif %}>{{ veterinario.nombre }} {{ veterinario.apellido }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('visita_medica.index') }}">Volver</a>
+{% endblock %}
