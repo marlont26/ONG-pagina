@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Detalles de la Solicitud de Adopción{% endblock %}
+{% block content %}
+    <h1>Detalles de la Solicitud de Adopción</h1>
+    <table>
+        <tr>
+            <th>ID:</th>
+            <td>{{ solicitud.idSolicitud }}</td>
+        </tr>
+        <tr>
+            <th>Adoptante:</th>
+            <td>{{ solicitud.adoptante.nombre }} {{ solicitud.adoptante.apellido }}</td>
+        </tr>
+        <tr>
+            <th>Perro:</th>
+            <td>{{ solicitud.perro.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Empleado:</th>
+            <td>{{ solicitud.empleado.nombre }} {{ solicitud.empleado.apellido }}</td>
+        </tr>
+        <tr>
+            <th>Fecha:</th>
+            <td>{{ solicitud.fecha }}</td>
+        </tr>
+        <tr>
+            <th>Estado:</th>
+            <td>{{ solicitud.estado }}</td>
+        </tr>
+    </table>
+    <a href="{{ url_for('solicitud_adopcion.index') }}">Volver</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Detalles del Adoptante{% endblock %}
+{% block content %}
+    <h1>Detalles del Adoptante</h1>
+    <form action="{{ url_for('adoptante.show', id=adoptante.idAdoptante) }}" method="post">
+        <h2>Actualizar Datos del Adoptante</h2>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ adoptante.nombre }}" required>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" value="{{ adoptante.apellido }}" required>
+        <label for="pais">País:</label>
+        <input type="text" id="pais" name="pais" value="{{ adoptante.pais }}" required>
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" name="ciudad" value="{{ adoptante.ciudad }}" required>
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" value="{{ adoptante.direccion }}" required>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{ adoptante.telefono }}" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ adoptante.email }}" required>
+        <button type="submit" name="actualizar">Actualizar Datos</button>
+    </form>
+
+    <h2>Solicitar Adopción</h2>
+    <form action="{{ url_for('adoptante.show', id=adoptante.idAdoptante) }}" method="post">
+        <label for="idPerro">Selecciona un Perro:</label>
+        <select id="idPerro" name="idPerro" required>
+            {% for perro in perros %}
+                <option value="{{ perro.idPerro }}">{{ perro.nombre }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="solicitar">Solicitar Adopción</button>
+    </form>
+
+    <a href="{{ url_for('adoptante.index') }}">Volver</a>
+{% endblock %}

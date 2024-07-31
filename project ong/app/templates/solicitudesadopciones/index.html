@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Solicitudes de Adopción{% endblock %}
+{% block content %}
+    <h1>Solicitudes de Adopción</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID Adoptante</th>
+                <th>ID Perro</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solicitud in solicitudes %}
+                <tr>
+                    <td>{{ solicitud.idSolicitud }}</td>
+                    <td>{{ solicitud.idAdoptante }}</td>
+                    <td>{{ solicitud.idPerro }}</td>
+                    <td>{{ solicitud.estado }}</td>
+                    <td>
+                        <a href="{{ url_for('solicitud_adopcion.aprobar', id=solicitud.idSolicitud) }}">Aprobar</a>
+                        <a href="{{ url_for('solicitud_adopcion.rechazar', id=solicitud.idSolicitud) }}">Rechazar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

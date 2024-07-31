@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Añadir Adoptante{% endblock %}
+{% block content %}
+    <h1>Añadir Adoptante</h1>
+    <form action="{{ url_for('adoptante.add') }}" method="post">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" name="apellido" required>
+
+        <label for="pais">País</label>
+        <input type="text" id="pais" name="pais" required>
+
+        <label for="ciudad">Ciudad</label>
+        <input type="text" id="ciudad" name="ciudad" required>
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" required>
+
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" name="telefono" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="submit">Añadir Adoptante</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Revisar Solicitud de Adopción{% endblock %}
+{% block content %}
+    <h1>Revisar Solicitud de Adopción</h1>
+    <form action="{{ url_for('solicitud_adopcion.edit', id=solicitud.idSolicitud) }}" method="post">
+        <p>Adoptante: {{ solicitud.adoptante.nombre }} {{ solicitud.adoptante.apellido }}</p>
+        <p>Perro: {{ solicitud.perro.nombre }}</p>
+        <p>Fecha de solicitud: {{ solicitud.fecha }}</p>
+
+        <label for="idEmpleado">Empleado</label>
+        <select id="idEmpleado" name="idEmpleado">
+            {% for empleado in empleados %}
+                <option value="{{ empleado.idEmpleado }}" {% if empleado.idEmpleado == solicitud.idEmpleado %}selected{% endif %}>{{ empleado.nombre }} {{ empleado.apellido }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="estado">Estado</label>
+        <select id="estado" name="estado">
+            <option value="Pendiente" {% if solicitud.estado == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+            <option value="Aprobada" {% if solicitud.estado == 'Aprobada' %}selected{% endif %}>Aprobada</option>
+            <option value="Rechazada" {% if solicitud.estado == 'Rechazada' %}selected{% endif %}>Rechazada</option>
+        </select>
+
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}

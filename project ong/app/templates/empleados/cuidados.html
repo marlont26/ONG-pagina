@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Cuidados del Empleado{% endblock %}
+{% block content %}
+    <h1>Cuidados Asociados a {{ empleado.nombre }} {{ empleado.apellido }}</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Perro</th>
+        </tr>
+        {% for cuidado in empleado.cuidados %}
+        <tr>
+            <td>{{ cuidado.idCuidado }}</td>
+            <td>{{ cuidado.descripcion }}</td>
+            <td>{{ cuidado.fecha }}</td>
+            <td>{{ cuidado.perro.nombre }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('empleado.index') }}">Volver</a>
+{% endblock %}

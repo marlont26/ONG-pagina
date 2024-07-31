@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Lista de Empleados{% endblock %}
+{% block content %}
+    <h1>Lista de Empleados</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Acciones</th>
+        </tr>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.idEmpleado }}</td>
+            <td>{{ empleado.nombre }}</td>
+            <td>{{ empleado.apellido }}</td>
+            <td>
+                <a href="{{ url_for('empleado.show', id=empleado.idEmpleado) }}">Ver Detalles</a>
+                <a href="{{ url_for('empleado.edit', id=empleado.idEmpleado) }}">Editar</a>
+                <a href="{{ url_for('empleado.delete', id=empleado.idEmpleado) }}">Eliminar</a>
+                <a href="{{ url_for('solicitud_adopcion.index', empleado_id=empleado.idEmpleado) }}">Ver Solicitudes de Adopción</a>
+                <a href="{{ url_for('cuidado.index', empleado_id=empleado.idEmpleado) }}">Ver Cuidados</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('empleado.add') }}">Agregar Nuevo Empleado</a>
+{% endblock %}

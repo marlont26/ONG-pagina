@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Detalles del Perro{% endblock %}
+{% block content %}
+    <h1>Detalles del Perro</h1>
+    <table>
+        <tr>
+            <th>ID:</th>
+            <td>{{ perro.idPerro }}</td>
+        </tr>
+        <tr>
+            <th>Nombre:</th>
+            <td>{{ perro.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Raza:</th>
+            <td>{{ perro.raza }}</td>
+        </tr>
+        <tr>
+            <th>Edad:</th>
+            <td>{{ perro.edad }}</td>
+        </tr>
+        <tr>
+            <th>Estado de Salud:</th>
+            <td>{{ perro.estadoSalud }}</td>
+        </tr>
+        <tr>
+            <th>Estado:</th>
+            <td>{{ perro.estado }}</td>
+        </tr>
+        <tr>
+            <th>Color:</th>
+            <td>{{ perro.color }}</td>
+        </tr>
+        <tr>
+            <th>Fecha de Ingreso:</th>
+            <td>{{ perro.fechaIngreso }}</td>
+        </tr>
+        <tr>
+            <th>Foto:</th>
+            <td><img src="{{ perro.foto }}" alt="Foto del Perro"></td>
+        </tr>
+        <tr>
+            <th>Descripción:</th>
+            <td>{{ perro.descripcion }}</td>
+        </tr>
+    </table>
+    <a href="{{ url_for('perro.edit', id=perro.idPerro) }}">Editar</a>
+    <a href="{{ url_for('perro.index') }}">Volver a la lista</a>
+{% endblock %}

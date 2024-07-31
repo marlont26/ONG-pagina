@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Adoptantes{% endblock %}
+{% block content %}
+    <h1>Adoptantes</h1>
+    <a href="{{ url_for('adoptante.add') }}">Añadir Adoptante</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>País</th>
+                <th>Ciudad</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for adoptante in adoptantes %}
+                <tr>
+                    <td>{{ adoptante.idAdoptante }}</td>
+                    <td>{{ adoptante.nombre }}</td>
+                    <td>{{ adoptante.apellido }}</td>
+                    <td>{{ adoptante.pais }}</td>
+                    <td>{{ adoptante.ciudad }}</td>
+                    <td>{{ adoptante.direccion }}</td>
+                    <td>{{ adoptante.telefono }}</td>
+                    <td>{{ adoptante.email }}</td>
+                    <td>
+                        <a href="{{ url_for('adoptante.show', id=adoptante.idAdoptante) }}">Ver</a>
+                        <a href="{{ url_for('adoptante.edit', id=adoptante.idAdoptante) }}">Editar</a>
+                        <a href="{{ url_for('adoptante.delete', id=adoptante.idAdoptante) }}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

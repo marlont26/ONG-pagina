@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Cuidados{% endblock %}
+{% block content %}
+    <h1>Listado de Cuidados</h1>
+    <a href="{{ url_for('cuidado.add') }}">Agregar Nuevo Cuidado</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Perro</th>
+            <th>Empleado</th>
+            <th>Acciones</th>
+        </tr>
+        {% for cuidado in cuidados %}
+        <tr>
+            <td>{{ cuidado.idCuidado }}</td>
+            <td>{{ cuidado.descripcion }}</td>
+            <td>{{ cuidado.fecha }}</td>
+            <td>{{ cuidado.perro.nombre }}</td>
+            <td>{{ cuidado.empleado.nombre }}</td>
+            <td>
+                <a href="{{ url_for('cuidado.edit', id=cuidado.idCuidado) }}">Editar</a>
+                <a href="{{ url_for('cuidado.delete', id=cuidado.idCuidado) }}" onclick="return confirm('¿Estás seguro de que deseas eliminar este cuidado?');">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

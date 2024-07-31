@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Agregar Cuidado{% endblock %}
+{% block content %}
+    <h1>Agregar Nuevo Cuidado</h1>
+    <form action="{{ url_for('cuidado.add') }}" method="post">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required>
+        
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        
+        <label for="perro">Perro:</label>
+        <select id="perro" name="perro">
+            {% for perro in perros %}
+            <option value="{{ perro.idPerro }}">{{ perro.nombre }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="empleado">Empleado:</label>
+        <select id="empleado" name="empleado">
+            {% for empleado in empleados %}
+            <option value="{{ empleado.idEmpleado }}">{{ empleado.nombre }} {{ empleado.apellido }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Agregar Cuidado</button>
+    </form>
+    <a href="{{ url_for('cuidado.index') }}">Volver</a>
+{% endblock %}

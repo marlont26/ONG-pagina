@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import Perro
+from app.models.perro import Perro
 from app import db
 
 bp_perro = Blueprint('perro', __name__)
@@ -16,10 +16,10 @@ def add():
         raza = request.form['raza']
         edad = request.form['edad']
         estado = request.form['estado']
-        estadoSalud = request.form['estado_salud']
+        estadoSalud = request.form['estadoSalud']
         color = request.form['color']
         foto= request.form['foto']
-        fechaIngreso = request.form['fecha_ingreso']
+        fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
         
         new_perro = Perro(
@@ -37,7 +37,7 @@ def add():
         db.session.commit()
         
         return redirect(url_for('perro.index'))
-    return render_template('perros/create.html')
+    return render_template('perros/add.html')
 
 @bp_perro.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -47,8 +47,11 @@ def edit(id):
         perro.nombre = request.form['nombre']
         perro.raza = request.form['raza']
         perro.edad = request.form['edad']
-        perro.estado_salud = request.form['estado_salud']
-        perro.fecha_ingreso = request.form['fecha_ingreso']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.estado = request.form['estado']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.foto = request.form['foto']
         perro.descripcion = request.form['descripcion']
         
         db.session.commit()

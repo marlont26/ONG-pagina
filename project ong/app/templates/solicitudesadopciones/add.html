@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Solicitar Adopción{% endblock %}
+{% block content %}
+    <h1>Solicitar Adopción</h1>
+    <form action="{{ url_for('solicitud_adopcion.add') }}" method="post">
+        <label for="idAdoptante">Adoptante</label>
+        <select id="idAdoptante" name="idAdoptante">
+            {% for adoptante in adoptantes %}
+                <option value="{{ adoptante.idAdoptante }}">{{ adoptante.nombre }} {{ adoptante.apellido }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="idPerro">Perro</label>
+        <select id="idPerro" name="idPerro">
+            {% for perro in perros %}
+                <option value="{{ perro.idPerro }}">{{ perro.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" name="fecha" required>
+
+        <button type="submit">Solicitar Adopción</button>
+    </form>
+{% endblock %}
