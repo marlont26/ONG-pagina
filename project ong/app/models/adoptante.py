@@ -10,6 +10,5 @@ class Adoptante(db.Model):
     direccion= db.Column(db.String(255))
     telefono = db.Column(db.String(255), nullable=True)
     email = db.Column(db.String(255), nullable=True)
-
-    adopciones = db.relationship('Adopcion', back_populates='adoptante')
+    
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='adoptante')

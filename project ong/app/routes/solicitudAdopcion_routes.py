@@ -2,14 +2,15 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import SolicitudAdopcion, Empleado
 from app import db
 
-bp_solicitud_adopcion = Blueprint('solicitud_adopcion', __name__)
+bp = Blueprint('solicitud_adopcion', __name__)
 
-@bp_solicitud_adopcion.route('/')
+
+@bp.route('/solicitudesadopciones')
 def index():
     solicitudes = SolicitudAdopcion.query.all()
     return render_template('solicitudesadopciones/index.html', solicitudes=solicitudes)
 
-@bp_solicitud_adopcion.route('/aprobar/<int:id>')
+@bp.route('/aprobar/<int:id>')
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
@@ -17,7 +18,7 @@ def aprobar(id):
     db.session.commit()
     return redirect(url_for('solicitud_adopcion.index'))
 
-@bp_solicitud_adopcion.route('/rechazar/<int:id>')
+@bp.route('/rechazar/<int:id>')
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'

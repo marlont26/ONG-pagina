@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Veterinario
 from app import db
 
-bp_veterinario = Blueprint('veterinario', __name__)
+bp = Blueprint('veterinario', __name__)
 
-@bp_veterinario.route('/')
+@bp.route('/veterinarios')
 def index():
     veterinarios = Veterinario.query.all()
     return render_template('veterinarios/index.html', veterinarios=veterinarios)
 
-@bp_veterinario.route('/add', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -31,7 +31,7 @@ def add():
         return redirect(url_for('veterinario.index'))
     return render_template('veterinarios/create.html')
 
-@bp_veterinario.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     veterinario = Veterinario.query.get_or_404(id)
 
@@ -48,7 +48,7 @@ def edit(id):
 
     return render_template('veterinarios/edit.html', veterinario=veterinario)
 
-@bp_veterinario.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     veterinario = Veterinario.query.get_or_404(id)
     
@@ -57,7 +57,7 @@ def delete(id):
 
     return redirect(url_for('veterinario.index'))
 
-@bp_veterinario.route('/show/<int:id>')
+@bp.route('/show/<int:id>')
 def show(id):
     veterinario = Veterinario.query.get_or_404(id)
     return render_template('veterinarios/show.html', veterinario=veterinario)

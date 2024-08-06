@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Donacion, Donante
 from app import db
 
-bp_donacion = Blueprint('donacion', __name__)
+bp = Blueprint('donacion', __name__)
 
-@bp_donacion.route('/')
+@bp.route('/donaciones')
 def index():
     donaciones = Donacion.query.all()
     return render_template('donaciones/index.html', donaciones=donaciones)
 
-@bp_donacion.route('/add', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         monto = request.form['monto']
@@ -28,9 +28,9 @@ def add():
         
         return redirect(url_for('donacion.index'))
     donantes = Donante.query.all()
-    return render_template('donaciones/create.html', donantes=donantes)
+    return render_template('donaciones/add.html', donantes=donantes)
 
-@bp_donacion.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     donacion = Donacion.query.get_or_404(id)
 
@@ -47,7 +47,7 @@ def edit(id):
     donantes = Donante.query.all()
     return render_template('donaciones/edit.html', donacion=donacion, donantes=donantes)
 
-@bp_donacion.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     donacion = Donacion.query.get_or_404(id)
     
@@ -56,7 +56,7 @@ def delete(id):
 
     return redirect(url_for('donacion.index'))
 
-@bp_donacion.route('/<int:id>/show')
+@bp.route('/<int:id>/show')
 def show(id):
     donacion = Donacion.query.get_or_404(id)
     return render_template('donaciones/show.html', donacion=donacion)

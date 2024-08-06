@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Adoptante, Perro, SolicitudAdopcion
 from app import db
 
-bp_adoptante = Blueprint('adoptante', __name__)
+bp= Blueprint('adoptante', __name__)
 
-@bp_adoptante.route('/')
+@bp.route('/')
 def index():
     adoptantes = Adoptante.query.all()
     return render_template('adoptantes/index.html', adoptantes=adoptantes)
 
-@bp_adoptante.route('/add', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -33,9 +33,9 @@ def add():
         db.session.commit()
         
         return redirect(url_for('adoptante.index'))
-    return render_template('adoptantes/create.html')
+    return render_template('adoptantes/add.html')
 
-@bp_adoptante.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     adoptante = Adoptante.query.get_or_404(id)
 
@@ -54,7 +54,7 @@ def edit(id):
 
     return render_template('adoptantes/edit.html', adoptante=adoptante)
 
-@bp_adoptante.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     adoptante = Adoptante.query.get_or_404(id)
     
@@ -63,7 +63,7 @@ def delete(id):
 
     return redirect(url_for('adoptante.index'))
 
-@bp_adoptante.route('/show/<int:id>', methods=['GET', 'POST'])
+@bp.route('/show/<int:id>', methods=['GET', 'POST'])
 def show(id):
     adoptante = Adoptante.query.get_or_404(id)
     

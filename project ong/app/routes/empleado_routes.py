@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Empleado, Cuidado, SolicitudAdopcion
 from app import db
 
-bp_empleado = Blueprint('empleado', __name__)
+bp = Blueprint('empleado', __name__)
 
-@bp_empleado.route('/')
+@bp.route('/empleados')
 def index():
     empleados = Empleado.query.all()
-    return render_template('empleados/index.html', empleados=empleados)
+    return render_template('empleados/index.htmb l', empleados=empleados)
 
-@bp_empleado.route('/add', methods=['GET', 'POST'])
+@bp.route('/add/empleados', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -29,9 +29,9 @@ def add():
         db.session.commit()
         
         return redirect(url_for('empleado.index'))
-    return render_template('empleados/create.html')
+    return render_template('empleados/add.html')
 
-@bp_empleado.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     empleado = Empleado.query.get_or_404(id)
 
@@ -48,7 +48,7 @@ def edit(id):
 
     return render_template('empleados/edit.html', empleado=empleado)
 
-@bp_empleado.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     empleado = Empleado.query.get_or_404(id)
     
@@ -57,26 +57,26 @@ def delete(id):
 
     return redirect(url_for('empleado.index'))
 
-@bp_empleado.route('/solicitudes')
+@bp.route('/solicitudes')
 def solicitudes():
     solicitudes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
     return render_template('solicitudes/index.html', solicitudes=solicitudes)
 
-@bp_empleado.route('/aprobar/<int:id>', methods=['POST'])
+@bp.route('/aprobar/<int:id>', methods=['POST'])
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
     db.session.commit()
     return redirect(url_for('empleado.solicitudes'))
 
-@bp_empleado.route('/rechazar/<int:id>', methods=['POST'])
+@bp.route('/rechazar/<int:id>', methods=['POST'])
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'
     db.session.commit()
     return redirect(url_for('empleado.solicitudes'))
 
-@bp_empleado.route('/<int:id>/cuidados')
+@bp.route('/<int:id>/cuidados')
 def cuidados(id):
     empleado = Empleado.query.get_or_404(id)
     return render_template('empleados/cuidados.html', empleado=empleado)

@@ -18,8 +18,8 @@
                 <a href="{{ url_for('empleado.show', id=empleado.idEmpleado) }}">Ver Detalles</a>
                 <a href="{{ url_for('empleado.edit', id=empleado.idEmpleado) }}">Editar</a>
                 <a href="{{ url_for('empleado.delete', id=empleado.idEmpleado) }}">Eliminar</a>
-                <a href="{{ url_for('solicitud_adopcion.index', empleado_id=empleado.idEmpleado) }}">Ver Solicitudes de Adopción</a>
-                <a href="{{ url_for('cuidado.index', empleado_id=empleado.idEmpleado) }}">Ver Cuidados</a>
+                <a href="{{ url_for('solicitud_adopcion.index', id=empleado.idEmpleado) }}">Ver Solicitudes de Adopción</a>
+                <a href="{{ url_for('cuidado.index', id=empleado.idEmpleado) }}">Ver Cuidados</a>
             </td>
         </tr>
         {% endfor %}

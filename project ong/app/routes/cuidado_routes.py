@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Cuidado, Empleado, Perro
 from app import db
 
-bp_cuidado = Blueprint('cuidado', __name__)
+bp = Blueprint('cuidado', __name__)
 
-@bp_cuidado.route('/')
+@bp.route('/cuidados')
 def index():
     cuidados = Cuidado.query.all()
     return render_template('cuidados/index.html', cuidados=cuidados)
 
-@bp_cuidado.route('/add', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
@@ -29,9 +29,9 @@ def add():
         return redirect(url_for('cuidado.index'))
     perros = Perro.query.all()
     empleados = Empleado.query.all()
-    return render_template('cuidados/create.html', perros=perros, empleados=empleados)
+    return render_template('cuidados/add.html', perros=perros, empleados=empleados)
 
-@bp_cuidado.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     cuidado = Cuidado.query.get_or_404(id)
 
@@ -49,7 +49,7 @@ def edit(id):
     empleados = Empleado.query.all()
     return render_template('cuidados/edit.html', cuidado=cuidado, perros=perros, empleados=empleados)
 
-@bp_cuidado.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     cuidado = Cuidado.query.get_or_404(id)
     

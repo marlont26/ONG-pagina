@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models.perro import Perro
 from app import db
 
-bp_perro = Blueprint('perro', __name__)
+bp = Blueprint('perro', __name__)
 
-@bp_perro.route('/')
+@bp.route('/perros')
 def index():
     perros = Perro.query.all()
     return render_template('perros/index.html', perros=perros)
 
-@bp_perro.route('/add', methods=['GET', 'POST'])
+@bp.route('/add/perros', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -39,7 +39,7 @@ def add():
         return redirect(url_for('perro.index'))
     return render_template('perros/add.html')
 
-@bp_perro.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     perro = Perro.query.get_or_404(id)
 
@@ -60,7 +60,7 @@ def edit(id):
 
     return render_template('perros/edit.html', perro=perro)
 
-@bp_perro.route('/delete/<int:id>')
+@bp.route('/delete/<int:id>')
 def delete(id):
     perro = Perro.query.get_or_404(id)
     
@@ -69,7 +69,7 @@ def delete(id):
 
     return redirect(url_for('perro.index'))
 
-@bp_perro.route('/show/<int:id>')
+@bp.route('/show/<int:id>')
 def show(id):
     perro = Perro.query.get_or_404(id)
     return render_template('perros/show.html', perro=perro)

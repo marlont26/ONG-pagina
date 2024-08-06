@@ -10,12 +10,12 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('list_perros') }}">Perros</a></li>
-                <li><a href="{{ url_for('list_adoptantes') }}">Adoptantes</a></li>
-                <li><a href="{{ url_for('list_empleados') }}">Empleados</a></li>
-                <li><a href="{{ url_for('list_solicitudes_adopcion') }}">Solicitudes de Adopción</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+
+                <li><a href="{{ url_for('perro.index') }}">Perros</a></li>
+                <li><a href="{{ url_for('adoptante.index') }}">Adoptantes</a></li>
+                <li><a href="{{ url_for('empleado.index') }}">Empleados</a></li>
+                <li><a href="{{ url_for('solicitud_adopcion.index') }}">Solicitudes de Adopción</a></li>
+
             </ul>
         </nav>
     </header>
