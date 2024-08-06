@@ -4,7 +4,7 @@ from app import db
 
 bp= Blueprint('adoptante', __name__)
 
-@bp.route('/')
+@bp.route('/adoptantes')
 def index():
     adoptantes = Adoptante.query.all()
     return render_template('adoptantes/index.html', adoptantes=adoptantes)

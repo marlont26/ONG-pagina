@@ -9,7 +9,7 @@ def create_app():
     
     db.init_app(app)
 
-    from app.routes import adoptante_routes, cuidado_routes, donacion_routes, donante_routes, empleado_routes, perro_routes, solicitudAdopcion_routes, veterinario_routes, visitaMedica_routes
+    from app.routes import adoptante_routes, cuidado_routes, donacion_routes, donante_routes, empleado_routes, perro_routes, solicitudAdopcion_routes, veterinario_routes, visitaMedica_routes, main_routes
     app.register_blueprint(adoptante_routes.bp)
     app.register_blueprint(cuidado_routes.bp)
     app.register_blueprint(donacion_routes.bp)
@@ -19,5 +19,6 @@ def create_app():
     app.register_blueprint(solicitudAdopcion_routes.bp)
     app.register_blueprint(veterinario_routes.bp)
     app.register_blueprint(visitaMedica_routes.bp)
+    app.register_blueprint(main_routes.bp)
 
     return app  

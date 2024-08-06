@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<link href="{{url_for('static',filename='styles.css')}}" rel="stylesheet">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>{% block title %}Mi Ap licación{% endblock %}</title>
+    <!-- Aquí podrías incluir estilos CSS y scripts -->
 </head>
 <body>
-    <header>
+    <header class="cabecerapagina">
         <nav>
-            <ul>
-
-                <li><a href="{{ url_for('perro.index') }}">Perros</a></li>
-                <li><a href="{{ url_for('adoptante.index') }}">Adoptantes</a></li>
-                <li><a href="{{ url_for('empleado.index') }}">Empleados</a></li>
-                <li><a href="{{ url_for('solicitud_adopcion.index') }}">Solicitudes de Adopción</a></li>
-
+            <ul class="menu">
+                <a href="{{ url_for('main.home') }}">Inicio</a>
+                <a href="{{ url_for('perro.index') }}">Perros</a>
+                <a href="{{ url_for('adoptante.index') }}">Adoptantes</a>
+                <a href="{{ url_for('empleado.index') }}">Empleados</a>
+                <a href="{{ url_for('solicitud_adopcion.index') }}">Solicitudes de Adopción</a>
+                <a href="{{ url_for('donacion.index') }}">Donaciones</a>
             </ul>
         </nav>
     </header>
     <main>
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
+    <footer>
+        <p>&copy; 2024 Mi Aplicación</p>
+    </footer>
 </body>
 </html>

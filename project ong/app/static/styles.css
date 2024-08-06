@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 1px;
+    padding: 1px;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: beige;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header.cabecera-pagina {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 0;
+    backdrop-filter: blur(10px);
+}
+
+header.cabecera-pagina nav {
+    display: flex;
+    justify-content: center;
+}
+
+header.cabecera-pagina nav .menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header.cabecera-pagina nav .menu li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+header.cabecera-pagina nav .menu li a:hover {
+    background-color: rgba(132, 0, 255, 0.2);
+    color: #fff;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
