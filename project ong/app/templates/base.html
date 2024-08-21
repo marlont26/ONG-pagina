@@ -11,23 +11,23 @@
 
 
 
+<!--
 
-
- <!--navbar-->
+ <navbar-
  <nav class="navbar navbar-expand-lg fixed-top">
   <link href="{{url_for('static',filename='home/styles.css')}}" rel="stylesheet">
   <div class="container">
     <a  class="navbar-brand  " href="{{ url_for('main.home') }}">
       <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50" height="50">
       HappyPaws
-      <!--<a class="navbar-brand me-auto" href="#">Offcanvas navbar</a>-->
+      --<a class="navbar-brand me-auto" href="#">Offcanvas navbar</a>--
     </a> 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <a  class="navbar-brand  " href="{{ url_for('main.home') }}">
           <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50" height="50">
           HappyPaws
-          <!--<a class="navbar-brand me-auto" href="#">Offcanvas navbar</a>-->
+          !--<a class="navbar-brand me-auto" href="#">Offcanvas navbar</a>--
         </a> 
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
@@ -62,25 +62,8 @@ aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 </button>
   </div>
 </nav>
-<!--end navbar-->
-
-
-  <main>
-
-    {% block content %}
-    {% endblock %}
-
-  </main>
-  <footer>
-    <p>&copy; 2024 Mi Aplicación</p>
-
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-</body>
-
-</html>
+#end navbar
+-->
 
 
 
@@ -103,25 +86,52 @@ aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <a class="nav-link active " aria-current="page" href="{{ url_for('main.home') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('perro.index') }}">Perros</a>
+          <a class="nav-link mx-lg" href="{{ url_for('perro.index') }}">Perros</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('adoptante.index') }}">Adoptantes</a>
+          <a class="nav-link mx-lg" href="{{ url_for('adoptante.index') }}">Adoptantes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{{ url_for('empleado.index') }}">Empleados</a>
+          <a class="nav-link mx-lg " href="{{ url_for('empleado.index') }}">Empleados</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{{ url_for('solicitud_adopcion.index') }}">Solicitudes</a>
+          <a class="nav-link mx-lg " href="{{ url_for('solicitud_adopcion.index') }}">Solicitudes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="{{ url_for('donacion.index') }}">Donaciones</a>
+          <a class="nav-link mx-lg " href="{{ url_for('donacion.index') }}">Donaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mx-lg " href="{{ url_for('donante.index') }}">Donantes</a>
         </li>
       </ul>
     </div>
     <a href="#" class="login-button">Login</a>
   </div>
 </nav>
+
+
+
+  <main>
+
+    {% block content %}
+    {% endblock %}
+
+  </main>
+  <footer>
+    <p>&copy; 2024 Mi Aplicación</p>
+
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+
+
+-
 
 
 <!--<section class="custom-section">

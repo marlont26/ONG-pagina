@@ -1,44 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Agregar Libro</title>
-</head>
-<body>
-    <h1>Agregar canino</h1>
-    <form action="{{ url_for('perro.add') }}" method="post">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" required>
-        
-        <label for="raza">Raza</label>
-        <input type="text" id="raza" name="raza">
-        
-        <label for="edad">Edad</label>
-        <input type="number" id="edad" name="edad">
-        
-        <label for="estadoSalud">Estado de Salud</label>
-        <input type="text" id="estadoSalud" name="estadoSalud">
+{% extends "base.html" %}
+{% block title %}Agregar Canino{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Agregar Canino</h1>
+    <form action="{{ url_for('perro.add') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required />
+        </div>
 
-        <label for=" estado"> Estado</label>
-        <input type="text" id="estado" name="estado">
-        
-        <label for="color">Color</label>
-        <input type="text" id="color" name="color">
+        <div class="form-group mb-3">
+            <label for="raza" class="form-label">Raza</label>
+            <input type="text" class="form-control" id="raza" name="raza" />
+        </div>
 
-        <label for="foto">Foto</label>
-        <input type="file" id="foto" name="foto">
-        
-        <label for="fechaIngreso">Fecha de Ingreso</label>
-        <input type="date" id="fechaIngreso" name="fechaIngreso">
-        
-        <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" name="descripcion"></textarea>
-        
-        <button type="submit">Añadir</button>
+        <div class="form-group mb-3">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edad" name="edad" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="estadoSalud" class="form-label">Estado de Salud</label>
+            <select class="form-select" id="estadoSalud" name="estadoSalud">
+                <option value="bueno">Bueno</option>
+                <option value="regular">Regular</option>
+                <option value="malo">Malo</option>
+                <option value="muy_malo">Muy Malo</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="suspendido">Suspendido</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="color" class="form-label">Color</label>
+            <input type="text" class="form-control" id="color" name="color" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="fechaIngreso" class="form-label">Fecha de Ingreso</label>
+            <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Añadir</button>
     </form>
-
-</body>
-</html>
+</div>
+{% endblock %}

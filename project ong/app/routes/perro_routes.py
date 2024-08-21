@@ -9,7 +9,7 @@ def index():
     perros = Perro.query.all()
     return render_template('perros/index.html', perros=perros)
 
-@bp.route('/add/perros', methods=['GET', 'POST'])
+@bp.route('/add/perro', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -18,11 +18,11 @@ def add():
         estado = request.form['estado']
         estadoSalud = request.form['estadoSalud']
         color = request.form['color']
-        foto= request.form['foto']
+        
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
         
-        new_perro = Perro(
+        new_perro = Perro( 
             nombre=nombre,
             raza=raza,
             edad=edad,
@@ -31,7 +31,7 @@ def add():
             descripcion=descripcion,
             estado=estado,
             color=color,
-            foto=foto
+            
         )
         db.session.add(new_perro)
         db.session.commit()
@@ -39,7 +39,7 @@ def add():
         return redirect(url_for('perro.index'))
     return render_template('perros/add.html')
 
-@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
+@bp.route('/editperro/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     perro = Perro.query.get_or_404(id)
 
@@ -51,16 +51,14 @@ def edit(id):
         perro.estado = request.form['estado']
         perro.color = request.form['color']
         perro.fechaIngreso = request.form['fechaIngreso']
-        perro.foto = request.form['foto']
         perro.descripcion = request.form['descripcion']
         
         db.session.commit()
-        
         return redirect(url_for('perro.index'))
 
     return render_template('perros/edit.html', perro=perro)
 
-@bp.route('/delete/<int:id>')
+@bp.route('/deleteperro/<int:id>')
 def delete(id):
     perro = Perro.query.get_or_404(id)
     
@@ -69,10 +67,7 @@ def delete(id):
 
     return redirect(url_for('perro.index'))
 
-@bp.route('/show/<int:id>')
+@bp.route('/showperro/<int:id>')
 def show(id):
     perro = Perro.query.get_or_404(id)
     return render_template('perros/show.html', perro=perro)
-
-
-        

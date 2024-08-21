@@ -80,3 +80,9 @@ def rechazar(id):
 def cuidados(id):
     empleado = Empleado.query.get_or_404(id)
     return render_template('empleados/cuidados.html', empleado=empleado)
+
+# Nueva ruta para mostrar los detalles de un empleado
+@bp.route('/empleado/<int:id>', methods=['GET'])
+def show(id):
+    empleado = Empleado.query.get_or_404(id)
+    return render_template('empleados/show.html', empleado=empleado)

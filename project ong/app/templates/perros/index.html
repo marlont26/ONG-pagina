@@ -1,36 +1,40 @@
 {% extends "base.html" %}
 {% block title %}Perros{% endblock %}
 {% block content %}
-    <h1>Perros</h1>
-    <a href="{{ url_for('perro.add') }}">Añadir Perro</a>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Raza</th>
-                <th>Edad</th>
-                <th>Estado de Salud</th>
-                <th>Fecha de Ingreso</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for perro in perros %}
-                <tr>
-                    <td>{{ perro.idPerro }}</td>
-                    <td>{{ perro.nombre }}</td>
-                    <td>{{ perro.raza }}</td>
-                    <td>{{ perro.edad }}</td>
-                    <td>{{ perro.estadoSalud }}</td>
-                    <td>{{ perro.fechaIngreso }}</td>
-                    <td>
-                        <a href="{{ url_for('perro.show', id=perro.idPerro) }}">Ver</a>
-                        <a href="{{ url_for('perro.edit', id=perro.idPerro) }}">Editar</a>
-                        <a href="{{ url_for('perro.delete', id=perro.idPerro) }}">Eliminar</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Perros</h1>
+        <a href="{{ url_for('perro.add') }}" class="btn btn-primary mb-3">Añadir Perro</a>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Raza</th>
+                        <th>Edad</th>
+                        <th>Estado de Salud</th>
+                        <th>Fecha de Ingreso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for perro in perros %}
+                        <tr>
+                            <td>{{ perro.idPerro }}</td>
+                            <td>{{ perro.nombre }}</td>
+                            <td>{{ perro.raza }}</td>
+                            <td>{{ perro.edad }}</td>
+                            <td>{{ perro.estadoSalud }}</td>
+                            <td>{{ perro.fechaIngreso }}</td>
+                            <td>
+                                <a href="{{ url_for('perro.show', id=perro.idPerro) }}" class="btn btn-info btn-sm">Ver</a>
+                                <a href="{{ url_for('perro.edit', id=perro.idPerro) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{{ url_for('perro.delete', id=perro.idPerro) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
