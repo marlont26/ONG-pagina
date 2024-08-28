@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 offset-md-2">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h3 class="card-title">Detalles del Perro</h3>
@@ -43,11 +43,6 @@
                                 <th scope="row" class="fw-bold">Fecha de Ingreso:</th>
                                 <td>{{ perro.fechaIngreso }}</td>
                             </tr>
-                            <!-- Si decides incluir la foto, descomenta y ajusta la clase img-fluid -->
-                            <!-- <tr>
-                                <th scope="row" class="fw-bold">Foto:</th>
-                                <td><img src="{{ perro.foto }}" alt="Foto del Perro" class="img-fluid" style="max-height: 200px; object-fit: cover;"></td>
-                            </tr> -->
                             <tr>
                                 <th scope="row" class="fw-bold">Descripción:</th>
                                 <td>{{ perro.descripcion }}</td>

@@ -2,11 +2,28 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Adoptante, Perro, SolicitudAdopcion
 from app import db
 
-bp= Blueprint('adoptante', __name__)
+bp = Blueprint('adoptante', __name__)
 
 @bp.route('/adoptantes')
 def index():
-    adoptantes = Adoptante.query.all()
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('search', '')
+
+    # Consulta con búsqueda
+    query = Adoptante.query
+    if search_query:
+        query = query.filter(
+            Adoptante.nombre.ilike(f'%{search_query}%') |
+            Adoptante.apellido.ilike(f'%{search_query}%') |
+            Adoptante.pais.ilike(f'%{search_query}%') |
+            Adoptante.ciudad.ilike(f'%{search_query}%')
+        )
+    
+    adoptantes = query.paginate(page=page, per_page=10)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('adoptantes/table.html', adoptantes=adoptantes)
+
     return render_template('adoptantes/index.html', adoptantes=adoptantes)
 
 @bp.route('/add', methods=['GET', 'POST'])

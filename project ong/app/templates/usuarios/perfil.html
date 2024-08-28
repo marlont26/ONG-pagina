@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Perfil de Usuario</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <!-- User details -->
+                    </dl>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ url_for('usuario.logout') }}" class="btn btn-danger">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

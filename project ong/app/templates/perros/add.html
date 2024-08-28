@@ -2,59 +2,62 @@
 {% block title %}Agregar Canino{% endblock %}
 {% block content %}
 <div class="container mt-5">
-    <h1 class="mb-4">Agregar Canino</h1>
-    <form action="{{ url_for('perro.add') }}" method="post" enctype="multipart/form-data">
-        <div class="form-group mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required />
-        </div>
+    <div class="card shadow-lg p-4 bg-light">
+        <h1 class="mb-4 text-center text-primary">Agregar Canino</h1>
+        <form action="{{ url_for('perro.add') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control border border-primary" id="nombre" name="nombre" required />
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="raza" class="form-label">Raza</label>
-            <input type="text" class="form-control" id="raza" name="raza" />
-        </div>
+            <div class="form-group mb-3">
+                <label for="raza" class="form-label">Raza</label>
+                <input type="text" class="form-control border border-primary" id="raza" name="raza" />
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="edad" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="edad" name="edad" />
-        </div>
+            <div class="form-group mb-3">
+                <label for="edad" class="form-label">Edad</label>
+                <input type="number" class="form-control border border-primary" id="edad" name="edad" />
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="estadoSalud" class="form-label">Estado de Salud</label>
-            <select class="form-select" id="estadoSalud" name="estadoSalud">
-                <option value="bueno">Bueno</option>
-                <option value="regular">Regular</option>
-                <option value="malo">Malo</option>
-                <option value="muy_malo">Muy Malo</option>
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label for="estadoSalud" class="form-label">Estado de Salud</label>
+                <select class="form-select border border-primary" id="estadoSalud" name="estadoSalud">
+                    <option value="bueno">Bueno</option>
+                    <option value="regular">Regular</option>
+                    <option value="malo">Malo</option>
+                    <option value="muy_malo">Muy Malo</option>
+                </select>
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select class="form-select" id="estado" name="estado">
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="suspendido">Suspendido</option>
-            </select>
-        </div>
+            <div class="form-group mb-3">
+                <label for="estado" class="form-label">Estado</label>
+                <select class="form-select border border-primary" id="estado" name="estado">
+                    <option value="en adopcion">EN ADOPCION</option>
+                    <option value="en proceso de adopcion">EN PROCESO DE ADOPCION</option>
+                    <option value="adoptado">ADOPTADO</option>
+                </select>
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="color" class="form-label">Color</label>
-            <input type="text" class="form-control" id="color" name="color" />
-        </div>
+            <div class="form-group mb-3">
+                <label for="color" class="form-label">Color</label>
+                <input type="text" class="form-control border border-primary" id="color" name="color" />
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="fechaIngreso" class="form-label">Fecha de Ingreso</label>
-            <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" />
-        </div>
+            <div class="form-group mb-3">
+                <label for="fechaIngreso" class="form-label">Fecha de Ingreso</label>
+                <input type="date" class="form-control border border-primary" id="fechaIngreso" name="fechaIngreso" />
+            </div>
 
-        <div class="form-group mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
-        </div>
+            <div class="form-group mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control border border-primary" id="descripcion" name="descripcion" rows="4"></textarea>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Añadir</button>
-    </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg px-5">Añadir</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

@@ -6,7 +6,22 @@ bp = Blueprint('perro', __name__)
 
 @bp.route('/perros')
 def index():
-    perros = Perro.query.all()
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('search', '')
+
+    # Filtrar perros basados en la consulta de búsqueda
+    if search_query:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{search_query}%') |
+            Perro.raza.ilike(f'%{search_query}%') |
+            Perro.estadoSalud.ilike(f'%{search_query}%')
+        ).paginate(page=page, per_page=10)
+    else:
+        perros = Perro.query.paginate(page=page, per_page=10)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('perros/table.html', perros=perros)
+
     return render_template('perros/index.html', perros=perros)
 
 @bp.route('/add/perro', methods=['GET', 'POST'])
@@ -18,7 +33,6 @@ def add():
         estado = request.form['estado']
         estadoSalud = request.form['estadoSalud']
         color = request.form['color']
-        
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
         
@@ -31,7 +45,6 @@ def add():
             descripcion=descripcion,
             estado=estado,
             color=color,
-            
         )
         db.session.add(new_perro)
         db.session.commit()

@@ -1,29 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Agregar Cuidado{% endblock %}
 {% block content %}
-    <h1>Agregar Nuevo Cuidado</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Agregar Cuidado</h1>
     <form action="{{ url_for('cuidado.add') }}" method="post">
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required>
-        
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" name="fecha" required>
-        
-        <label for="perro">Perro:</label>
-        <select id="perro" name="perro">
-            {% for perro in perros %}
-            <option value="{{ perro.idPerro }}">{{ perro.nombre }}</option>
-            {% endfor %}
-        </select>
-        
-        <label for="empleado">Empleado:</label>
-        <select id="empleado" name="empleado">
-            {% for empleado in empleados %}
-            <option value="{{ empleado.idEmpleado }}">{{ empleado.nombre }} {{ empleado.apellido }}</option>
-            {% endfor %}
-        </select>
-        
-        <button type="submit">Agregar Cuidado</button>
+        <div class="form-group mb-3">
+            <label for="idPerro" class="form-label">Perro</label>
+            <select class="form-select" id="idPerro" name="idPerro" required>
+                {% for perro in perros %}
+                <option value="{{ perro.idPerro }}">{{ perro.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="idEmpleado" class="form-label">Empleado</label>
+            <select class="form-select" id="idEmpleado" name="idEmpleado" required>
+                {% for empleado in empleados %}
+                <option value="{{ empleado.idEmpleado }}">{{ empleado.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="fecha" name="fecha" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Añadir Cuidado</button>
     </form>
-    <a href="{{ url_for('cuidado.index') }}">Volver</a>
+</div>
 {% endblock %}

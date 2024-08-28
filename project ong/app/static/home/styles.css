@@ -110,3 +110,15 @@
   border: none;
 }
 <!--home-->
+
+<!--botones de perros -->
+
+.btn-action {
+  background-color: #007bff; /* Color azul bonito y uniforme */
+  color: white;
+  border: none;
+}
+
+.btn-action:hover {
+  background-color: #808385; /* Oscurecer un poco el color al pasar el mouse */
+}

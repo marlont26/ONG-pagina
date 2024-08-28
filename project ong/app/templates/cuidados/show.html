@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Detalles del Cuidado{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Detalles del Cuidado</h1>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title">Detalles del Cuidado</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>ID:</strong> {{ cuidado.idCuidado }}</p>
+            <p><strong>Perro:</strong> {{ cuidado.perro.nombre }}</p>
+            <p><strong>Empleado:</strong> {{ cuidado.empleado.nombre }}</p>
+            <p><strong>Descripción:</strong> {{ cuidado.descripcion }}</p>
+            <p><strong>Fecha:</strong> {{ cuidado.fecha }}</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{{ url_for('cuidado.edit', id=cuidado.idCuidado) }}" class="btn btn-warning me-2">Editar</a>
+            <a href="{{ url_for('cuidado.index') }}" class="btn btn-secondary">Volver al listado</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

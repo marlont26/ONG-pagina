@@ -1,0 +1,17 @@
+{% for adoptante in adoptantes.items %}
+    <tr>
+        <td>{{ adoptante.idAdoptante }}</td>
+        <td>{{ adoptante.nombre }}</td>
+        <td>{{ adoptante.apellido }}</td>
+        <td>{{ adoptante.pais }}</td>
+        <td>{{ adoptante.ciudad }}</td>
+        <td>{{ adoptante.direccion }}</td>
+        <td>{{ adoptante.telefono }}</td>
+        <td>{{ adoptante.email }}</td>
+        <td>
+            <a href="{{ url_for('adoptante.show', id=adoptante.idAdoptante) }}" class="btn btn-info btn-sm">Ver</a>
+            <a href="{{ url_for('adoptante.edit', id=adoptante.idAdoptante) }}" class="btn btn-warning btn-sm">Editar</a>
+            <a href="{{ url_for('adoptante.delete', id=adoptante.idAdoptante) }}" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+    </tr>
+{% endfor %}
