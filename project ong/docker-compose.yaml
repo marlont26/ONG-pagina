@@ -1,14 +1,14 @@
-version: '1'
+version: '3'
 
 services:
   db:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: ong1
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: ong
+      MYSQL_USER: root@localhost 
+      MYSQL_PASSWORD: 1234
     volumes:
       - ./data:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3307:3306
