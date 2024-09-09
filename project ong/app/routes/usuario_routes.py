@@ -1,60 +1,59 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import Usuario, Rol  # Asegúrate de que Rol esté importado
 
 bp = Blueprint('usuario', __name__)
 
-@bp.route('/registro', methods=['GET', 'POST'])
-def registro():
-    if request.method == 'POST':
-        nombre = request.form.get('nombre')
-        email = request.form.get('email')
-        contrasena = request.form.get('contrasena')
-        tipo_usuario = request.form.get('tipo_usuario')
-
-        if Usuario.query.filter_by(email=email).first():
-            flash('El email ya está registrado', 'danger')
-            return redirect(url_for('usuario.registro'))
-
-        nuevo_usuario = Usuario(
-            nombre=nombre, 
-            email=email, 
-            rol=Rol[tipo_usuario]
-        )
-        nuevo_usuario.set_password(contrasena)
-        db.session.add(nuevo_usuario)
-        db.session.commit()
-        flash('Usuario registrado con éxito', 'success')
-        return redirect(url_for('usuario.login'))
-
-    return render_template('usuarios/registro.html')
-
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        contrasena = request.form.get('contrasena')
+        email = request.form['email']
+        password = request.form['password']
+        user = Usuario.query.filter_by(email=email).first()
 
-        usuario = Usuario.query.filter_by(email=email).first()
-        if usuario and usuario.check_password(contrasena):
-            login_user(usuario)
-            flash('Inicio de sesión exitoso', 'success')
-            return redirect(url_for('home'))  # Ruta para la página principal
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('producto.index'))
         else:
-            flash('Email o contraseña incorrectos', 'danger')
+            flash('Email o contraseña inválidos')
 
     return render_template('usuarios/login.html')
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        password = request.form['password']
+
+                # Verificar si el correo ya existe
+        user = Usuario.query.filter_by(email=email).first()
+        if user:
+            flash('El correo ya existe.', 'error')
+            return redirect(url_for('usuario.register'))
+
+        user = Usuario(
+            email=email,
+            nombre=nombre,
+            apellido=apellido,
+            password=generate_password_hash(password, method='pbkdf2:sha256')
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash('Registro exitoso. Por favor, inicia sesión.', 'success')
+        login_user(user)
+        return redirect(url_for('producto.index'))
+
+    return render_template('usuarios/registro.html')
 
 @bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('Has cerrado sesión', 'info')
-    return redirect(url_for('index'))
-
-@bp.route('/perfil')
-@login_required
-def perfil():
-    return render_template('usuarios/perfil.html', usuario=current_user)
+    return redirect(url_for('usuario.login'))
