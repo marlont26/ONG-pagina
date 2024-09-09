@@ -38,6 +38,7 @@
   border-radius: 50px;
   text-decoration: none;
   transition: 0.3s background-color;
+  margin-left: 10px;
 }
 .login-button:hover{
   background-color: #00b383
