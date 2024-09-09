@@ -7,5 +7,5 @@ from app.models.veterinario import Veterinario
 from app.models.visitaMedica import VisitaMedica
 from app.models.usuario import Usuario
 # app/models/__init__.py
-from .usuario import Usuario, Rol
+
 

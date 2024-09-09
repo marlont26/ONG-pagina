@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app.models import Usuario, Rol  # Asegúrate de que Rol esté importado
+from app.models import Usuario # Asegúrate de que Rol esté importado
 
 bp = Blueprint('usuario', __name__)
 
