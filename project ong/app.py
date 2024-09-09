@@ -1,6 +1,6 @@
 from flask import Flask
 from app import db
-from app.usuario.routes import bp  # Importa el Blueprint
+from app.usuario.routes import bp  # type: ignore # Importa el Blueprint
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost:3306/ong'
