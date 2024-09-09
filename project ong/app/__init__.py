@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 
 db = SQLAlchemy()
@@ -9,6 +10,21 @@ def create_app():
     app.config.from_object('config.Config')  # Carga la configuración desde config.py
     
     db.init_app(app)
+    
+    # Inicializar el LoginManager
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    # Configura la vista de login
+    login_manager.login_view = 'usuario_routes.login'  # Cambia esto por la ruta de tu vista de login
+    login_manager.login_message = "Por favor, inicia sesión para acceder a esta página."
+
+    # Cargar usuario (se usa para la sesión de usuario)
+    from app.models import Usuario  # Asegúrate de importar tu modelo de usuario correctamente
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Usuario.query.get(int(user_id))
 
     # Registrar Blueprints
     from app.routes import (

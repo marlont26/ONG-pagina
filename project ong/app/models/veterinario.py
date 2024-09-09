@@ -3,7 +3,7 @@ from app import db
 class Veterinario(db.Model):
     __tablename__ = 'veterinario'
     idVeterinario = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    idUsuario = db.Column(db.Integer, db.ForeignKey('usuario.idUsuario'), nullable=False)
+    idUsuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(20))
     direccion = db.Column(db.String(255))

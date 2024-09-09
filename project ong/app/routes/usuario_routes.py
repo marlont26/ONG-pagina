@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, current_user, login_required
 from app import db
+from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.models import Usuario # Asegúrate de que Rol esté importado
@@ -16,7 +16,7 @@ def login():
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for('producto.index'))
+            return redirect(url_for('main.home'))
         else:
             flash('Email o contraseña inválidos')
 
@@ -28,7 +28,9 @@ def register():
         email = request.form['email']
         nombre = request.form['nombre']
         apellido = request.form['apellido']
+        telefono = request.form['telefono']
         password = request.form['password']
+        cedula = request.form['cedula']
 
                 # Verificar si el correo ya existe
         user = Usuario.query.filter_by(email=email).first()
@@ -40,6 +42,8 @@ def register():
             email=email,
             nombre=nombre,
             apellido=apellido,
+            telefono=telefono,
+            cedula=cedula,
             password=generate_password_hash(password, method='pbkdf2:sha256')
         )
 
@@ -48,7 +52,7 @@ def register():
 
         flash('Registro exitoso. Por favor, inicia sesión.', 'success')
         login_user(user)
-        return redirect(url_for('producto.index'))
+        return redirect(url_for('main.home'))
 
     return render_template('usuarios/registro.html')
 
