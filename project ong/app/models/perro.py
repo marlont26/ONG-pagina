@@ -10,13 +10,10 @@ class Perro(db.Model):
     estado = db.Column(db.String(255))
     color = db.Column(db.String(100))
     fechaIngreso = db.Column(db.Date)
-    foto=db.Column(db.String(255))
+    foto = db.Column(db.String(255))
     descripcion = db.Column(db.Text)
 
-    # Relaciones con otras tablas
+    # Relaciones
     visitas_medicas = db.relationship('VisitaMedica', back_populates='perro')
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='perro')
     cuidados = db.relationship('Cuidado', back_populates='perro')
-
-
-

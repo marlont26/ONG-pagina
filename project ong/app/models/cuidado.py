@@ -9,5 +9,5 @@ class Cuidado(db.Model):
     fecha = db.Column(db.Date)
 
     # Relaciones
-    empleado = db.relationship('Empleado', back_populates='cuidados')
     perro = db.relationship('Perro', back_populates='cuidados')
+    empleado = db.relationship('Empleado', back_populates='cuidados')
