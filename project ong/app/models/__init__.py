@@ -1,4 +1,3 @@
-from app.models.adoptante import Adoptante
 from app.models.cuidado import Cuidado
 from app.models.empleado import Empleado
 from app.models.perro import Perro

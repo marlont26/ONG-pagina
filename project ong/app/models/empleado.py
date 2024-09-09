@@ -9,7 +9,8 @@ class Empleado(db.Model):
     telefono = db.Column(db.String(20))
     email= db.Column(db.String(255))
 #perro_empleado relacion tabla intermedia = cuidado
-    usuario = db.relationship('Usuario', back_populates='empleado')
+
+
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='empleado')
     cuidados = db.relationship('Cuidado', back_populates='empleado')
     #usuario = db.relationship('Usuario', back_populates='empleado', uselist=False)

@@ -11,5 +11,5 @@ class Veterinario(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
 
     # Relaciones con otras tablas
-    usuario = db.relationship('Usuario', back_populates='veterinario')
+
     visitas_medicas = db.relationship('VisitaMedica', back_populates='veterinario')

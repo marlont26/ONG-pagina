@@ -12,7 +12,6 @@ def create_app():
 
     # Registrar Blueprints
     from app.routes import (
-        adoptante_routes, 
         cuidado_routes, 
         empleado_routes, 
         perro_routes, 
@@ -23,7 +22,6 @@ def create_app():
         usuario_routes
     )
     
-    app.register_blueprint(adoptante_routes.bp)
     app.register_blueprint(cuidado_routes.bp)
     app.register_blueprint(empleado_routes.bp)
     app.register_blueprint(perro_routes.bp)
