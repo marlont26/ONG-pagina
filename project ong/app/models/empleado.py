@@ -5,6 +5,7 @@ class Empleado(db.Model):
     idEmpleado = db.Column(db.Integer, primary_key=True, autoincrement=True)
     idUsuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     nombre = db.Column(db.String(255), nullable=True)
+    puesto = db.Column(db.String(55), nullable=False)
     apellido = db.Column(db.String(255), nullable=True)
     telefono = db.Column(db.String(20))
     email= db.Column(db.String(255))
