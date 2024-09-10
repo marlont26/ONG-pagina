@@ -9,7 +9,7 @@ def index():
     veterinarios = Veterinario.query.all()
     return render_template('veterinarios/index.html', veterinarios=veterinarios)
 
-@bp.route('/add', methods=['GET', 'POST'])
+@bp.route('/add/veterinarios', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -29,7 +29,7 @@ def add():
         db.session.commit()
         
         return redirect(url_for('veterinario.index'))
-    return render_template('veterinarios/create.html')
+    return render_template('veterinarios/add.html')
 
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):

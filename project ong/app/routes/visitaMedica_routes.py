@@ -9,7 +9,7 @@ def index():
     visitas = VisitaMedica.query.all()
     return render_template('visita_medica/index.html', visitas=visitas)
 
-@bp.route('/add', methods=['GET', 'POST'])
+@bp.route('/add/visitasmedicas', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         fecha = request.form['fecha']
@@ -30,7 +30,7 @@ def add():
     
     perros = Perro.query.all()
     veterinarios = Veterinario.query.all()
-    return render_template('visita_medica/add.html', perros=perros, veterinarios=veterinarios)
+    return render_template('visitasmedicas/add.html', perros=perros, veterinarios=veterinarios)
 
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):

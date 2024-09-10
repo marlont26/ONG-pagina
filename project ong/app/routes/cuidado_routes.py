@@ -9,7 +9,7 @@ def index():
     cuidados = Cuidado.query.all()
     return render_template('cuidados/index.html', cuidados=cuidados)
 
-@bp.route('/add', methods=['GET', 'POST'])
+@bp.route('/add/cuidados', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
