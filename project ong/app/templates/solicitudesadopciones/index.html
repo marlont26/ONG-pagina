@@ -1,38 +1,43 @@
-{% extends "base.html" %}
-{% block title %}Solicitudes de Adopción{% endblock %}
-{% block content %}
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Solicitudes de Adopción</h1>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Adoptante</th>
-                        <th>ID Perro</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for solicitud in solicitudes %}
-                        <tr>
-                            <td>{{ solicitud.idSolicitud }}</td>
-                            <td>{{ solicitud.idAdoptante }}</td>
-                            <td>{{ solicitud.idPerro }}</td>
-                            <td>
-                                <span class="badge badge-pill {% if solicitud.estado == 'Aprobado' %}badge-success{% elif solicitud.estado == 'Rechazado' %}badge-danger{% else %}badge-secondary{% endif %}">
-                                    {{ solicitud.estado }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ url_for('solicitud_adopcion.aprobar', id=solicitud.idSolicitud) }}" class="btn btn-success btn-sm">Aprobar</a>
-                                <a href="{{ url_for('solicitud_adopcion.rechazar', id=solicitud.idSolicitud) }}" class="btn btn-danger btn-sm">Rechazar</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes de Adopción</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Solicitudes de Adopción</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Adoptante</th>
+                    <th>Perro</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for solicitud in solicitudes %}
+                <tr>
+                    <td>{{ solicitud.id }}</td>
+                    <td>{{ solicitud.adoptante.nombre }}</td>
+                    <td>{{ solicitud.perro.nombre }}</td>
+                    <td>{{ solicitud.estado }}</td>
+                    <td>
+                        <form action="{{ url_for('empleado.aprobar', id=solicitud.id) }}" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                        </form>
+                        <form action="{{ url_for('empleado.rechazar', id=solicitud.id) }}" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-{% endblock %}
+</body>
+</html>

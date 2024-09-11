@@ -1,32 +1,95 @@
-{% extends "base.html" %}
-{% block title %}Lista de Empleados{% endblock %}
-{% block content %}
-    <h1>Lista de Empleados</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Acciones</th>
-        </tr>
-        {% for empleado in empleados %}
-        <tr>
-            <td>{{ empleado.idEmpleado }}</td>
-            <td>{{ empleado.nombre }}</td>
-            <td>{{ empleado.apellido }}</td>
-            <td>
-                <a href="{{ url_for('empleado.show', id=empleado.idEmpleado) }}">Ver Detalles</a>
-                <a href="{{ url_for('empleado.edit', id=empleado.idEmpleado) }}">Editar</a>
-                <a href="{{ url_for('empleado.delete', id=empleado.idEmpleado) }}">Eliminar</a>
-                <a href="{{ url_for('solicitud_adopcion.index', id=empleado.idEmpleado) }}">Ver Solicitudes de Adopción</a>
-                <a href="{{ url_for('cuidado.index', id=empleado.idEmpleado) }}">Ver Cuidados</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="{{ url_for('empleado.add') }}">Agregar Nuevo Empleado</a>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control del Empleado</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Bienvenido, {{ empleado.nombre }} {{ empleado.apellido }}</h1>
+        
+        <div class="row">
+            <!-- Gestión de solicitudes de adopción -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Solicitudes de Adopción Pendientes</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if solicitudes_pendientes %}
+                            <ul class="list-group">
+                                {% for solicitud in solicitudes_pendientes %}
+                                <li class="list-group-item">
+                                    <strong>{{ solicitud.adoptante.nombre }}</strong> solicitó adoptar a <strong>{{ solicitud.perro.nombre }}</strong>.
+                                    <form action="{{ url_for('empleado.aprobar', id=solicitud.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                                    </form>
+                                    <form action="{{ url_for('empleado.rechazar', id=solicitud.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                                    </form>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No hay solicitudes de adopción pendientes.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
+            <!-- Ver perros bajo su cuidado -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Perros bajo tu cuidado</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if cuidados %}
+                            <ul class="list-group">
+                                {% for cuidado in cuidados %}
+                                <li class="list-group-item">
+                                    <strong>{{ cuidado.perro.nombre }}</strong> - Último chequeo: {{ cuidado.fecha_chequeo }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No tienes perros asignados bajo tu cuidado.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!--tengo que añadir lo de paypal y lo de whatsshap-->
-<!--tambien lo del contacto , el mapa etc-->
+        <div class="row">
+            <!-- Gestión de perros -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Gestionar Perros</h3>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ url_for('perro.index') }}" class="btn btn-primary">Ver todos los perros</a>
+                        <p>Puedes ver todos los perros disponibles y detalles sobre ellos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de adopciones -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Gestionar Solicitudes de Adopción</h3>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ url_for('empleado.solicitudes') }}" class="btn btn-primary">Ver solicitudes de adopción</a>
+                        <p>Puedes aprobar o rechazar solicitudes de adopción pendientes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
