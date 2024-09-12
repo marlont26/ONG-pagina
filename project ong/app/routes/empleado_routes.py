@@ -8,7 +8,7 @@ bp = Blueprint('empleado', __name__)
 @bp.route('/empleados')
 def index():
     empleados = Empleado.query.all()
-    return render_template('empleados/index.html', empleados=empleados)
+    return render_template('empleados/index.html', empleado=empleados)
 
 # Ruta para agregar un nuevo empleado
 @bp.route('/add/empleados', methods=['GET', 'POST'])

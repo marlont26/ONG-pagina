@@ -10,6 +10,5 @@ class SolicitudAdopcion(db.Model):
     comentarios = db.Column(db.String(255))
     #relaciones con otras tabas
     
-  
     perro = db.relationship('Perro', back_populates='solicitudes_adopcion')
     empleado = db.relationship('Empleado', back_populates='solicitudes_adopcion')
