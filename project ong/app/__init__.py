@@ -39,10 +39,12 @@ def create_app():
         visitaMedica_routes, 
         main_routes, 
         usuario_routes,
-        usuarioin_routes
+        usuarioin_routes,
+        adoptante_routes
     )
     
     app.register_blueprint(usuarioin_routes.bp)
+    app.register_blueprint(adoptante_routes.bp)
     app.register_blueprint(cuidado_routes.bp)
     app.register_blueprint(empleado_routes.bp)
     app.register_blueprint(perro_routes.bp)
