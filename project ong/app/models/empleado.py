@@ -3,7 +3,6 @@ from app import db
 class Empleado(db.Model):
     __tablename__ = 'empleado'
     idEmpleado = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    idUsuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     nombre = db.Column(db.String(255), nullable=True)
     apellido = db.Column(db.String(255), nullable=True)
     telefono = db.Column(db.String(20))
