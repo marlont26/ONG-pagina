@@ -85,13 +85,7 @@ def cuidados(id):
     cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
     return render_template('empleados/cuidados.html', empleado=empleado, cuidados=cuidados)
 
-# Ruta para mostrar los detalles de un empleado
-@bp.route('/empleado/<int:id>', methods=['GET'])
-def show(id):
-    empleado = Empleado.query.get_or_404(id)
-    return render_template('empleados/show.html', empleado=empleado)
-
-# Ruta para el panel de control del empleado
+# Ruta para el panel de control del empleado (dashboard)
 @bp.route('/empleado/<int:id>/dashboard')
 def dashboard(id):
     empleado = Empleado.query.get_or_404(id)

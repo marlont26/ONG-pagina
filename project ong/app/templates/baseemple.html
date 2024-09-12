@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Título por Defecto{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='home/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+        <div class="container-fluid px-4 py-4">
+            <a class="navbar-brand" href="#">
+                <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50" height="50">
+                HappyPaws
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url_for('main.home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link mx-lg" href="{{ url_for('perro.index') }}">Gestionar Perros</a></li>
+                    <li class="nav-item"><a class="nav-link mx-lg " href="">Tus perros</a></li>
+                    <li class="nav-item"><a class="nav-link mx-lg " href="{{ url_for('solicitud_adopcion.index') }}">Gestionar adopciones</a></li>
+                    <li class="nav-item"><a class="nav-link mx-lg ">Donantes</a></li>
+                </ul>
+            </div>
+            <a href="#" class="login-button">cerrar sesion</a>
+        </div>
+    </nav>
+
+    <main class="mt-5">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="text-center text-lg-start text-white" style="background-color: #343a40;">
+        <!-- Sección: Redes Sociales -->
+        <section class="d-flex justify-content-center p-4 border-bottom">
+            <div>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sección: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold">HappyPaws</h6>
+                        <p>Rescatamos y rehabilitamos perros en situaciones difíciles, brindándoles una segunda oportunidad de vida.</p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold">Enlaces Rápidos</h6>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Home</a></p>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Perros</a></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold">Ayuda</h6>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Preguntas Frecuentes</a></p>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Soporte Técnico</a></p>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Contáctanos</a></p>
+                        <p><a href="#" class="text-white" style="text-decoration: none;">Políticas de Privacidad</a></p>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <h6 class="text-uppercase fw-bold">Contacto</h6>
+                        <p><i class="bi bi-house-door me-3"></i> Medellín, Colombia</p>
+                        <p><i class="bi bi-envelope me-3"></i> info@happypaws.org</p>
+                        <p><i class="bi bi-phone me-3"></i> +57 300 123 4567</p>
+                        <p><i class="bi bi-printer me-3"></i> +57 300 123 4567</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+            © <script>document.write(new Date().getFullYear());</script> Todos los derechos reservados:
+            <a class="text-white fw-bold" href="#" style="text-decoration: none;">HappyPaws.org</a>
+        </div>
+    </footer>
+
+    <!-- Incluye los íconos de Bootstrap y el CSS para animación -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+      .bi {
+        transition: transform 0.3s, color 0.3s;
+      }
+      
+      .bi:hover {
+        transform: scale(1.2);
+        color: #ff6f61;
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+ 
