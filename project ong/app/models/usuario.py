@@ -12,7 +12,4 @@ class Usuario(db.Model, UserMixin):
     cedula = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(255))
     ciudad = db.Column(db.String(255))
-    
-
-
-
+    rol = db.Column(db.String(10), nullable=False, default='usuario')
