@@ -28,7 +28,7 @@ def add():
         db.session.add(new_empleado)
         db.session.commit()
         
-        return redirect(url_for('empleado.index'))
+        return redirect(url_for('main.baseadm'))
     return render_template('empleados/add.html')
 
 # Ruta para editar un empleado existente
