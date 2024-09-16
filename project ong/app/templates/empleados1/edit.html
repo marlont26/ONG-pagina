@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Editar Empleado{% endblock %}
+{% block content %}
+    <h1>Editar Empleado</h1>
+    <form method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ empleado.nombre }}" required>
+        <br>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" value="{{ empleado.apellido }}" required>
+        <br>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" value="{{ empleado.telefono }}">
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ empleado.email }}">
+        <br>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" value="{{ empleado.direccion }}">
+        <br>
+
+        <button type="submit">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('empleado.index') }}">Volver</a>
+{% endblock %}

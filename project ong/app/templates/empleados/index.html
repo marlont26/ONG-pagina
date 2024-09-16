@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control del Empleado</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        h1 {
-            color: #007bff;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background-color: #007bff;
-            color: white;
-            border-radius: 10px 10px 0 0;
-        }
-        .btn {
-            border-radius: 20px;
-        }
-        .btn-success {
-            background-color: #28a745;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-        }
-        .list-group-item {
-            border: none;
-            padding: 10px;
-        }
-    </style>
+	<title>Inicio</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet">
 </head>
+<style>
+	
+</style>
 <body>
+    {% extends 'baseemple.html' %}
+
+    {% block content %}
     <div class="container my-5">
         <h1 class="text-center my-5 py-5">Bienvenido, {{ empleado.nombre }} {{ empleado.apellido }}</h1>
         
@@ -113,6 +89,7 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
