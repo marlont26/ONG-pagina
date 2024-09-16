@@ -16,7 +16,7 @@ def create_app():
     login_manager.init_app(app)
 
     # Configura la vista de login
-    login_manager.login_view = 'usuario_routes.login'  # Cambia esto por la ruta de tu vista de login
+    login_manager.login_view = 'usuario.login'  # Asegúrate de que coincida con el nombre del blueprint y la función de vista
     login_manager.login_message = "Por favor, inicia sesión para acceder a esta página."
 
     # Cargar usuario (se usa para la sesión de usuario)
