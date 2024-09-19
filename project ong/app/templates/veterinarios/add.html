@@ -1,6 +1,4 @@
-{% extends "base.html" %}
 {% block title %}Agregar Veterinario{% endblock %}
-{% block content %}
     <h1>Agregar Veterinario</h1>
     <form method="POST">
         <label for="nombre">Nombre:</label>
@@ -21,4 +19,3 @@
         <input type="submit" value="Agregar">
     </form>
     <a href="{{ url_for('veterinario.index') }}">Volver</a>
-{% endblock %}

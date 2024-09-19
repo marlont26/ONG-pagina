@@ -14,7 +14,7 @@ class Usuario(db.Model, UserMixin):
     cedula = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(255))
     ciudad = db.Column(db.String(255))
-    rol = db.Column(db.String(10), nullable=False, default='usuario')
+    rol = db.Column(db.String(10), nullable=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

@@ -15,10 +15,12 @@ def baseadm():
     return render_template('bases/baseadm.html')
 
 @bp.route('/baseemple')
+@login_required
 def baseemple():
     return render_template('bases/baseemple.html')
 
 @bp.route('/basevete')
+@login_required
 def basevete():
     return render_template('bases/basevete.html')
 

@@ -11,7 +11,7 @@ def index():
     return render_template('empleados/index.html', empleado=empleados)
 
 # Ruta para agregar un nuevo empleado
-@bp.route('/add/empleados', methods=['GET', 'POST'])
+@bp.route('/addemple', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -29,7 +29,7 @@ def add():
         db.session.commit()
         
         return redirect(url_for('main.baseadm'))
-    return render_template('empleados/add.html')
+    return render_template('empleados1/add.html')
 
 # Ruta para editar un empleado existente
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])

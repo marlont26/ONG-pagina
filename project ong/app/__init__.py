@@ -1,9 +1,9 @@
 from flask import Flask
-from werkzeug.security import generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 db = SQLAlchemy()
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
@@ -29,11 +29,9 @@ def create_app():
         visitaMedica_routes, 
         main_routes, 
         usuario_routes,
-        usuarioin_routes,
         adoptante_routes
     )
 
-    app.register_blueprint(usuarioin_routes.bp)
     app.register_blueprint(adoptante_routes.bp)
     app.register_blueprint(cuidado_routes.bp)
     app.register_blueprint(empleado_routes.bp)
@@ -45,22 +43,3 @@ def create_app():
     app.register_blueprint(usuario_routes.bp)
 
     return app
-
-def crear_admin_default():
-    with create_app().app_context():
-        from app.models import Usuario
-        admin = Usuario.query.filter_by(email='samuel@gmail.com').first()
-
-        if not admin:
-            admin = Usuario(
-                email='samuel@gmail.com',
-                nombre='Samuel',
-                apellido='Estrada',
-                telefono='000000000',
-                cedula='000000000',
-                password=generate_password_hash('7828sam', method='pbkdf2:sha256'),
-                rol='admin'
-            )
-            db.session.add(admin)
-            db.session.commit()
-            print('Administrador por defecto creado.')
