@@ -1,6 +1,4 @@
-{% extends "baseadm.html" %}
 {% block title %}Cuidados del Empleado{% endblock %}
-{% block content %}
     <h1>Cuidados Asociados a {{ empleado.nombre }} {{ empleado.apellido }}</h1>
     <table>
         <tr>
@@ -19,4 +17,3 @@
         {% endfor %}
     </table>
     <a href="{{ url_for('empleado.index') }}">Volver</a>
-{% endblock %}

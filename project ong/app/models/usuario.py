@@ -1,5 +1,7 @@
 from flask_login import UserMixin
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
@@ -12,4 +14,13 @@ class Usuario(db.Model, UserMixin):
     cedula = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(255))
     ciudad = db.Column(db.String(255))
-    rol = db.Column(db.String(10), nullable=False, default='usuario')
+    rol = db.Column(db.String(10), nullable=False)
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+    
+    def get_id(self):
+        return str(self.id)
