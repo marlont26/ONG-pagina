@@ -93,3 +93,29 @@ def dashboard(id):
     cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
     perros = Perro.query.all()  # Para gestionar perros
     return render_template('empleados/dashboard.html', empleado=empleado, solicitudes_pendientes=solicitudes_pendientes, cuidados=cuidados, perros=perros)
+
+# Ruta para archivos estáticos con url_for (añadido)
+@bp.route('/static-file')
+def static_file():
+    return render_template('empleados/index.html', static_url=url_for('templates', filename='empleados/index.html'))
+
+@bp.route('/perrosemple')
+def perrosemple():
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('search', '')
+
+    # Filtrar perros basados en la consulta de búsqueda
+    if search_query:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{search_query}%') |
+            Perro.raza.ilike(f'%{search_query}%') |
+            Perro.estadoSalud.ilike(f'%{search_query}%')
+        ).paginate(page=page, per_page=10)
+    else:
+        perros = Perro.query.paginate(page=page, per_page=10)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('empleados/table.html ', perros=perros)
+
+    return render_template('empleados/perrosemple.html', perros=perros)
+

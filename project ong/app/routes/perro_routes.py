@@ -84,3 +84,32 @@ def delete(id):
 def show(id):
     perro = Perro.query.get_or_404(id)
     return render_template('perros/show.html', perro=perro)
+
+
+@bp.route('/perrosemple')
+def perrosemple():
+    page = request.args.get('page', 1, type=int)
+    search_query = request.args.get('search', '')
+
+    # Filtrar perros basados en la consulta de búsqueda
+    if search_query:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{search_query}%') |
+            Perro.raza.ilike(f'%{search_query}%') |
+            Perro.estadoSalud.ilike(f'%{search_query}%')
+        ).paginate(page=page, per_page=10)
+    else:
+        perros = Perro.query.paginate(page=page, per_page=10)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('empleados/table.html ', perros=perros)
+
+    return render_template('empleados/perrosemple.html', perros=perros)
+
+
+
+
+#@bp.route('/perrosemple')
+#def perrosemple():
+    #perros = Perro.query.paginate(page=1, per_page=10)
+    #return render_template('perros/perrosemple.html', perros=perros)
