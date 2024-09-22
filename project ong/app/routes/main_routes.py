@@ -9,6 +9,11 @@ bp = Blueprint('main', __name__)
 def about():
     return render_template('/vistasusuario/about.html')
 
+
+@bp.route('/contacto')
+def contacts():
+    return render_template('/vistasusuario/contacts.html')
+
 @bp.route('/admin')
 @login_required
 def baseadm():
