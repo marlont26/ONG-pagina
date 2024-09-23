@@ -29,10 +29,12 @@ def create_app():
         veterinario_routes, 
         visitaMedica_routes, 
         main_routes, 
-        usuario_routes
+        usuario_routes,
+        mensaje_contacto_routes
     )
 
     # Registrar blueprints
+    app.register_blueprint(mensaje_contacto_routes.bp)
     app.register_blueprint(adoptante_routes.bp)
     app.register_blueprint(cuidado_routes.bp)
     app.register_blueprint(empleado_routes.bp)
