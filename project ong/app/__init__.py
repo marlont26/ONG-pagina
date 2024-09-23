@@ -29,7 +29,8 @@ def create_app():
         visitaMedica_routes, 
         main_routes, 
         usuario_routes,
-        adoptante_routes
+        adoptante_routes,
+        mensaje_contacto_routes
     )
 
     app.register_blueprint(adoptante_routes.bp)
@@ -41,5 +42,6 @@ def create_app():
     app.register_blueprint(visitaMedica_routes.bp)
     app.register_blueprint(main_routes.bp)
     app.register_blueprint(usuario_routes.bp)
+    app.register_blueprint(mensaje_contacto_routes.bp)
 
     return app
