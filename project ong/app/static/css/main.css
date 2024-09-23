@@ -35,7 +35,7 @@
 }
 /*============ Estilos generales*/
 body, html{
-	background-color: #f1e79c;
+	background-color: #fbfffb;
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -49,7 +49,7 @@ body, html{
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	box-sizing: border-box;
+	box-sizing: border-box;	
 }
 .cover{
 	background: 50% 50% no-repeat;
