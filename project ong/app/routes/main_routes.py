@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
-
-
+from app.models.usuario import Usuario
 
 bp = Blueprint('main', __name__)
 
@@ -9,7 +8,7 @@ bp = Blueprint('main', __name__)
 def about():
     return render_template('/vistasusuario/about.html')
 
-@bp.route('/admin')
+@bp.route('/baseadm')
 @login_required
 def baseadm():
     return render_template('bases/baseadm.html')
