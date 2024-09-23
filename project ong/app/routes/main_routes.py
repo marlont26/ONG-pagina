@@ -12,6 +12,11 @@ def about():
 def contacts():
     return render_template('/vistasusuario/contacts.html')
 
+@bp.route('/perros_adopcion')
+@login_required
+def usuperro():
+    return render_template('/vistasusuario/perros.html')
+
 @bp.route('/baseadm')
 @login_required
 def baseadm():
