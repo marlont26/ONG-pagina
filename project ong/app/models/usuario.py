@@ -16,6 +16,7 @@ class Usuario(db.Model, UserMixin):
     ciudad = db.Column(db.String(255))
     rol = db.Column(db.String(30), nullable=False)
 
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 

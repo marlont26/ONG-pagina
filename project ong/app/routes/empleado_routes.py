@@ -20,12 +20,17 @@ def add():
         apellido = request.form['apellido']
         email = request.form['email']
         telefono = request.form['telefono']
+        password = request.form['password']
+        cedula = request.form['cedula']
+
         
         new_empleado = Empleado(
             nombre=nombre,
             apellido=apellido,
             email=email,
             telefono=telefono,
+            password=password,
+            cedula=cedula,
         )
         db.session.add(new_empleado)
         db.session.commit()
@@ -43,6 +48,8 @@ def edit(id):
         empleado.apellido = request.form['apellido']
         empleado.email = request.form['email']
         empleado.telefono = request.form['telefono']
+        empleado.password = request.form['password']
+        empleado.cedula = request.form['cedula']
         
         db.session.commit()
         return redirect(url_for('empleado.index'))
@@ -101,6 +108,8 @@ def dashboard(id):
 def static_file():
     return render_template('empleados/index.html', static_url=url_for('templates', filename='empleados/index.html'))
 
+
+
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
@@ -121,3 +130,31 @@ def perrosemple():
 
     return render_template('empleados/perrosemple.html', perros=perros)
 
+@bp.route('/empleado/perrosemple_nuevo', methods=['GET', 'POST'])
+def perrosemple_nuevo():
+    if request.method == 'POST':
+        # Lógica para agregar un perro
+        nombre = request.form['nombre']
+        raza = request.form['raza']
+        edad = request.form['edad']
+        estado = request.form['estado']
+        estadoSalud = request.form['estadoSalud']
+        color = request.form['color']
+        fechaIngreso = request.form['fechaIngreso']
+        descripcion = request.form['descripcion']
+
+        new_perro = Perro(
+            nombre=nombre,
+            raza=raza,
+            edad=edad,
+            estado=estado,
+            estadoSalud=estadoSalud,
+            color=color,
+            fechaIngreso=fechaIngreso,
+            descripcion=descripcion,
+        )
+        db.session.add(new_perro)
+        db.session.commit()
+
+        return redirect(url_for('empleado.index', id=current_user.id))  # Redirigir al dashboard del empleado
+    return render_template('empleados/perrosemple.html')

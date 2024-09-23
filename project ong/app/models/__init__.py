@@ -5,6 +5,7 @@ from app.models.solicitudAdopcion import SolicitudAdopcion
 from app.models.veterinario import Veterinario
 from app.models.visitaMedica import VisitaMedica
 from app.models.usuario import Usuario
+from app.models.mensaje_contacto import MensajeContacto
 # app/models/__init__.py
 
 

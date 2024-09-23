@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models.perro import Perro
 from app import db
+from werkzeug.utils import secure_filename
+import os
 
 bp = Blueprint('perro', __name__)
 
@@ -35,6 +37,16 @@ def add():
         color = request.form['color']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            ruta_imagen = imagen_path
+
+        else:
+            imagen=None
         
         new_perro = Perro( 
             nombre=nombre,
@@ -45,6 +57,7 @@ def add():
             descripcion=descripcion,
             estado=estado,
             color=color,
+            imagen=imagen.filename
         )
         db.session.add(new_perro)
         db.session.commit()
@@ -105,6 +118,35 @@ def perrosemple():
         return render_template('empleados/table.html ', perros=perros)
 
     return render_template('empleados/perrosemple.html', perros=perros)
+@bp.route('/empleado/perrosemple_nuevo', methods=['GET', 'POST'])
+def perrosemple_nuevo():
+    if request.method == 'POST':
+        # Lógica para agregar un perro
+        nombre = request.form['nombre']
+        raza = request.form['raza']
+        edad = request.form['edad']
+        estado = request.form['estado']
+        estadoSalud = request.form['estadoSalud']
+        color = request.form['color']
+        fechaIngreso = request.form['fechaIngreso']
+        descripcion = request.form['descripcion']
+
+        new_perro = Perro(
+            nombre=nombre,
+            raza=raza,
+            edad=edad,
+            estado=estado,
+            estadoSalud=estadoSalud,
+            color=color,
+            fechaIngreso=fechaIngreso,
+            descripcion=descripcion,
+        )
+        db.session.add(new_perro)
+        db.session.commit()
+
+        return redirect(url_for('empleado.index'))  # Redirigir al dashboard del empleado
+    return render_template('empleados/perrosemple.html')
+
 
 
 

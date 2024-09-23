@@ -10,7 +10,7 @@ class Perro(db.Model):
     estado = db.Column(db.String(255))
     color = db.Column(db.String(100))
     fechaIngreso = db.Column(db.Date)
-    foto = db.Column(db.String(255))
+    imagen = db.Column(db.String(255))
     descripcion = db.Column(db.Text)
 
     # Relaciones
