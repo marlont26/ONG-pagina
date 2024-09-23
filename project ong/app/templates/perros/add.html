@@ -1,6 +1,4 @@
-{% extends "baseadm.html" %}
-{% block title %}Agregar Canino{% endblock %}
-{% block content %}
+
 <div class="container mt-5">
     <div class="card shadow-lg p-4 bg-light">
         <h1 class="mb-4 text-center text-primary">Agregar Canino</h1>
@@ -53,6 +51,10 @@
                 <label for="descripcion" class="form-label">Descripción</label>
                 <textarea class="form-control border border-primary" id="descripcion" name="descripcion" rows="4"></textarea>
             </div>
+            <div class="form-group mb-3">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" name="imagen">
+            </div>
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary btn-lg px-5">Añadir</button>
@@ -60,4 +62,4 @@
         </form>
     </div>
 </div>
-{% endblock %}
+
