@@ -9,7 +9,7 @@ bp = Blueprint('veterinario', __name__)
 @bp.route('/veterinarios')
 def index():
     veterinarios = Veterinario.query.all()
-    return render_template('veterinarios/index.html', veterinarios=veterinarios)
+    return render_template('veterinarios1/index.html', veterinarios=veterinarios)
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -111,3 +111,6 @@ def delete(id):
 def show(id):
     veterinario = Veterinario.query.get_or_404(id)
     return render_template('veterinarios/show.html', veterinario=veterinario)
+
+
+
