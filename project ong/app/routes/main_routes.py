@@ -27,6 +27,7 @@ def baseemple():
 def basevete():
     return render_template('bases/basevete.html')
 
-@bp.route('/')
-def baseusu():
+@bp.route('/baseusu')
+@login_required
+def baseusu():    
     return render_template('bases/baseusu.html')
