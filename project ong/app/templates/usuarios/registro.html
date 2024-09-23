@@ -15,50 +15,41 @@
                         <h2 class="mb-0">Registrarse</h2>
                     </div>
                     <div class="card-body p-4">
-                        <form action="{{ url_for('usuario.register') }}" method="post">
-                            <div class="form-group mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" name="apellido" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="cedula" class="form-label">Cédula</label>
-                                <input type="text" class="form-control" id="cedula" name="cedula" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="ciudad" class="form-label">Ciudad</label>
-                                <input type="text" class="form-control" id="ciudad" name="ciudad">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select class="form-control" id="rol" name="rol" required>
-                                    <option value="cliente">Cliente</option>
-                                    <option value="empleado">Empleado</option>
-                                    <option value="veterinario">Veterinario</option>
-                                    <option value="admin">Administrador</option>
-                                </select>
-                            </div>
+                        <form action="{{ url_for('usuario.register') }}" method="POST">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" required><br><br>
+                    
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" id="apellido" name="apellido" required><br><br>
+                    
+                            <label for="email">Correo electrónico:</label>
+                            <input type="email" id="email" name="email" required><br><br>
+                    
+                            <label for="password">Contraseña:</label>
+                            <input type="password" id="password" name="password" required><br><br>
+                    
+                            <label for="telefono">Teléfono:</label>
+                            <input type="text" id="telefono" name="telefono" required><br><br>
+                    
+                            <label for="cedula">Cédula:</label>
+                            <input type="text" id="cedula" name="cedula" required><br><br>
+                    
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" id="direccion" name="direccion" required><br><br>
+                    
+                            <label for="ciudad">Ciudad:</label>
+                            <input type="text" id="ciudad" name="ciudad" required><br><br>
+                    
+                            <label for="rol">Rol:</label>
+                            <select id="rol" name="rol" required>
+                                <option value="usuario">Usuario</option>
+                                <option value="empleado">Empleado</option>
+                                <option value="veterinario">Veterinario</option>
+                                <option value="admin">Administrador</option>
+                            </select><br><br>
+                    
                             <button type="submit" class="btn btn-primary">Registrarse</button>
-                        </form>                        
+                        </form>     
                     </div>
                     <div class="card-footer text-center">
                         <small>¿Ya tienes una cuenta? <a href="{{ url_for('usuario.login') }}" class="text-primary">Inicia sesión aquí</a></small>

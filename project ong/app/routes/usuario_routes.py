@@ -1,89 +1,83 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
-from app import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
+from app import db
 from app.models import Usuario
-
+# Crear Blueprint para auth
 bp = Blueprint('usuario', __name__)
 
-@bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        user = Usuario.query.filter_by(email=email).first()
-
-        if user and check_password_hash(user.password, password):
-            # Utiliza login_user para registrar al usuario
-            login_user(user)
-
-            # Redirige según el rol del usuario
-            if user.rol == 'admin':
-                return redirect(url_for('main.baseadm'))
-            elif user.rol == 'veterinario':
-                return redirect(url_for('main.basevete'))
-            elif user.rol == 'empleado':
-                return redirect(url_for('main.baseemple'))
-            elif user.rol == 'cliente':
-                return redirect(url_for('main.baseusu'))
-        else:
-            flash('Email o contraseña inválidos')
-
-    return render_template('usuarios/login.html')
-
-
+# Registro de usuarios
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.form['email']
         nombre = request.form['nombre']
         apellido = request.form['apellido']
-        telefono = request.form['telefono']
+        email = request.form['email']
         password = request.form['password']
+        telefono = request.form['telefono']
         cedula = request.form['cedula']
         direccion = request.form['direccion']
         ciudad = request.form['ciudad']
-        rol = request.form.get('rol')  # Obtén el rol del formulario
+        rol = request.form['rol']  # admin, veterinario, empleado, usuario
 
         # Verificar si el correo ya existe
-        user = Usuario.query.filter_by(email=email).first()
-        if user:
-            flash('El correo ya existe.', 'error')
+        if Usuario.query.filter_by(email=email).first():
+            flash('El correo ya está registrado.')
             return redirect(url_for('usuario.register'))
 
-        # Crear el usuario con el rol especificado
-        user = Usuario(
-            email=email,
+        # Crear nuevo usuario
+        new_user = Usuario(
             nombre=nombre,
             apellido=apellido,
+            email=email,
             telefono=telefono,
-            password=generate_password_hash(password, method='pbkdf2:sha256'),
             cedula=cedula,
             direccion=direccion,
             ciudad=ciudad,
             rol=rol
         )
+        new_user.set_password(password)
 
-        db.session.add(user)
+        # Guardar en la base de datos
+        db.session.add(new_user)
         db.session.commit()
 
-        flash('Registro exitoso. Por favor, inicia sesión.', 'success')
-
-        # Redirige según el rol del nuevo usuario
-        if rol == 'admin':
-            return redirect(url_for('main.baseadm'))  # Redirige a vista de administrador
-        elif rol == 'veterinario':
-            return redirect(url_for('main.basevete'))  # Redirige a vista de veterinario
-        elif rol == 'empleado':
-            return redirect(url_for('main.baseemple'))  # Redirige a vista de empleado
-        else:
-            return redirect(url_for('main.baseusu'))  # Redirige a vista de cliente
+        flash('Te has registrado con éxito. Ahora puedes iniciar sesión.')
+        return redirect(url_for('usuario.login'))
 
     return render_template('usuarios/registro.html')
 
+# Login de usuarios
+@bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
+        # Buscar usuario por email
+        user = Usuario.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+            login_user(user)
+
+            # Redirigir según el rol del usuario
+            if user.rol == 'admin':
+                return redirect(url_for('main.baseadm'))  # Ejemplo de ruta para admin
+            elif user.rol == 'veterinario':
+                return redirect(url_for('main.basevete'))
+            elif user.rol == 'empleado':
+                return redirect(url_for('main.baseemple'))
+            else:  # usuario
+                return redirect(url_for('main.baseusu'))
+        else:
+            flash('Correo o contraseña incorrectos.')
+            return redirect(url_for('usuario.login'))
+
+    return render_template('usuarios/login.html')
+
+# Logout
 @bp.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash('Has cerrado sesión correctamente.')
     return redirect(url_for('usuario.login'))
