@@ -126,7 +126,7 @@ def perrosemple():
         perros = Perro.query.paginate(page=page, per_page=10)
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template('empleados/table.html ', perros=perros)
+        return render_template('empleados/table.html', perros=perros)
 
     return render_template('empleados/perrosemple.html', perros=perros)
 
@@ -156,5 +156,12 @@ def perrosemple_nuevo():
         db.session.add(new_perro)
         db.session.commit()
 
-        return redirect(url_for('empleado.index', id=current_user.id))  # Redirigir al dashboard del empleado
+        return redirect(url_for('empleado.perrosemple'))  # Redirigir a la lista de perros
     return render_template('empleados/perrosemple.html')
+
+
+
+
+
+
+    # End Generation Here
