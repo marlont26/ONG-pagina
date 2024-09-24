@@ -20,12 +20,12 @@ def baseadm():
 @bp.route('/baseemple')
 @login_required
 def baseemple():
-    return render_template('bases/baseemple.html')
+    return render_template('empleados/index.html')
 
 @bp.route('/basevete')
 @login_required
 def basevete():
-    return render_template('bases/basevete.html')
+    return render_template('veterinarios1/index.html')
 
 @bp.route('/baseusu')
 @login_required
