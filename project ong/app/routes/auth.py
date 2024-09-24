@@ -24,9 +24,9 @@ def login():
             if usuario.rol == 'admin':
                 return redirect(url_for('main.baseadm'))
             elif usuario.rol == 'empleado':
-                return redirect(url_for('main.baseemple'))
+                return redirect(url_for('empleado.index'))
             elif usuario.rol == 'veterinario':
-                return redirect(url_for('main.basevete'))
+                return redirect(url_for('veterinario.index'))
             else:  # rol usuario
                 return redirect(url_for('main.baseusu'))
         
@@ -36,9 +36,9 @@ def login():
         if current_user.rol == 'admin':
             return redirect(url_for('main.baseadm'))
         elif current_user.rol == 'empleado':
-            return redirect(url_for('main.baseemple'))
+            return redirect(url_for('empleado.index'))
         elif current_user.rol == 'veterinario':
-            return redirect(url_for('main.basevete'))
+            return redirect(url_for('veterinario.index'))
         else:
             return redirect(url_for('main.baseusu'))
     
