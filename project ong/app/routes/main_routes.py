@@ -8,6 +8,15 @@ bp = Blueprint('main', __name__)
 def about():
     return render_template('/vistasusuario/about.html')
 
+@bp.route('/contacto')
+def contacts():
+    return render_template('/vistasusuario/contacts.html')
+
+@bp.route('/perros_adopcion')
+@login_required
+def usuperro():
+    return render_template('/vistasusuario/perros.html')
+
 @bp.route('/baseadm')
 @login_required
 def baseadm():
@@ -23,8 +32,9 @@ def baseemple():
 def basevete():
     return render_template('bases/basevete.html')
 
-@bp.route('/')
-def baseusu():
+@bp.route('/baseusu')
+@login_required
+def baseusu():    
     return render_template('bases/baseusu.html')
 @bp.route('/')
 def contacts():

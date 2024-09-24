@@ -34,6 +34,7 @@ def add():
         edad = request.form['edad']
         estado = request.form['estado']
         estadoSalud = request.form['estadoSalud']
+        tamaño = request.form['tamaño']
         color = request.form['color']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
@@ -57,7 +58,8 @@ def add():
             descripcion=descripcion,
             estado=estado,
             color=color,
-            imagen=imagen.filename
+            imagen=imagen.filename,
+            tamaño=tamaño
         )
         db.session.add(new_perro)
         db.session.commit()
