@@ -115,13 +115,14 @@ def perrosemple():
         perros = Perro.query.paginate(page=page, per_page=10)
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template('empleados/table.html ', perros=perros)
+        return render_template('empleados/table.html', perros=perros)
 
     return render_template('empleados/perrosemple.html', perros=perros)
-@bp.route('/empleado/perrosemple_nuevo', methods=['GET', 'POST'])
-def perrosemple_nuevo():
+    # End Generation Here
+
+@bp.route('/addperrosemple', methods=['GET', 'POST'])
+def addperrosemple():
     if request.method == 'POST':
-        # Lógica para agregar un perro
         nombre = request.form['nombre']
         raza = request.form['raza']
         edad = request.form['edad']
@@ -130,28 +131,34 @@ def perrosemple_nuevo():
         color = request.form['color']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            ruta_imagen = imagen_path
+        else:
+            ruta_imagen = None
 
         new_perro = Perro(
             nombre=nombre,
             raza=raza,
             edad=edad,
-            estado=estado,
             estadoSalud=estadoSalud,
-            color=color,
             fechaIngreso=fechaIngreso,
             descripcion=descripcion,
+            estado=estado,
+            color=color,
+            imagen=ruta_imagen
         )
         db.session.add(new_perro)
         db.session.commit()
 
-        return redirect(url_for('empleado.index'))  # Redirigir al dashboard del empleado
-    return render_template('empleados/perrosemple.html')
+        return redirect(url_for('perro.perrosemple'))
+    return render_template('empleados/addperrosemple.html')
 
 
 
 
 
-#@bp.route('/perrosemple')
-#def perrosemple():
-    #perros = Perro.query.paginate(page=1, per_page=10)
-    #return render_template('perros/perrosemple.html', perros=perros)

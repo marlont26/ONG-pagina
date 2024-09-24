@@ -26,3 +26,7 @@ def basevete():
 @bp.route('/')
 def baseusu():
     return render_template('bases/baseusu.html')
+@bp.route('/')
+def contacts():
+    return render_template('bases/cantacts.html')
+
