@@ -36,7 +36,6 @@ def basevete():
 @login_required
 def baseusu():    
     return render_template('bases/baseusu.html')
-@bp.route('/')
-def contacts():
-    return render_template('bases/cantacts.html')
+
+
 
