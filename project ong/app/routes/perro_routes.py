@@ -9,6 +9,7 @@ bp = Blueprint('perro', __name__)
 @bp.route('/perros')
 def index():
     page = request.args.get('page', 1, type=int)
+    per_page = 5  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -17,9 +18,9 @@ def index():
             Perro.nombre.ilike(f'%{search_query}%') |
             Perro.raza.ilike(f'%{search_query}%') |
             Perro.estadoSalud.ilike(f'%{search_query}%')
-        ).paginate(page=page, per_page=10)
+        ).paginate(page=page, per_page=per_page)  # Usar per_page
     else:
-        perros = Perro.query.paginate(page=page, per_page=10)
+        perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('perros/table.html', perros=perros)
@@ -47,7 +48,7 @@ def add():
             ruta_imagen = imagen_path
 
         else:
-            imagen=None
+            ruta_imagen = None
         
         new_perro = Perro( 
             nombre=nombre,
@@ -58,13 +59,13 @@ def add():
             descripcion=descripcion,
             estado=estado,
             color=color,
-            imagen=imagen.filename,
+            imagen=ruta_imagen,  # Corrección aquí
             tamaño=tamaño
         )
         db.session.add(new_perro)
         db.session.commit()
         
-        return redirect(url_for('perro.index'))
+        return redirect(url_for('empleado.perrosemple'))  # Corrección aquí
     return render_template('perros/add.html')
 
 @bp.route('/editperro/<int:id>', methods=['GET', 'POST'])
@@ -104,6 +105,7 @@ def show(id):
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
+    per_page = 5  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -112,9 +114,9 @@ def perrosemple():
             Perro.nombre.ilike(f'%{search_query}%') |
             Perro.raza.ilike(f'%{search_query}%') |
             Perro.estadoSalud.ilike(f'%{search_query}%')
-        ).paginate(page=page, per_page=10)
+        ).paginate(page=page, per_page=per_page)  # Usar per_page
     else:
-        perros = Perro.query.paginate(page=page, per_page=10)
+        perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('empleados/table.html', perros=perros)
@@ -134,14 +136,15 @@ def addperrosemple():
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
+        tamaño = request.form['tamaño']
 
         if imagen:
             filename = secure_filename(imagen.filename)
             imagen_path = os.path.join('static', 'img_perros', filename)
             imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
-            ruta_imagen = imagen_path
+            ruta_imagen = filename  # Corrección aquí
         else:
-            ruta_imagen = None
+            ruta_imagen = None  # Corrección aquí
 
         new_perro = Perro(
             nombre=nombre,
@@ -152,15 +155,50 @@ def addperrosemple():
             descripcion=descripcion,
             estado=estado,
             color=color,
-            imagen=ruta_imagen
+            imagen=ruta_imagen,  # Corrección aquí
+            tamaño=tamaño
         )
         db.session.add(new_perro)
         db.session.commit()
 
-        return redirect(url_for('perro.perrosemple'))
+        return redirect(url_for('perro.perrosemple'))  # Corrección aquí
     return render_template('empleados/addperrosemple.html')
 
+@bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
+def editperrosemple(id):
+    perro = Perro.query.get_or_404(id)
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estado = request.form['estado']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+        perro.tamaño = request.form['tamaño']
+
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            perro.imagen = filename
+
+        db.session.commit()
+        return redirect(url_for('perro.perrosemple'))
+
+    return render_template('empleados/editperrosemple.html', perro=perro)
 
 
 
+
+@bp.route('/deleteperrosemple/<int:id>')
+def deleteperrosemple(id):
+    perro = Perro.query.get_or_404(id)
+    
+    db.session.delete(perro)
+    db.session.commit()
+
+    return redirect(url_for('perro.perrosemple'))
 

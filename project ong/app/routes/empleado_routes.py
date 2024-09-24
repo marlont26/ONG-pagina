@@ -40,7 +40,7 @@ def add():
 
 # Ruta para editar un empleado existente
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
-def edit(id):
+def edit_empleado(id):  # Renombrar esta función
     empleado = Empleado.query.get_or_404(id)
 
     if request.method == 'POST':
@@ -159,8 +159,71 @@ def perrosemple_nuevo():
         return redirect(url_for('empleado.perrosemple'))  # Redirigir a la lista de perros
     return render_template('empleados/perrosemple.html')
 
+@bp.route('/empleado/edit/<int:id>', methods=['GET', 'POST'])
+def edit_perro(id):  # Renombrar esta función
+    perro = Perro.query.get_or_404(id)
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estado = request.form['estado']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+        perro.tamaño = request.form['tamaño']
 
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            perro.imagen = filename
 
+        db.session.commit()
+        return redirect(url_for('empleado.perrosemple'))
+
+    return render_template('empleados/editperrosemple.html', perro=perro)
+
+@bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
+def editperrosemple(id):
+    perro = Perro.query.get_or_404(id)
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estado = request.form['estado']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+        perro.tamaño = request.form['tamaño']  # Asegúrate de que este campo esté presente
+
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            perro.imagen = filename
+
+        db.session.commit()
+        return redirect(url_for('perro.perrosemple'))
+
+    return render_template('empleados/editperrosemple.html', perro=perro)
+
+@bp.route('/perros/count')
+def count_perros():
+    cantidad_perros = Perro.query.count()
+    return {'cantidad_perros': cantidad_perros}
+
+@bp.route('/deleteperrosemple/<int:id>')
+def deleteperrosemple(id):
+    perro = Perro.query.get_or_404(id)
+    
+    db.session.delete(perro)
+    db.session.commit()
+
+    return redirect(url_for('empleado.perrosemple'))
 
 
 
