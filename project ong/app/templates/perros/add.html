@@ -43,7 +43,7 @@
         </li>
       </ul>
     </div>
-    <a href="{{url_for('usuario.login')}}" class="login-button">Login</a>
+    <a href="{{url_for('auth.login')}}" class="login-button">Login</a>
     <a href="{{url_for('usuario.register')}}" class="login-button">Register</a>
   </div>
 </nav>
@@ -80,8 +80,8 @@
             <div class="form-group mb-3">
                 <label for="tamaño" class="form-label">Tamaño</label>
                 <select class="form-select border border-primary" id="tamaño" name="tamaño">
-                    <option value="pequeño">Pequeño</option>
-                    <option value="mediano">Mediano</option>
+                    <option value="Pequeño">Pequeño</option>
+                    <option value="Mediano">Mediano</option>
                     <option value="Grande">Grande</option>
                 </select>
             </div>
@@ -120,4 +120,3 @@
         </form>
     </div>
 </div>
-
