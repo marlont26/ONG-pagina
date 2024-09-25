@@ -6,7 +6,7 @@ class SolicitudAdopcion(db.Model):
     idPerro = db.Column(db.Integer, db.ForeignKey('perro.idPerro'))
     fechaSolicitud = db.Column(db.Date)
     estado = db.Column(db.String(255))
-    idEmpleado = db.Column(db.Integer, db.ForeignKey('empleado.idEmpleado'))
+    idEmple = db.Column(db.Integer, db.ForeignKey('empleado.idEmple'))
     comentarios = db.Column(db.String(255))
     #relaciones con otras tabas
     

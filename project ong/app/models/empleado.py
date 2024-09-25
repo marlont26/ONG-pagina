@@ -1,17 +1,16 @@
 from app import db
 
+from app.models.usuario import Usuario
+from app import db
 
-class Empleado(db.Model):
+class Empleado(Usuario):
     __tablename__ = 'empleado'
-    idEmpleado = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(255), nullable=True)
-    apellido = db.Column(db.String(255), nullable=True)
-    telefono = db.Column(db.String(20))
-    email= db.Column(db.String(255))
-    password = db.Column(db.String(255), nullable=False)
-    cedula = db.Column(db.Integer, nullable=False)
-    rol = db.Column(db.String(10), nullable=False, default='empleado')
+    idEmple = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
 
-#perro_empleado relacion tabla intermedia = cuidado
+    __mapper_args__ = {
+        'polymorphic_identity': 'empleado',
+    }
+
+    # Relaciones específicas de Empleado
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='empleado')
     cuidados = db.relationship('Cuidado', back_populates='empleado')
