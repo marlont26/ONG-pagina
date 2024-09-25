@@ -12,51 +12,7 @@ def index():
     empleados = Empleado.query.all()
     return render_template('empleados/index.html', empleado=empleados)
 
-# Ruta para agregar un nuevo empleado   
-@bp.route('/add/empleados', methods=['GET', 'POST'])
 # Ruta para agregar un nuevo empleado
-@bp.route('/addemple', methods=['GET', 'POST'])
-def add():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        apellido = request.form['apellido']
-        email = request.form['email']
-        telefono = request.form['telefono']
-        password = request.form['password']
-        cedula = request.form['cedula']
-
-        
-        new_empleado = Empleado(
-            nombre=nombre,
-            apellido=apellido,
-            email=email,
-            telefono=telefono,
-            password=password,
-            cedula=cedula,
-        )
-        db.session.add(new_empleado)
-        db.session.commit()
-        
-        return redirect(url_for('main.baseadm'))
-    return render_template('empleados1/add.html')
-
-# Ruta para editar un empleado existente
-@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
-def edit_empleado(id):  # Renombrar esta función
-    empleado = Empleado.query.get_or_404(id)
-
-    if request.method == 'POST':
-        empleado.nombre = request.form['nombre']
-        empleado.apellido = request.form['apellido']
-        empleado.email = request.form['email']
-        empleado.telefono = request.form['telefono']
-        empleado.password = request.form['password']
-        empleado.cedula = request.form['cedula']
-        
-        db.session.commit()
-        return redirect(url_for('empleado.index'))
-
-    return render_template('empleados/edit.html', empleado=empleado)
 
 # Ruta para eliminar un empleado
 @bp.route('/delete/<int:id>')
