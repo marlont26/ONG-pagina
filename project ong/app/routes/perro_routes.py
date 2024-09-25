@@ -37,6 +37,7 @@ def add():
         estadoSalud = request.form['estadoSalud']
         tamaño = request.form['tamaño']
         color = request.form['color']
+        genero = request.form['genero']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
@@ -45,7 +46,7 @@ def add():
             filename = secure_filename(imagen.filename)
             imagen_path = os.path.join('static', 'img_perros', filename)
             imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
-            ruta_imagen = imagen_path
+            ruta_imagen = filename
 
         else:
             ruta_imagen = None
@@ -60,7 +61,8 @@ def add():
             estado=estado,
             color=color,
             imagen=ruta_imagen,  # Corrección aquí
-            tamaño=tamaño
+            tamaño=tamaño,
+            genero=genero
         )
         db.session.add(new_perro)
         db.session.commit()
@@ -86,6 +88,11 @@ def edit(id):
         return redirect(url_for('perro.index'))
 
     return render_template('perros/edit.html', perro=perro)
+
+@bp.route('/detalleperro/<int:id>')
+def detalleperro(id):
+    perro = Perro.query.get_or_404(id)
+    return render_template('vistasusuario/detalle.html', perro=perro)
 
 @bp.route('/deleteperro/<int:id>')
 def delete(id):
@@ -189,6 +196,8 @@ def editperrosemple(id):
         return redirect(url_for('perro.perrosemple'))
 
     return render_template('empleados/editperrosemple.html', perro=perro)
+
+
 
 
 

@@ -13,6 +13,7 @@ class Perro(db.Model):
     imagen = db.Column(db.String(255))
     descripcion = db.Column(db.Text)
     tamaño = db.Column(db.String(255))
+    genero = db.Column(db.String(255))
 
     # Relaciones
     visitas_medicas = db.relationship('VisitaMedica', back_populates='perro')

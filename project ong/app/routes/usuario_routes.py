@@ -48,10 +48,3 @@ def register():
     
     # Renderizar el formulario de registro si es GET
     return render_template('/usuarios/registro.html')
-
-@bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        # Lógica de autenticación
-        pass
-    return render_template('usuario/login.html')
