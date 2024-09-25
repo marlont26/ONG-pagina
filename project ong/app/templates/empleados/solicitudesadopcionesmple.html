@@ -7,9 +7,6 @@
 	<link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet">
 	<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
-<style>
-	
-</style>
 <body>
 	<!-- SideBar -->
 	<section class="full-box cover dashboard-sideBar">
@@ -23,11 +20,9 @@
 			<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
 					<img src="{{ url_for('static', filename='imagenes/avatar.jpg') }}" alt="UserIcon">
-
 					<figcaption class="text-center text-titles">EMPLEADO</figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
-					
 					<li>
 						<a href="#!" class="btn-exit-system">
 							<i class="zmdi zmdi-power"></i>
@@ -39,7 +34,6 @@
 			<ul class="list-unstyled full-box dashboard-sideBar-Menu">
 				<li>
 					<a href="{{ url_for('empleado.index') }}">
-
 						<i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
 					</a>
 				</li>
@@ -49,24 +43,16 @@
 					</a>
 					<ul class="list-unstyled full-box">
 						<li>
-							<a href="{{ url_for('empleado.perrosemple') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros
-							</a>
-							
+							<a href="{{ url_for('empleado.perrosemple') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros</a>
 						</li>
 						<li>
-								<a href="{{ url_for('empleado.solicitudesadopcionesemple') }}"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Solicitudes de Adopción</a>
+							<a href="{{url_for('empleado.solicitudesadopcion')}}"><i class="zmdi zmdi-book zmdi-hc-fw"></i>solicitudes</a>
 						</li>
-															<li>
-							<a href="cuidadosemple.html">
-								<box-icon name='plus-medical' color='#ffffff'></box-icon> cuidados
-							</a>
-							
+						<li>
+							<a href="cuidadosemple.html"><box-icon name='plus-medical' color='#ffffff'></box-icon> cuidados</a>
 						</li>
 					</ul>
 				</li>
-				
-				
-				
 			</ul>
 		</div>
 	</section>
@@ -86,67 +72,79 @@
 					</a>
 				</li>
 				<li>
-					<a href="#!" class="btn-search">
-						<i class="zmdi zmdi-search"></i>
-					</a>
+					<a href="#!" class="btn-search"><i class="zmdi zmdi-search"></i></a>
 				</li>
 				<li>
-					<a href="#!" class="btn-modal-help">
-						<i class="zmdi zmdi-help-outline"></i>
-					</a>
+					<a href="#!" class="btn-modal-help"><i class="zmdi zmdi-help-outline"></i></a>
 				</li>
 			</ul>
 		</nav>
 		<!-- Content page -->
-		<div class="container-fluid ">
+		<div class="container-fluid">
 			<div class="page-header">
 			  <h1 class="text-titles">Empleado <small>vip</small></h1>
 			</div>
 		</div>
 	
-		<div class="full-box text-center " style="padding: 30px 10px;">
+		<div class="full-box text-center" style="padding: 30px 10px;">
 			<article class="full-box tile">
-				<div class="full-box tile-title text-center text-titles text-uppercase">
-					Perros
-				</div>
-				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-account"></i>
-				</div>
+				<div class="full-box tile-title text-center text-titles text-uppercase">Perros</div>
+				<div class="full-box tile-icon text-center"><i class="zmdi zmdi-account"></i></div>
 				<div class="full-box tile-number text-titles">
 					<p class="full-box" id="cantidad-perros">0</p> <!-- Contenedor para la cantidad de perros -->
 					<small>CANTIDAD</small>
 				</div>
 			</article>
 			<article class="full-box tile">
-				<div class="full-box tile-title text-center text-titles text-uppercase">
-					SOLICITUDES PENDIENTES
-				</div>
-				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-male-alt"></i>
-				</div>
+				<div class="full-box tile-title text-center text-titles text-uppercase">SOLICITUDES PENDIENTES</div>
+				<div class="full-box tile-icon text-center"><i class="zmdi zmdi-male-alt"></i></div>
 				<div class="full-box tile-number text-titles">
 					<p class="full-box">10</p>
 					<small>CANTIDAD</small>
 				</div>
 			</article>
 			<article class="full-box tile">
-				<div class="full-box tile-title text-center text-titles text-uppercase">
-					CUIDADOS
-				</div>
-				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-face"></i>
-				</div>
+				<div class="full-box tile-title text-center text-titles text-uppercase">CUIDADOS</div>
+				<div class="full-box tile-icon text-center"><i class="zmdi zmdi-face"></i></div>
 				<div class="full-box tile-number text-titles">
 					<p class="full-box">70</p>
 					<small>CANTIDAD</small>
 				</div>
 			</article>
-			
 		</div>
 
-
-		
-		
+		<div class="container">
+			<h1 class="my-4">Solicitudes de Adopción</h1>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre Adoptante</th>
+						<th>Perro</th>
+						<th>Estado</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for solicitud in solicitudes %}
+					<tr>
+						<td>{{ solicitud.id }}</td>
+						<td>{{ solicitud.adoptante.nombre }}</td>
+						<td>{{ solicitud.perro.nombre }}</td>
+						<td>{{ solicitud.estado }}</td>
+						<td>
+							<form action="{{ url_for('empleado.aprobar', id=solicitud.id) }}" method="POST" class="d-inline">
+								<button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+							</form>
+							<form action="{{ url_for('empleado.rechazar', id=solicitud.id) }}" method="POST" class="d-inline">
+								<button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</section>
 
 	<!-- Notifications area -->
@@ -158,9 +156,7 @@
 			</div>
 			<div class="list-group">
 			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-alert-triangle"></i>
-				    </div>
+				    <div class="row-action-primary"><i class="zmdi zmdi-alert-triangle"></i></div>
 				    <div class="row-content">
 				      	<div class="least-content">17m</div>
 				      	<h4 class="list-group-item-heading">Tile with a label</h4>
@@ -169,9 +165,7 @@
 			  	</div>
 			  	<div class="list-group-separator"></div>
 			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-alert-octagon"></i>
-				    </div>
+				    <div class="row-action-primary"><i class="zmdi zmdi-alert-octagon"></i></div>
 				    <div class="row-content">
 				      	<div class="least-content">15m</div>
 				      	<h4 class="list-group-item-heading">Tile with a label</h4>
@@ -180,9 +174,7 @@
 			  	</div>
 			  	<div class="list-group-separator"></div>
 				<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-help"></i>
-				    </div>
+				    <div class="row-action-primary"><i class="zmdi zmdi-help"></i></div>
 				    <div class="row-content">
 				      	<div class="least-content">10m</div>
 				      	<h4 class="list-group-item-heading">Tile with a label</h4>
@@ -191,9 +183,7 @@
 				</div>
 			  	<div class="list-group-separator"></div>
 			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-info"></i>
-				    </div>
+				    <div class="row-action-primary"><i class="zmdi zmdi-info"></i></div>
 				    <div class="row-content">
 				      	<div class="least-content">8m</div>
 				      	<h4 class="list-group-item-heading">Tile with a label</h4>
@@ -201,7 +191,6 @@
 				    </div>
 			  	</div>
 			</div>
-
 		</div>
 	</section>
 
@@ -227,11 +216,11 @@
 	<!--====== Scripts -->
 	<script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
 	<script>
 		$.material.init();
@@ -250,6 +239,5 @@
 		// Actualizar la cantidad de perros al cargar la página
 		actualizarCantidadPerros();
 	</script>
-
 </body>
 </html>

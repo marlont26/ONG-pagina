@@ -66,10 +66,10 @@ def delete(id):
     return redirect(url_for('empleado.index'))
 
 # Ruta para ver las solicitudes de adopción pendientes
-@bp.route('/solicitudes')
-def solicitudes():
+@bp.route('/solicitudesadopcionesemple')
+def solicitudesadopcionesemple():
     solicitudes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
-    return render_template('solicitudes/index.html', solicitudes=solicitudes)
+    return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes)
 
 # Ruta para aprobar una solicitud de adopción
 @bp.route('/aprobar/<int:id>', methods=['POST'])
@@ -77,7 +77,7 @@ def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
     db.session.commit()
-    return redirect(url_for('empleado.solicitudes'))
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))  # Corrección aquí
 
 # Ruta para rechazar una solicitud de adopción
 @bp.route('/rechazar/<int:id>', methods=['POST'])
@@ -85,7 +85,7 @@ def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'
     db.session.commit()
-    return redirect(url_for('empleado.solicitudes'))
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))  # Corrección aquí
 
 # Ruta para ver los cuidados de un empleado (perros asignados)
 @bp.route('/<int:id>/cuidados')
@@ -113,6 +113,7 @@ def static_file():
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
+    per_page = 5  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -121,9 +122,9 @@ def perrosemple():
             Perro.nombre.ilike(f'%{search_query}%') |
             Perro.raza.ilike(f'%{search_query}%') |
             Perro.estadoSalud.ilike(f'%{search_query}%')
-        ).paginate(page=page, per_page=10)
+        ).paginate(page=page, per_page=per_page)  # Usar per_page
     else:
-        perros = Perro.query.paginate(page=page, per_page=10)
+        perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('empleados/table.html', perros=perros)
@@ -224,7 +225,3 @@ def deleteperrosemple(id):
     db.session.commit()
 
     return redirect(url_for('empleado.perrosemple'))
-
-
-
-    # End Generation Here

@@ -22,13 +22,10 @@ def index():
     else:
         perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
 
-    # Añadir print para depurar y verificar los datos
-    print(perros.items)
-
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('perros/table.html', perros=perros)
 
-    return render_template('/vistasusuario/perros.html', perros=perros)
+    return render_template('perros/index.html', perros=perros)
 
 @bp.route('/add/perro', methods=['GET', 'POST'])
 def add():

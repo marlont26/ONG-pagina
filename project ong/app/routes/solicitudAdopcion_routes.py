@@ -10,7 +10,7 @@ def index():
     solicitudes = SolicitudAdopcion.query.all()
     return render_template('solicitudesadopciones/index.html', solicitudes=solicitudes)
 
-@bp.route('/aprobar/<int:id>')
+@bp.route('/aprobar/<int:id>', methods=['POST'])
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
@@ -18,10 +18,15 @@ def aprobar(id):
     db.session.commit()
     return redirect(url_for('solicitud_adopcion.index'))
 
-@bp.route('/rechazar/<int:id>')
+@bp.route('/rechazar/<int:id>', methods=['POST'])
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'
     solicitud.idEmpleado = 1  # Debes cambiar esto por el ID del empleado real que rechaza la solicitud
     db.session.commit()
     return redirect(url_for('solicitud_adopcion.index'))
+
+@bp.route('/solicitudesadopcionesemple')
+def solicitudes_adopciones_emple():
+    solicitudes = SolicitudAdopcion.query.all()
+    return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes)
