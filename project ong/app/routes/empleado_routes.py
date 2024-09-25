@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Empleado, Cuidado, SolicitudAdopcion, Perro
+import os
+from werkzeug.utils import secure_filename
 from app import db
 
 bp = Blueprint('empleado', __name__)
@@ -113,7 +115,7 @@ def static_file():
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
-    per_page = 5  # Fijar la cantidad de perros por página a 5
+    per_page = 10  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -161,8 +163,9 @@ def perrosemple_nuevo():
     return render_template('empleados/perrosemple.html')
 
 @bp.route('/empleado/edit/<int:id>', methods=['GET', 'POST'])
-def edit_perro(id):  # Renombrar esta función
+def edit_perro(id):  # Manteniendo el nombre original
     perro = Perro.query.get_or_404(id)
+    
     if request.method == 'POST':
         perro.nombre = request.form['nombre']
         perro.raza = request.form['raza']
@@ -172,20 +175,25 @@ def edit_perro(id):  # Renombrar esta función
         perro.color = request.form['color']
         perro.fechaIngreso = request.form['fechaIngreso']
         perro.descripcion = request.form['descripcion']
-        imagen = request.files.get('imagen')
         perro.tamaño = request.form['tamaño']
-
+        
+        imagen = request.files.get('imagen')
+        
         if imagen:
             filename = secure_filename(imagen.filename)
             imagen_path = os.path.join('static', 'img_perros', filename)
-            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            full_imagen_path = os.path.join(os.path.dirname(__file__), '..', imagen_path)
+            
+            # Crear directorio si no existe
+            os.makedirs(os.path.dirname(full_imagen_path), exist_ok=True)
+            
+            imagen.save(full_imagen_path)
             perro.imagen = filename
 
         db.session.commit()
         return redirect(url_for('empleado.perrosemple'))
 
     return render_template('empleados/editperrosemple.html', perro=perro)
-
 @bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
 def editperrosemple(id):
     perro = Perro.query.get_or_404(id)

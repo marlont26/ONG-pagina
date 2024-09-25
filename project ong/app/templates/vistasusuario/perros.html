@@ -159,7 +159,7 @@
                     </div>
 
                     <div class="row" id="dogContainer">
-                        {% for perro in perros %}
+                        {% for perro in perros.items %}
                         <div class="col-sm-6 col-lg-4 mb-4 dog-card" data-breed="{{ perro.raza }}" data-age="{{ perro.edad }}" data-size="{{ perro.tamaño }}">
                             <div class="card h-100 shadow border-0 rounded-3 overflow-hidden">
                                 <div class="position-relative overflow-hidden">
@@ -183,6 +183,49 @@
                         </div>
                         {% endfor %}
                     </div>
+
+                    <!-- Paginación -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if perros.has_prev %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('perro.index', page=perros.prev_num) }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+                            {% for page_num in perros.iter_pages() %}
+                                {% if page_num %}
+                                    {% if page_num == perros.page %}
+                                        <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="{{ url_for('perro.index', page=page_num) }}">{{ page_num }}</a></li>
+                                    {% endif %}
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if perros.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ url_for('perro.index', page=perros.next_num) }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
