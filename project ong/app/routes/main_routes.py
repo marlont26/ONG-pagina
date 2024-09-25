@@ -17,21 +17,17 @@ def donaciones():
     return render_template('/vistasusuario/donaciones.html')
 
 @bp.route('/baseadm')
-@login_required
 def baseadm():
     return render_template('bases/baseadm.html')
 
 @bp.route('/baseemple')
-@login_required
 def baseemple():
     return render_template('empleados/index.html')
 
 @bp.route('/basevete')
-@login_required
 def basevete():
     return render_template('veterinarios1/index.html')
 
-@bp.route('/baseusu')
-@login_required
+@bp.route('/')
 def baseusu():    
     return render_template('bases/baseusu.html')
