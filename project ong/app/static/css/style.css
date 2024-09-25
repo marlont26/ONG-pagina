@@ -6881,4 +6881,7 @@ html:not(.ie-11):not(.ios) .parallax-disabled {
 
 	margin-top: 150px;
 }
-
+.navbar {
+    background-color: #333; /* Cambia este color a uno que contraste con el fondo de tu página */
+    color: #fff; /* Asegúrate de que el texto sea legible */
+}

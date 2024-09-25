@@ -12,6 +12,10 @@ def about():
 def contacts():
     return render_template('/vistasusuario/contacts.html')
 
+@bp.route('/donaciones')
+def donaciones():
+    return render_template('/vistasusuario/donaciones.html')
+
 @bp.route('/baseadm')
 @login_required
 def baseadm():
