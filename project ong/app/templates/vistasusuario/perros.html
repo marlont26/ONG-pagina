@@ -3,271 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perros Disponibles para Adopción</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Adopción de Perros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-      body {
-          background-color: #f8f9fa;
-      }
-      .card-img-top {
-          height: 200px;
-          object-fit: cover;
-      }
-      .dog-card {
-          transition: transform 0.3s, box-shadow 0.3s;
-      }
-      .dog-card .card {
-          background: linear-gradient(to bottom, #ffffff, #f0f8ff);
-      }
-      .dog-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      }
-      .card-body {
-          background-color: rgba(255, 255, 255, 0.8);
-      }
-      .badge {
-          font-size: 0.8rem;
-          padding: 0.5em 1em;
-      }
-      .btn-outline-primary {
-          border-width: 2px;
-      }
-      .btn-outline-primary:hover {
-          background-color: #007bff;
-          color: white;
-      }
-      #searchInput {
-          border-top-left-radius: 20px;
-          border-bottom-left-radius: 20px;
-      }
-      #searchButton {
-          border-top-right-radius: 20px;
-          border-bottom-right-radius: 20px;
-      }
-  </style>
+        :root {
+            --primary-color: #28a745;
+            --secondary-color: #218838;
+            --nav-height: 169px;
+        }
+        body {
+            background-color: #f8f9fa;
+            padding-top: var(--nav-height);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .dog-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .dog-card .card {
+            background: linear-gradient(to bottom, #ffffff, #e8f5e9);
+        }
+        .dog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .dog-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        .card-body {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .badge {
+            font-size: 0.8rem;
+            padding: 0.5em 1em;
+            background-color: var(--primary-color);
+        }
+        .btn-outline-primary {
+            border-width: 2px;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        #searchInput {
+            border-radius: 20px;
+            border: 2px solid var(--primary-color);
+            padding-left: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%2328a745" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+        .sidebar {
+            background-color: #ffffff;
+            border-right: 1px solid #dee2e6;
+            height: calc(100vh - var(--nav-height));
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 250px;
+            padding-top: 20px;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        .main-content {
+            margin-left: 250px;
+        }
+        @media (max-width: 767.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            #sidebarToggle {
+                position: fixed;
+                left: 10px;
+                top: calc(var(--nav-height) + 10px);
+                z-index: 1001;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        .form-range::-webkit-slider-thumb {
+            background: var(--primary-color);
+        }
+        .form-range::-moz-range-thumb {
+            background: var(--primary-color);
+        }
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
 </head>
 <body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Toggle Button -->
+            <button id="sidebarToggle" class="btn btn-primary d-md-none">
+                <i class="bi bi-list"></i>
+            </button>
 
-    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
-        <link href="{{url_for('static',filename='home/styles.css')}}" rel="stylesheet">
-        <div class="container-fluid px-4 py-4">
-          <a class="navbar-brand" href="#">
-            <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50"
-              height="50">
-            HappyPaws
-          </a> 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('main.baseusu') }}">Home Usu</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg" href="{{ url_for('perro.index') }}">adopciones</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg" href="">Como ayudar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('main.about') }}">Sobre nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('main.contacts') }}">contactanos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('solicitud_adopcion.index') }}">Donaciones</a>
-              </li>
-            </ul>
-          </div>
-          <a href="{{url_for('auth.login')}}" class="login-button">Login</a>
-          <a href="{{url_for('usuario.register')}}" class="login-button">Register</a>
-        </div>
-    </nav>
-
-<br><br><br><br>
-
-<div class="container-fluid">
-  <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-3 col-lg-2 sidebar">
-          <h3 class="mb-4">Filtros</h3>
-          <div class="filter-section">
-              <h5>Raza</h5>
-              <div id="breedFilter">
-                  <!-- Las opciones de raza se generarán dinámicamente -->
-              </div>
-          </div>
-          <div class="filter-section">
-              <h5>Edad</h5>
-              <input type="range" class="form-range" id="ageFilter" min="0" max="20" step="1">
-              <div id="ageValue">Cualquier edad</div>
-          </div>
-          <div class="filter-section">
-              <h5>Tamaño</h5>
-              <div id="sizeFilter">
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Pequeño" id="sizeSmall">
-                      <label class="form-check-label" for="sizeSmall">Pequeño</label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Mediano" id="sizeMedium">
-                      <label class="form-check-label" for="sizeMedium">Mediano</label>
-                  </div>
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="Grande" id="sizeLarge">
-                      <label class="form-check-label" for="sizeLarge">Grande</label>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Main content -->
-      <div class="col-md-9 col-lg-10 py-5">
-          <div class="row mb-4">
-              <div class="col-md-6 mx-auto">
-                  <input type="text" id="searchInput" class="form-control" placeholder="Buscar perros...">
-              </div>
-          </div>
-
-          <div class="row" id="dogContainer">
-              {% for perro in perros %}
-              <div class="col-md-6 col-lg-4 mb-4 dog-card" data-breed="{{ perro.raza }}" data-age="{{ perro.edad }}" data-size="{{ perro.tamaño }}">
-                  <div class="card h-100 shadow border-0 rounded-3 overflow-hidden">
-                      <div class="position-relative">
-                          {% if perro.imagen %}
-                              {% set direccion = 'img_perros/' + perro.imagen %}
-                              <img class="card-img-top" src="{{ url_for('static', filename=direccion) }}" alt="{{ perro.nombre }}">
-                          {% else %}
-                              <img class="card-img-top" src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ perro.nombre }}">
-                          {% endif %}
-                          <div class="position-absolute top-0 end-0 p-2">
-                              <span class="badge bg-primary rounded-pill">{{ perro.tamaño }}</span>
-                          </div>
-                      </div>
-                      <div class="card-body d-flex flex-column">
-                          <h3 class="card-title mb-3 text-primary">{{ perro.nombre }}</h3>
-                          <p class="card-text mb-2"><i class="bi bi-calendar-heart me-2 text-secondary"></i>{{ perro.edad }} años</p>
-                          <p class="card-text mb-3"><i class="bi bi-tag-fill me-2 text-secondary"></i>{{ perro.raza }}</p>
-                          <a href="#" class="btn btn-outline-primary mt-auto">Ver detalles</a>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %}
-          </div>
-      </div>
-  </div>
-</div>
-</div>
-    </div>
-    <footer class="text-center text-lg-start text-white" style="background-color: #343a40;">
-        <!-- Sección: Redes Sociales -->
-        <section class="d-flex justify-content-center p-4 border-bottom">
-          <!-- Redes sociales -->
-          <div>
-            <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
-              <i class="bi bi-facebook"></i>
-            </a>
-            <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
-              <i class="bi bi-twitter"></i>
-            </a>
-            <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
-              <i class="bi bi-instagram"></i>
-            </a>
-            <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
-              <i class="bi bi-linkedin"></i>
-            </a>
-          </div>
-        </section>
-      
-        <!-- Sección: Links  -->
-        <section class="">
-          <div class="container text-center text-md-start mt-5">
-            <div class="row mt-3">
-              <!-- Columna 1 -->
-              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                <!-- Contenido -->
-                <h6 class="text-uppercase fw-bold">HappyPaws</h6>
-                <p>
-                  Rescatamos y rehabilitamos perros en situaciones difíciles, brindándoles una segunda oportunidad de vida.
-                </p>
-              </div>
-              <!-- Columna 2 -->
-              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold">Enlaces Rápidos</h6>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Home</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Perros</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Adoptantes</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Donaciones</a>
-                </p>
-              </div>
-              <!-- Columna 3 -->
-              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold">Ayuda</h6>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Preguntas Frecuentes</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Soporte Técnico</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Contáctanos</a>
-                </p>
-                <p>
-                  <a href="#" class="text-white" style="text-decoration: none;">Políticas de Privacidad</a>
-                </p>
-              </div>
-              <!-- Columna 4 -->
-              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                <!-- Contacto -->
-                <h6 class="text-uppercase fw-bold">Contacto</h6>
-                <p><i class="bi bi-house-door me-3"></i> Medellín, Colombia</p>
-                <p><i class="bi bi-envelope me-3"></i> info@happypaws.org</p>
-                <p><i class="bi bi-phone me-3"></i> +57 300 123 4567</p>
-                <p><i class="bi bi-printer me-3"></i> +57 300 123 4567</p>
-              </div>
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar" id="sidebar">
+                <h3 class="mb-4 text-center">Filtros</h3>
+                <div class="filter-section">
+                    <h5>Raza</h5>
+                    <div id="breedFilter">
+                        <!-- Las opciones de raza se generarán dinámicamente -->
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h5>Edad</h5>
+                    <input type="range" class="form-range" id="ageFilter" min="0" max="20" step="1">
+                    <div id="ageValue" class="text-center">Cualquier edad</div>
+                </div>
+                <div class="filter-section">
+                    <h5>Tamaño</h5>
+                    <div id="sizeFilter">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Pequeño" id="sizeSmall">
+                            <label class="form-check-label" for="sizeSmall">Pequeño</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Mediano" id="sizeMedium">
+                            <label class="form-check-label" for="sizeMedium">Mediano</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Grande" id="sizeLarge">
+                            <label class="form-check-label" for="sizeLarge">Grande</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </section>
-      
-        <!-- Copyright -->
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
-          © <script>document.write(new Date().getFullYear());</script> Todos los derechos reservados:
-          <a class="text-white fw-bold" href="#" style="text-decoration: none;">HappyPaws.org</a>
+
+            <!-- Main content -->
+            <div class="col-md-9 col-lg-10 main-content">
+                <div class="py-4">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mx-auto">
+                            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Buscar perros...">
+                        </div>
+                    </div>
+
+                    <div class="row" id="dogContainer">
+                        {% for perro in perros %}
+                        <div class="col-sm-6 col-lg-4 mb-4 dog-card" data-breed="{{ perro.raza }}" data-age="{{ perro.edad }}" data-size="{{ perro.tamaño }}">
+                            <div class="card h-100 shadow border-0 rounded-3 overflow-hidden">
+                                <div class="position-relative overflow-hidden">
+                                    {% if perro.imagen %}
+                                        {% set direccion = 'img_perros/' + perro.imagen %}
+                                        <img class="card-img-top" src="{{ url_for('static', filename=direccion) }}" alt="{{ perro.nombre }}">
+                                    {% else %}
+                                        <img class="card-img-top" src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ perro.nombre }}">
+                                    {% endif %}
+                                    <div class="position-absolute top-0 end-0 p-2">
+                                        <span class="badge rounded-pill">{{ perro.tamaño }}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h3 class="card-title mb-3 text-primary">{{ perro.nombre }}</h3>
+                                    <p class="card-text mb-2"><i class="bi bi-calendar-heart me-2 text-secondary"></i>{{ perro.edad }} años</p>
+                                    <p class="card-text mb-3"><i class="bi bi-tag-fill me-2 text-secondary"></i>{{ perro.raza }}</p>
+                                    <a href="#" class="btn btn-outline-primary mt-auto">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
-      </footer>
-      
-      <!-- Incluye los íconos de Bootstrap y el CSS para animación -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-      <style>
-        .bi {
-          transition: transform 0.3s, color 0.3s;
-        }
-        
-        .bi:hover {
-          transform: scale(1.2);
-          color: #ff6f61; /* Un color llamativo en hover */
-        }
-      </style>
-      
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('searchInput');
@@ -276,6 +197,8 @@
         const ageFilter = document.getElementById('ageFilter');
         const ageValue = document.getElementById('ageValue');
         const sizeFilter = document.getElementById('sizeFilter');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
 
         // Generar opciones de raza dinámicamente
         const breeds = [...new Set([...document.querySelectorAll('.dog-card')].map(card => card.dataset.breed))];
@@ -321,6 +244,20 @@
             filterDogs();
         });
         sizeFilter.addEventListener('change', filterDogs);
+
+        // Sidebar toggle functionality
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('show');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const isClickInsideSidebar = sidebar.contains(event.target);
+            const isClickOnToggleButton = sidebarToggle.contains(event.target);
+            if (!isClickInsideSidebar && !isClickOnToggleButton && window.innerWidth < 768) {
+                sidebar.classList.remove('show');
+            }
+        });
 
         // Inicializar filtros
         filterDogs();
