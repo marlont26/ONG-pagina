@@ -25,7 +25,7 @@ def index():
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('perros/table.html', perros=perros)
 
-    return render_template('perros/index.html', perros=perros)
+    return render_template('/vistasusuario/perros.html', perros=perros)
 
 @bp.route('/add/perro', methods=['GET', 'POST'])
 def add():
