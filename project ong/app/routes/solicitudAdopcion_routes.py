@@ -4,7 +4,6 @@ from app import db
 
 bp = Blueprint('solicitud_adopcion', __name__)
 
-
 @bp.route('/solicitudesadopciones')
 def index():
     solicitudes = SolicitudAdopcion.query.all()
@@ -27,6 +26,7 @@ def rechazar(id):
     return redirect(url_for('solicitud_adopcion.index'))
 
 @bp.route('/solicitudesadopcionesemple')
-def solicitudes_adopciones_emple():
-    solicitudes = SolicitudAdopcion.query.all()
+def solicitudesadopcionesemple():
+    solicitudes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
     return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes)
+
