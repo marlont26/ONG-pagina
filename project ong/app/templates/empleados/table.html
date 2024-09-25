@@ -9,6 +9,7 @@
             <th>Estado</th>
             <th>Color</th>
             <th>Fecha de Ingreso</th>
+            <th>tamaño</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,10 +24,12 @@
                 <td>{{ perro.estado }}</td>
                 <td>{{ perro.color }}</td>
                 <td>{{ perro.fechaIngreso }}</td>
+                <td>{{perro.tamaño}}</td>
+
                 <td>
                     <a href="{{ url_for('perro.show', id=perro.idPerro) }}" class="btn btn-action btn-sm">Ver</a>
-                    <a href="{{ url_for('perro.edit', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>
-                    <a href="{{ url_for('perro.delete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Eliminar</a>
+                    <a href="{{ url_for('empleado.edit_perro', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>
+                    <a href="{{ url_for('empleado.deleteperrosemple', id=perro.idPerro) }}" class="btn btn-danger btn-sm">Eliminar</a> <!-- Corrección aquí -->
                 </td>
             </tr>
         {% endfor %}

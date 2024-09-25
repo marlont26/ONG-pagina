@@ -129,7 +129,7 @@
 				<ul class="pagination justify-content-center">
 					{% if perros.has_prev %}
 						<li class="page-item">
-							<a class="page-link" href="{{ url_for('perro.index', page=perros.prev_num, search=request.args.get('search', '')) }}" aria-label="Anterior">
+							<a class="page-link" href="{{ url_for('perro.perrosemple', page=perros.prev_num, search=request.args.get('search', '')) }}" aria-label="Anterior">
 								<span aria-hidden="true">&laquo;</span>
 							</a>
 						</li>
@@ -142,7 +142,7 @@
 					{% for page_num in perros.iter_pages() %}
 						{% if page_num %}
 							<li class="page-item {% if page_num == perros.page %}active{% endif %}">
-								<a class="page-link" href="{{ url_for('perro.index', page=page_num, search=request.args.get('search', '')) }}">{{ page_num }}</a>
+								<a class="page-link" href="{{ url_for('perro.perrosemple', page=page_num, search=request.args.get('search', '')) }}">{{ page_num }}</a>
 							</li>
 						{% else %}
 							<li class="page-item disabled"><span class="page-link">…</span></li>
@@ -151,7 +151,7 @@
 
 					{% if perros.has_next %}
 						<li class="page-item">
-							<a class="page-link" href="{{ url_for('perro.index', page=perros.next_num, search=request.args.get('search', '')) }}" aria-label="Siguiente">
+							<a class="page-link" href="{{ url_for('perro.perrosemple', page=perros.next_num, search=request.args.get('search', '')) }}" aria-label="Siguiente">
 								<span aria-hidden="true">&raquo;</span>
 							</a>
 						</li>

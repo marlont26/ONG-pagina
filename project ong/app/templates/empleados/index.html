@@ -113,7 +113,7 @@
 					<i class="zmdi zmdi-account"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
-					<p class="full-box">7</p>
+					<p class="full-box" id="cantidad-perros">0</p> <!-- Contenedor para la cantidad de perros -->
 					<small>CANTIDAD</small>
 				</div>
 			</article>
@@ -235,90 +235,21 @@
 
 	<script>
 		$.material.init();
+
+		function actualizarCantidadPerros() {
+			fetch('{{ url_for("empleado.count_perros") }}')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('cantidad-perros').innerText = data.cantidad_perros;
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		// Actualizar la cantidad de perros cada 10 segundos
+		setInterval(actualizarCantidadPerros, 10000);
+		// Actualizar la cantidad de perros al cargar la página
+		actualizarCantidadPerros();
 	</script>
 
-</body>
-</html>
-   <!--<div class="container my-5">
-        <h1 class="text-center my-5 py-5">Bienvenido, {{ empleado.nombre }} {{ empleado.apellido }}</h1>
-        
-        <div class="row my-5 py-5">
-            <!-- Gestión de solicitudes de adopción --
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header text-center">
-                        <h3>Solicitudes de Adopción Pendientes</h3>
-                    </div>
-                    <div class="card-body">
-                        {% if solicitudes_pendientes %}
-                            <ul class="list-group">
-                                {% for solicitud in solicitudes_pendientes %}
-                                <li class="list-group-item">
-                                    <strong>{{ solicitud.adoptante.nombre }}</strong> solicitó adoptar a <strong>{{ solicitud.perro.nombre }}</strong>.
-                                    <div class="mt-2">
-                                        <form action="{{ url_for('empleado.aprobar', id=solicitud.id) }}" method="POST" class="d-inline">
-                                            <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
-                                        </form>
-                                        <form action="{{ url_for('empleado.rechazar', id=solicitud.id) }}" method="POST" class="d-inline">
-                                            <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
-                                        </form>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p class="text-center">No hay solicitudes de adopción pendientes.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ver perros bajo su cuidado --
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header text-center">
-                        <h3>Perros bajo tu cuidado</h3>
-                    </div>
-                    <div class="card-body">
-                        {% if cuidados %}
-                            <ul class="list-group">
-                                {% for cuidado in cuidados %}
-                                <li class="list-group-item">
-                                    <strong>{{ cuidado.perro.nombre }}</strong> - Último chequeo: {{ cuidado.fecha_chequeo }}
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p class="text-center">No tienes perros asignados bajo tu cuidado.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gestión de todos los perros --
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header text-center">
-                        <h3>Gestionar Perros</h3>
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ url_for('perro.index') }}" class="btn btn-primary btn-block">Ver todos los perros</a>
-                        <ul class="list-group mt-3">
-                            {% for perro in perros %}
-                                <li class="list-group-item">
-                                    <strong>{{ perro.nombre }}</strong> - Estado: {{ perro.estado }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
--->
 </body>
 </html>
