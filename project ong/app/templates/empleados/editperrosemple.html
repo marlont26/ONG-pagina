@@ -136,10 +136,7 @@
                         <input type="text" class="form-control border-0 shadow-sm p-2" id="color" name="color" value="{{ perro.color }}" />
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label for="foto" class="form-label text-dark">Foto</label>
-                        <input type="file" class="form-control-file" id="foto" name="foto">
-                    </div>
+                    
 
                     <div class="form-group mb-4">
                         <label for="fechaIngreso" class="form-label text-dark">Fecha de Ingreso</label>
@@ -154,10 +151,15 @@
                     <div class="form-group mb-4">
                         <label for="tamaño" class="form-label text-dark">Tamaño</label>
                         <select class="form-select border-0 shadow-sm p-2" id="tamaño" name="tamaño">
-                            <option value="pequeno" {% if perro.tamaño == "pequeno" %}selected{% endif %}>Pequeño</option>
-                            <option value="mediano" {% if perro.tamaño == "mediano" %}selected{% endif %}>Mediano</option>
-                            <option value="grande" {% if perro.tamaño == "grande" %}selected{% endif %}>Grande</option>
+                            <option value="Pequeno" {% if perro.tamaño == "pequeno" %}selected{% endif %}>Pequeño</option>
+                            <option value="Mediano" {% if perro.tamaño == "mediano" %}selected{% endif %}>Mediano</option>
+                            <option value="Grande" {% if perro.tamaño == "grande" %}selected{% endif %}>Grande</option>
                         </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="imagen" class="form-label text-dark">Imagen</label>
+                        <input type="file" class="form-control-file" id="imagen" name="imagen">
                     </div>
 
                     <div class="text-center">

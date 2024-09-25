@@ -9,7 +9,7 @@ bp = Blueprint('perro', __name__)
 @bp.route('/perros')
 def index():
     page = request.args.get('page', 1, type=int)
-    per_page = 5  # Fijar la cantidad de perros por página a 5
+    per_page = 10  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -105,7 +105,7 @@ def show(id):
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
-    per_page = 5  # Fijar la cantidad de perros por página a 5
+    per_page = 10  # Fijar la cantidad de perros por página a 5
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
