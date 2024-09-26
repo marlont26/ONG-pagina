@@ -12,7 +12,49 @@ def index():
     empleados = Empleado.query.all()
     return render_template('empleados/index.html', empleado=empleados)
 
-# Ruta para agregar un nuevo empleado
+# Ruta para agregar un nuevo empleado   
+@bp.route('/add/empleados', methods=['GET', 'POST'])
+@bp.route('/addemple', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        email = request.form['email']
+        telefono = request.form['telefono']
+        password = request.form['password']
+        cedula = request.form['cedula']
+
+        new_empleado = Empleado(
+            nombre=nombre,
+            apellido=apellido,
+            email=email,
+            telefono=telefono,
+            password=password,
+            cedula=cedula,
+        )
+        db.session.add(new_empleado)
+        db.session.commit()
+        
+        return redirect(url_for('main.baseadm'))
+    return render_template('empleados1/add.html')
+
+# Ruta para editar un empleado existente
+@bp.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit_empleado(id):
+    empleado = Empleado.query.get_or_404(id)
+
+    if request.method == 'POST':
+        empleado.nombre = request.form['nombre']
+        empleado.apellido = request.form['apellido']
+        empleado.email = request.form['email']
+        empleado.telefono = request.form['telefono']
+        empleado.password = request.form['password']
+        empleado.cedula = request.form['cedula']
+        
+        db.session.commit()
+        return redirect(url_for('empleado.index'))
+
+    return render_template('empleados/edit.html', empleado=empleado)
 
 # Ruta para eliminar un empleado
 @bp.route('/delete/<int:id>')
@@ -34,16 +76,18 @@ def solicitudesadopcionesemple():
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
+    solicitud.idEmpleado = 1  # Debes cambiar esto por el ID del empleado real que aprueba la solicitud
     db.session.commit()
-    return redirect(url_for('empleado.solicitudesadopcionesemple'))  # Corrección aquí
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
 # Ruta para rechazar una solicitud de adopción
 @bp.route('/rechazar/<int:id>', methods=['POST'])
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'
+    solicitud.idEmpleado = 1  # Debes cambiar esto por el ID del empleado real que rechaza la solicitud
     db.session.commit()
-    return redirect(url_for('empleado.solicitudesadopcionesemple'))  # Corrección aquí
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
 # Ruta para ver los cuidados de un empleado (perros asignados)
 @bp.route('/<int:id>/cuidados')
@@ -66,12 +110,10 @@ def dashboard(id):
 def static_file():
     return render_template('empleados/index.html', static_url=url_for('templates', filename='empleados/index.html'))
 
-
-
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
-    per_page = 10  # Fijar la cantidad de perros por página a 5
+    per_page = 10  # Fijar la cantidad de perros por página a 10
     search_query = request.args.get('search', '')
 
     # Filtrar perros basados en la consulta de búsqueda
@@ -80,9 +122,9 @@ def perrosemple():
             Perro.nombre.ilike(f'%{search_query}%') |
             Perro.raza.ilike(f'%{search_query}%') |
             Perro.estadoSalud.ilike(f'%{search_query}%')
-        ).paginate(page=page, per_page=per_page)  # Usar per_page
+        ).paginate(page=page, per_page=per_page)
     else:
-        perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
+        perros = Perro.query.paginate(page=page, per_page=per_page)
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('empleados/table.html', perros=perros)
@@ -119,7 +161,7 @@ def perrosemple_nuevo():
     return render_template('empleados/perrosemple.html')
 
 @bp.route('/empleado/edit/<int:id>', methods=['GET', 'POST'])
-def edit_perro(id):  # Manteniendo el nombre original
+def edit_perro(id):
     perro = Perro.query.get_or_404(id)
     
     if request.method == 'POST':
@@ -150,6 +192,7 @@ def edit_perro(id):  # Manteniendo el nombre original
         return redirect(url_for('empleado.perrosemple'))
 
     return render_template('empleados/editperrosemple.html', perro=perro)
+
 @bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
 def editperrosemple(id):
     perro = Perro.query.get_or_404(id)
@@ -172,7 +215,7 @@ def editperrosemple(id):
             perro.imagen = filename
 
         db.session.commit()
-        return redirect(url_for('perro.perrosemple'))
+        return redirect(url_for('empleado.perrosemple'))
 
     return render_template('empleados/editperrosemple.html', perro=perro)
 

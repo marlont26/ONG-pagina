@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Judini - Adopción de Perros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-color: #d5dbf6;
+            --primary-color: #5c6bc0;
+            --secondary-color: #3f51b5;
+            --accent-color: #ff9800;
+            --background-color: #f0f2ff;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --nav-height: 169px;
+        }
+        body {
+            background-color: var(--background-color);
+            padding-top: var(--nav-height);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: var(--nav-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .dog-image-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .dog-name {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .dog-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .dog-info {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .dog-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .dog-info p {
+            margin-bottom: 10px;
+        }
+        .requirements {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .requirements h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .requirements ul {
+            padding-left: 20px;
+        }
+        .btn-adopt {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-adopt:hover {
+            background-color: #e68a00;
+        }
+        .btn-action {
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .btn-donate {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-donate:hover {
+            background-color: var(--secondary-color);
+        }
+        .btn-share {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-share:hover {
+            background-color: #45a049;
+        }
+        .icon-text {
+            display: flex;
+            align-items: flex-start;
+        }
+        .icon-text i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            min-width: 24px;
+            text-align: center;
+        }
+        .requirement-item {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        .requirement-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Adopción de Perros</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="dog-image-container">
+                    <h1 class="dog-name">{{ perro.nombre }}</h1>
+                    <img src="{{ url_for('static', filename='img_perros/' ~ perro.imagen) }}" alt="{{ perro.nombre }}" class="dog-image">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-action btn-donate" onclick="donar()">
+                            <i class="bi bi-heart-fill me-2"></i>Donar
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-action btn-share" onclick="compartir()">
+                            <i class="bi bi-share-fill me-2"></i>Compartir
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="dog-info">
+                    <h2>Información de {{ perro.nombre }}</h2>
+                    <p class="icon-text"><i class="bi bi-calendar-event"></i><strong>Fecha de llegada:</strong> {{ perro.fechaIngreso }}</p>
+                    <p class="icon-text"><i class="bi bi-calendar2-week"></i><strong>Edad:</strong> {{ perro.edad }} años</p>
+                    <p class="icon-text"><i class="bi bi-tags"></i><strong>Raza:</strong> {{ perro.raza }}</p>
+                    <p class="icon-text"><i class="bi bi-gender-ambiguous"></i><strong>Género:</strong> {{ perro.genero }}</p>
+                    <p class="icon-text"><i class="bi bi-heart-pulse"></i><strong>Estado de salud:</strong> {{ perro.estadoSalud }}</p>
+                    <p class="icon-text"><i class="bi bi-palette"></i><strong>Color:</strong> {{ perro.color }}</p>
+                    <p class="icon-text"><i class="bi bi-chat-quote"></i><strong>Descripción:</strong> {{ perro.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="requirements mt-4">
+            <h3>Requisitos para adoptar a Judini</h3>
+            <div class="requirement-item">
+                <p><strong>Compromiso familiar:</strong> Entender que un animal no es un objeto más de la casa, es un ser vivo con la capacidad de sentir que se convierte en un miembro más de la familia durante todos los años de su vida.</p>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Identificación:</strong> Debes ser mayor de edad. Presentar el DNI de identificación.</p>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Documentación:</strong> Comprobante de domicilio e ingresos del hogar.</p>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Acta de compromiso:</strong> Debes firmar un acta que te compromete a:</p>
+                <ul>
+                    <li>Cuidar de tu animal y mantenerlo en condiciones óptimas de espacio, tiempo, alimentación, actividad física y ejercicio.</li>
+                    <li>Dotarle de los cuidados veterinarios que necesite.</li>
+                    <li>No destinarlo a la cría, reproducción o entretenimiento.</li>
+                </ul>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Responsabilidad legal:</strong> Compromiso de no abandono ni maltrato a riesgo de consecuencias legales.</p>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Comunicación:</strong> Notificar cualquier cambio a la fundación.</p>
+            </div>
+            <div class="requirement-item">
+                <p><strong>Costes de adopción:</strong> Cubrir los costes de adopción (Donación para cubrir parte de los gastos del rescate y rehabilitación).</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 mb-5">
+            <button class="btn btn-lg btn-adopt" onclick="solicitarAdopcion()">
+                <i class="bi bi-house-heart-fill me-2"></i>Solicita la adopción
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function setArrivalDate() {
+            const today = new Date();
+            const arrivalDate = new Date(today.setMonth(today.getMonth() - 3));
+            document.getElementById('arrivalDate').textContent = arrivalDate.toLocaleDateString('es-ES');
+        }
+
+        function solicitarAdopcion() {
+            alert('Gracias por tu interés en adoptar a Judini. Un miembro de nuestro equipo se pondrá en contacto contigo pronto.');
+        }
+
+        function donar() {
+            alert('Gracias por tu interés en donar. Te redirigiremos a nuestra página de donaciones.');
+        }
+
+        function compartir() {
+            alert('Gracias por compartir la información de Judini. Juntos podemos encontrarle un hogar.');
+        }
+
+        window.onload = setArrivalDate;
+    </script>
+</body>
+</html>
