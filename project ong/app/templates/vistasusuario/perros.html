@@ -24,7 +24,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .navbar {
-            background-color: var(--nav-color);
+            background-color: var(--nav-color) !important;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .card-img-top {
@@ -152,7 +152,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+    <nav class="navbar navbar-expand-md fixed-top">
         <link href="{{url_for('static',filename='home/styles.css')}}" rel="stylesheet">
         <div class="container-fluid px-4 py-4">
           <a class="navbar-brand" href="#">
