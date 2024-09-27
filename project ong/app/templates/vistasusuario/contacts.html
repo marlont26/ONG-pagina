@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -185,7 +186,7 @@
       
       <div class="col-lg-6">
         <h2 class="mb-4">Envíanos un Mensaje</h2>
-        <form id="contactForm">
+        <form action="{{ url_for('mensaje.addmensaje') }}" method="POST" id="contactForm">
           <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" required>
@@ -210,6 +211,24 @@
             <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
           </button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="messageModalLabel">Mensaje Enviado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tu mensaje ha sido enviado exitosamente.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -302,36 +321,44 @@
   </footer>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Modal -->
-  <div class="modal fade" id="mensajeEnviadoModal" tabindex="-1" aria-labelledby="mensajeEnviadoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="mensajeEnviadoModalLabel">Mensaje Enviado</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <p>Tu mensaje ha sido enviado correctamente. Gracias por contactarnos.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contactForm');
-    const modal = new bootstrap.Modal(document.getElementById('mensajeEnviadoModal'));
-  
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-
-      setTimeout(function() {
-        modal.show();
-        form.reset();
-      }, 500);
+    $(document).ready(function() {
+      $('#contactForm').on('submit', function(event) {
+        event.preventDefault();
+        
+        var formData = new FormData(this);
+        var url = "{{ url_for('mensaje.addmensaje') }}";
+        
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            if (data.success) {
+              console.log('Mensaje enviado exitosamente');
+              
+              // Mostrar el modal
+              var myModal = new bootstrap.Modal(document.getElementById('messageModal'), {
+                backdrop: 'static',
+                keyboard: false
+              });
+              myModal.show();
+              
+              // Vaciar el formulario
+              $('#contactForm')[0].reset();
+            } else {
+              // Manejar errores aquí
+              console.error('Error en la respuesta:', data.error);
+            }
+          },
+          error: function(error) {
+            console.error('Error en la solicitud:', error);
+          }
+        });
+      });
     });
-  });
   </script>
+</body>
+</html>
