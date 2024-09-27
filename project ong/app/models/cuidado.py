@@ -10,4 +10,4 @@ class Cuidado(db.Model):
 
     # Relaciones
     perro = db.relationship('Perro', back_populates='cuidados')
-    empleado = db.relationship('Empleado', back_populates='cuidados')
+    empleado = db.relationship('Empleado', back_populates='cuidados')sd
