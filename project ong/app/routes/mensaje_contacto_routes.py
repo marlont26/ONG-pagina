@@ -1,11 +1,10 @@
-from flask import Blueprint, render_template, request, flash, url_for, redirect
-
+from flask import Blueprint, render_template, request, jsonify
 from app.models import MensajeContacto
 from app import db
 
 bp = Blueprint('mensaje', __name__)
 
-@bp.route('/mensajes', methods=['GET', 'POST'])
+@bp.route('/mensajes', methods=['POST'])
 def addmensaje():
     if request.method == 'POST':
         nombre = request.form.get('nombre')
@@ -13,10 +12,10 @@ def addmensaje():
         asunto = request.form['asunto']
         mensaje = request.form['mensaje']
 
-
-        newMensaje = MensajeContacto (nombre=nombre, email=email, asunto=asunto, mensaje=mensaje)
+        newMensaje = MensajeContacto(nombre=nombre, email=email, asunto=asunto, mensaje=mensaje)
         db.session.add(newMensaje)
         db.session.commit()
+        
+        return jsonify(success=True)
 
-
-    return render_template('vistasusuario/contacts.html')
+    return jsonify(success=False, error="Invalid request method")
