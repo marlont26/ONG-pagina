@@ -8,6 +8,7 @@
     <title>Acerca de Nostros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -80,7 +81,7 @@
             font-size: 16px;
         }
         textarea {
-            height: 150px;
+            height: 190px;
         }
         button {
             background-color: #3498db;
@@ -150,73 +151,70 @@
   <br>
   <br>
   <br>
-    <div class="container">
-      <br>
-      <br>
-        <h1>Contáctanos</h1>
-        <br>
-        <div class="contact-wrapper">
-            <div class="contact-info">
-                <h2>Información de Contacto</h2>
-                <br>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Sena, Velez, Santander</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+57 3117749044</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>happypaws@gmail.com</span>
-                </div>
-                <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1668.2924727386364!2d-73.6690571580168!3d6.009762967010435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e41f06d1b94d193%3A0xd47ace7939d6dd68!2sSENA!5e0!3m2!1sen!2sau!4v1727039782507!5m2!1sen!2sau"
-                width="510" 
-                height="400" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy">
-              </iframe>
-            </div>
-            <div class="contact-form">
-                <h2>Envíanos un Mensaje</h2>
-                <br>
-                <form action="{{ url_for('mensaje.addmensaje') }}" method="POST" id="contactForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                        <div class="error" id="nombreError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error" id="emailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="asunto">Asunto</label>
-                        <input type="text" id="asunto" name="asunto" required>
-                        <div class="error" id="asuntoError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" name="mensaje" required></textarea>
-                        <div class="error" id="mensajeError"></div>
-                    </div>
-                    <button type="submit">
-                        <i class="fas fa-paper-plane"></i> Enviar Mensaje
-                    </button>
-                </form>
-
-            </div>
-        </div>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12">
+        <h1 class="text-center mb-4">Contáctanos</h1>
+      </div>
     </div>
-<br>
-<br>
-<br>
-<br>
-<br>
+    
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <h2 class="mb-4">Información de Contacto</h2>
+        <div class="mb-3">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          <span>Sena, Velez, Santander</span>
+        </div>
+        <div class="mb-3">
+          <i class="fas fa-phone me-2"></i>
+          <span>+57 3117749044</span>
+        </div>
+        <div class="mb-3">
+          <i class="fas fa-envelope me-2"></i>
+          <span>happypaws@gmail.com</span>
+        </div>
+        <div class="ratio ratio-4x3">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1668.2924727386364!2d-73.6690571580168!3d6.009762967010435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e41f06d1b94d193%3A0xd47ace7939d6dd68!2sSENA!5e0!3m2!1sen!2sau!4v1727039782507!5m2!1sen!2sau"
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <h2 class="mb-4">Envíanos un Mensaje</h2>
+        <form id="contactForm">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+            <div class="invalid-feedback" id="nombreError"></div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback" id="emailError"></div>
+          </div>
+          <div class="mb-3">
+            <label for="asunto" class="form-label">Asunto</label>
+            <input type="text" class="form-control" id="asunto" name="asunto" required>
+            <div class="invalid-feedback" id="asuntoError"></div>
+          </div>
+          <div class="mb-3">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+            <div class="invalid-feedback" id="mensajeError"></div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+
   <footer class="text-center text-lg-start text-white" style="background-color: #343a40;">
     <!-- Sección: Redes Sociales -->
     <section class="d-flex justify-content-center p-4 border-bottom">
@@ -302,23 +300,38 @@
       <a class="text-white fw-bold" href="#" style="text-decoration: none;">HappyPaws.org</a>
     </div>
   </footer>
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    .bi {
-      transition: transform 0.3s, color 0.3s;
-    }
-    
-    .bi:hover {
-      transform: scale(1.2);
-      color: #ff6f61; /* Un color llamativo en hover */
-    }
-  </style>
+  <!-- Modal -->
+  <div class="modal fade" id="mensajeEnviadoModal" tabindex="-1" aria-labelledby="mensajeEnviadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mensajeEnviadoModalLabel">Mensaje Enviado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tu mensaje ha sido enviado correctamente. Gracias por contactarnos.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const modal = new bootstrap.Modal(document.getElementById('mensajeEnviadoModal'));
+  
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
 
-</body>
-</html>
+      setTimeout(function() {
+        modal.show();
+        form.reset();
+      }, 500);
+    });
+  });
+  </script>
