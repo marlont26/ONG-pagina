@@ -1,8 +1,21 @@
-{% extends "base.html" %}
-{% block title %}Lista de Veterinarios{% endblock %}
-{% block content %}
-    <h1>Lista de Veterinarios</h1>
-    <a href="{{ url_for('veterinario.add') }}">Agregar Nuevo Veterinario</a>
+<h1>Listado de veterinarios</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Cedula</th>
+        <th>Dirección</th>
+        <th>Ciudad</th>
+    </tr>
+</table>
+    <ul>
+        {% for usuario in usuarios %}
+        <li>{{ usuario.nombre }} - {{ usuario.email }}</li>
+        {% endfor %}
+    </ul>
     <table>
         <tr>
             <th>ID</th>

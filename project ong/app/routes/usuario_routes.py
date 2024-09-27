@@ -16,8 +16,6 @@ def register():
         password = request.form['password']
         telefono = request.form['telefono']
         cedula = request.form['cedula']
-        direccion = request.form['direccion']
-        ciudad = request.form['ciudad']
         rol = request.form['rol']
         
         # Definir contraseñas por defecto para roles específicos
@@ -47,8 +45,6 @@ def register():
             password=generate_password_hash(password),  # Encriptar la contraseña
             telefono=telefono,
             cedula=cedula,
-            direccion=direccion,
-            ciudad=ciudad,
             rol=rol
         )
         
