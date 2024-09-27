@@ -31,3 +31,23 @@ def basevete():
 @bp.route('/')
 def baseusu():    
     return render_template('bases/baseusu.html')
+
+
+#Rutas para listado de usuarios segun su rol
+
+@bp.route('/indexv')
+def indexv():
+    veterinarios = Usuario.query.filter_by(rol='veterinario').all()
+    return render_template('/veterinarios/indexv.html', usuarios=veterinarios)
+
+@bp.route('/indexe')
+def indexe():
+    empleados = Usuario.query.filter_by(rol='empleado').all()
+    return render_template('/empleados1/indexe.html', usuarios=empleados)
+
+@bp.route('/indexu')
+def indexu():
+    usuarios = Usuario.query.filter_by(rol='usuario').all()
+    return render_template('/usuarios/indexu.html', usuarios=usuarios)
+
+

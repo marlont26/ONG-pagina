@@ -12,16 +12,8 @@ class Usuario(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     telefono = db.Column(db.Integer, nullable=False)
     cedula = db.Column(db.Integer, nullable=False)
-    direccion = db.Column(db.String(255))
-    ciudad = db.Column(db.String(255))
     rol = db.Column(db.String(30), nullable=False)
 
-    # Relaciones polimórficas
-    tipo = db.Column(db.String(50))
-    __mapper_args__ = {
-        'polymorphic_identity': 'usuario',
-        'polymorphic_on': tipo
-    }
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

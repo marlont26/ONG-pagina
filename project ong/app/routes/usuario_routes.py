@@ -16,10 +16,21 @@ def register():
         password = request.form['password']
         telefono = request.form['telefono']
         cedula = request.form['cedula']
-        direccion = request.form['direccion']
-        ciudad = request.form['ciudad']
         rol = request.form['rol']
         
+        # Definir contraseñas por defecto para roles específicos
+        contrasenas_por_defecto = {
+            'admin': 'admin123',
+            'veterinario': 'vet123',
+            'empleado': 'emp123'
+        }
+        
+        # Verificar la contraseña para roles específicos
+        if rol in contrasenas_por_defecto:
+            if password != contrasenas_por_defecto[rol]:
+                flash(f'Contraseña incorrecta para el rol de {rol}. Por favor, use la contraseña por defecto.', 'danger')
+                return redirect(url_for('usuario.register'))
+
         # Verificar si el correo ya está registrado
         usuario_existente = Usuario.query.filter_by(email=email).first()
         if usuario_existente:
@@ -34,8 +45,6 @@ def register():
             password=generate_password_hash(password),  # Encriptar la contraseña
             telefono=telefono,
             cedula=cedula,
-            direccion=direccion,
-            ciudad=ciudad,
             rol=rol
         )
         
