@@ -325,6 +325,10 @@
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
 
+        // Establecer el valor inicial del filtro de edad a 0
+        ageFilter.value = 0;
+        ageValue.textContent = 'Cualquier edad';
+
         // Generar opciones de raza dinámicamente
         const breeds = [...new Set([...document.querySelectorAll('.dog-card')].map(card => card.dataset.breed))];
         breeds.forEach(breed => {
