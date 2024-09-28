@@ -39,8 +39,8 @@ def edit(id):
     if request.method == 'POST':
         visita.fecha = request.form['fecha']
         visita.descripcion = request.form['descripcion']
-        visita.idPerro = request.form['idPerro']  # Cambiado de 'perro_id'
-        visita.idVeterinario = request.form['idVeterinario']
+        visita.idPerro = request.form['idPerro']  # Asegúrate que este sea el nombre correcto del formulario
+        visita.idVeterinario = request.form['idVeterinario']  # Asegúrate que este sea el nombre correcto del formulario
         
         db.session.commit()
         

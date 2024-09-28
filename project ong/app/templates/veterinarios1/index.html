@@ -8,13 +8,13 @@
 	<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 <body>
-	<!-- SideBar -->
+	<!-- SideBar Menu -->
 	<section class="full-box cover dashboard-sideBar">
 		<div class="full-box dashboard-sideBar-bg btn-menu-dashboard"></div>
 		<div class="full-box dashboard-sideBar-ct">
 			<!--SideBar Title -->
 			<div class="full-box text-uppercase text-center text-titles dashboard-sideBar-title">
-				Happy PAWS <i class="zmdi zmdi-close btn-menu-dashboard visible-xs"></i>
+				HAPPY PAWS <i class="zmdi zmdi-close btn-menu-dashboard visible-xs"></i>
 			</div>
 			<!-- SideBar User info -->
 			<div class="full-box dashboard-sideBar-UserInfo">
@@ -44,19 +44,18 @@
 				</li>
 				<li>
 					<a href="#!" class="btn-sideBar-SubMenu">
-						<i class="zmdi zmdi-case zmdi-hc-fw"></i> Administration <i class="zmdi zmdi-caret-down pull-right"></i>
+						<i class="zmdi zmdi-case zmdi-hc-fw"></i> Administración <i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
 						<li>
-							<a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros</a>
+							<a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> Perros</a>
 						</li>
 						<li>
-							<a href="subject.html"><box-icon name='plus-medical' color='#ffffff' ></box-icon> visitas medicas</a>
+							<a href="visitas_medicas.html"><box-icon name='plus-medical' color='#ffffff'></box-icon> Visitas Médicas</a>
 						</li>
 						<li>
-							<a href="veterinarios.html"><box-icon name='male' color='#ffffff' ></box-icon> veterinarios</a>
+							<a href="veterinarios.html"><box-icon name='male' color='#ffffff'></box-icon> Veterinarios</a>
 						</li>
-
 					</ul>
 				</li>
 			</ul>
@@ -92,7 +91,7 @@
 		<!-- Content page -->
 		<div class="container-fluid">
 			<div class="page-header">
-			  <h1 class="text-titles">Veteriario <small>Vip</small></h1>
+			  <h1 class="text-titles">Veterinario <small>VIP</small></h1>
 			</div>
 		</div>
 		<div class="full-box text-center" style="padding: 30px 10px;">
@@ -101,126 +100,124 @@
 					Perros
 				</div>
 				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-account"></i>
+					<i class="zmdi zmdi-dog"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
-					<p class="full-box">7</p>
-					<small>CANTIDAD</small>
+					<p class="full-box" id="cantidad-perros">7</p>
+					<small>Cantidad</small>
 				</div>
 			</article>
 			<article class="full-box tile">
 				<div class="full-box tile-title text-center text-titles text-uppercase">
-					veterinarios
+					Veterinarios
 				</div>
 				<div class="full-box tile-icon text-center">
 					<i class="zmdi zmdi-male-alt"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
 					<p class="full-box">10</p>
-					<small>CANTIDAD</small>
+					<small>Cantidad</small>
 				</div>
 			</article>
 			<article class="full-box tile">
 				<div class="full-box tile-title text-center text-titles text-uppercase">
-					visitas medicas
+					Visitas Médicas
 				</div>
 				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-face"></i>
+					<i class="zmdi zmdi-hospital"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
-					<p class="full-box">70</p>
-					<small>CANTIDAD</small>
+					<p class="full-box" id="cantidad-solicitudes">70</p>
+					<small>Cantidad</small>
 				</div>
 			</article>
-			
 		</div>
-		
+	</section>
 
 	<!-- Notifications area -->
 	<section class="full-box Notifications-area">
 		<div class="full-box Notifications-bg btn-Notifications-area"></div>
 		<div class="full-box Notifications-body">
 			<div class="Notifications-body-title text-titles text-center">
-				Notifications <i class="zmdi zmdi-close btn-Notifications-area"></i>
+				Notificaciones <i class="zmdi zmdi-close btn-Notifications-area"></i>
 			</div>
 			<div class="list-group">
-			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-alert-triangle"></i>
-				    </div>
-				    <div class="row-content">
-				      	<div class="least-content">17m</div>
-				      	<h4 class="list-group-item-heading">Tile with a label</h4>
-				      	<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
-				    </div>
-			  	</div>
-			  	<div class="list-group-separator"></div>
-			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-alert-octagon"></i>
-				    </div>
-				    <div class="row-content">
-				      	<div class="least-content">15m</div>
-				      	<h4 class="list-group-item-heading">Tile with a label</h4>
-				      	<p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
-				    </div>
-			  	</div>
-			  	<div class="list-group-separator"></div>
+				{% for mensaje_contacto in mensajes %}
 				<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-help"></i>
-				    </div>
-				    <div class="row-content">
-				      	<div class="least-content">10m</div>
-				      	<h4 class="list-group-item-heading">Tile with a label</h4>
-				      	<p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
-				    </div>
+					<div class="row-action-primary">
+						<i class="zmdi zmdi-alert-triangle"></i>
+					</div>
+					<div class="row-content">
+						<div class="least-content">Hace un momento</div>
+						<h4 class="list-group-item-heading">{{ mensaje_contacto.nombre }}</h4>
+						<p class="list-group-item-text">{{ mensaje_contacto.mensaje }}</p>
+					</div>
 				</div>
-			  	<div class="list-group-separator"></div>
-			  	<div class="list-group-item">
-				    <div class="row-action-primary">
-				      	<i class="zmdi zmdi-info"></i>
-				    </div>
-				    <div class="row-content">
-				      	<div class="least-content">8m</div>
-				      	<h4 class="list-group-item-heading">Tile with a label</h4>
-				      	<p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
-				    </div>
-			  	</div>
+				<div class="list-group-separator"></div>
+				{% endfor %}
 			</div>
-
 		</div>
 	</section>
 
 	<!-- Dialog help -->
 	<div class="modal fade" tabindex="-1" role="dialog" id="Dialog-Help">
-	  	<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-			    <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    	<h4 class="modal-title">Help</h4>
-			    </div>
-			    <div class="modal-body">
-			        <p>
-			        	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt beatae esse velit ipsa sunt incidunt aut voluptas, nihil reiciendis maiores eaque hic vitae saepe voluptatibus. Ratione veritatis a unde autem!
-			        </p>
-			    </div>
-		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-primary btn-raised" data-dismiss="modal"><i class="zmdi zmdi-thumb-up"></i> Ok</button>
-		      	</div>
-		    </div>
-	  	</div>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Ayuda</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Aquí puedes agregar información de ayuda para los usuarios.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary btn-raised" data-dismiss="modal"><i class="zmdi zmdi-thumb-up"></i> Ok</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!--====== Scripts -->
 	<script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 	<script>
 		$.material.init();
+
+		function actualizarCantidadPerros() {
+			fetch('{{ url_for("empleado.count_perros") }}')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('cantidad-perros').innerText = data.cantidad_perros;
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		function actualizarCantidadSolicitudes() {
+			fetch('{{ url_for("empleado.count_solicitudes") }}')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('cantidad-solicitudes').innerText = data.cantidad_solicitudes;
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		// Actualizar la cantidad de perros y solicitudes cada 10 segundos
+		setInterval(() => {
+			actualizarCantidadPerros();
+			actualizarCantidadSolicitudes();
+		}, 10000);
+
+		// Actualizar la cantidad de perros y solicitudes al cargar la página
+		actualizarCantidadPerros();
+		actualizarCantidadSolicitudes();
 	</script>
+
 </body>
 </html>

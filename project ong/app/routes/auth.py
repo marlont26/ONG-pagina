@@ -32,7 +32,7 @@ def redirect_based_on_role(usuario):
     elif usuario.rol == 'empleado':
         return redirect(url_for('empleado.index'))
     elif usuario.rol == 'veterinario':
-        return redirect(url_for('veterinario.dashboard'))
+        return redirect(url_for('veterinario.index'))
     else:
         return redirect(url_for('main.baseusu'))
 

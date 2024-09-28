@@ -198,10 +198,6 @@ def editperrosemple(id):
     return render_template('empleados/editperrosemple.html', perro=perro)
 
 
-
-
-
-
 @bp.route('/deleteperrosemple/<int:id>')
 def deleteperrosemple(id):
     perro = Perro.query.get_or_404(id)
@@ -210,4 +206,36 @@ def deleteperrosemple(id):
     db.session.commit()
 
     return redirect(url_for('perro.perrosemple'))
+
+    
+
+@bp.route('/editperrosvete/<int:id>', methods=['GET', 'POST'])
+def editperrosvete(id):
+    perro = Perro.query.get_or_404(id)
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estado = request.form['estado']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+        perro.tamaño = request.form['tamaño']
+
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            perro.imagen = filename
+
+        db.session.commit()
+        return redirect(url_for('perro.perrosvete'))
+
+    return render_template('veterinarios1/editperrosvete.html', perro=perro)
+
+
+
+
 
