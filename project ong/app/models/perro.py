@@ -7,13 +7,13 @@ class Perro(db.Model):
     raza = db.Column(db.String(100))
     edad = db.Column(db.Integer)
     estadoSalud = db.Column(db.String(255))
-    estado = db.Column(db.String(255))
-    color = db.Column(db.String(100))
+    color = db.Column(db.String(255))
     fechaIngreso = db.Column(db.Date)
     imagen = db.Column(db.String(255))
     descripcion = db.Column(db.Text)
     tamaño = db.Column(db.String(255))
     genero = db.Column(db.String(255))
+    estado = db.Column(db.String(255))  # Asegúrate de que este campo exista
 
     # Relaciones
     visitas_medicas = db.relationship('VisitaMedica', back_populates='perro')

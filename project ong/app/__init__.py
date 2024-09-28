@@ -36,4 +36,7 @@ def create_app():
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
 
+    from app.routes.vistasusuario_routes import bp as vistasusuario_bp
+    app.register_blueprint(vistasusuario_bp, url_prefix='/vistasusuario')
+
     return app

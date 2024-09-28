@@ -202,9 +202,10 @@
         </div>
 
         <div class="text-center mt-4 mb-5">
-            <button class="btn btn-lg btn-adopt" onclick="solicitarAdopcion()">
-                <i class="bi bi-house-heart-fill me-2"></i>Solicita la adopción
-            </button>
+            <form action="{{ url_for('vistasusuario.solicitar_adopcion', perro_id=perro.idPerro) }}" method="POST">
+                <button type="submit" class="btn btn-primary">Solicitar Adopción</button>
+            </form>
+            
         </div>
     </div>
 
