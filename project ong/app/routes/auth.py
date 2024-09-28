@@ -44,7 +44,7 @@ def login():
     
     return render_template("/usuarios/login.html")
 
-# Logout
+# auth.py (Blueprint 'auth_bp')
 @auth_bp.route('/logout')
 @login_required
 def logout():

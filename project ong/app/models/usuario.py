@@ -13,6 +13,7 @@ class Usuario(db.Model, UserMixin):
     telefono = db.Column(db.Integer, nullable=False)
     cedula = db.Column(db.Integer, nullable=False)
     rol = db.Column(db.String(30), nullable=False)
+    solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='adoptante', lazy=True)
 
 
     def set_password(self, password):

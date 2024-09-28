@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import current_user,  login_required  # Añadir esta línea
 from app.models import Empleado, Cuidado, SolicitudAdopcion, Perro, MensajeContacto
 import os
 from werkzeug.utils import secure_filename
@@ -10,7 +11,7 @@ bp = Blueprint('empleado', __name__)
 @bp.route('/empleados')
 def index():
     empleados = Empleado.query.all()
-    mensajes= MensajeContacto.query.all()
+    mensajes = MensajeContacto.query.all()
     return render_template('empleados/index.html', empleado=empleados, mensajes=mensajes)
 
 # Ruta para agregar un nuevo empleado   
@@ -74,21 +75,40 @@ def solicitudesadopcionesemple():
 
 # Ruta para aprobar una solicitud de adopción
 @bp.route('/aprobar/<int:id>', methods=['POST'])
+@login_required
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
-    solicitud.estado = 'Aprobada'
-    solicitud.idEmpleado = 1  # Debes cambiar esto por el ID del empleado real que aprueba la solicitud
-    db.session.commit()
-    return redirect(url_for('empleado.solicitudesadopcionesemple'))
+    
+    if not current_user.is_authenticated:
+        return "Usuario no autenticado", 401
+
+    id_empleado = current_user.id
+
+    # Verifica si el empleado existe antes de asignar
+    empleado = Empleado.query.get(id_empleado)
+    if empleado:
+        solicitud.estado = 'Aprobada'
+        solicitud.idEmpleado = id_empleado
+        db.session.commit()
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
+    else:
+        return "Empleado no encontrado", 404
 
 # Ruta para rechazar una solicitud de adopción
 @bp.route('/rechazar/<int:id>', methods=['POST'])
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
-    solicitud.estado = 'Rechazada'
-    solicitud.idEmpleado = 1  # Debes cambiar esto por el ID del empleado real que rechaza la solicitud
-    db.session.commit()
-    return redirect(url_for('empleado.solicitudesadopcionesemple'))
+    id_empleado = current_user.id  # Usar el ID del empleado autenticado
+
+    # Verifica si el empleado existe antes de asignar
+    empleado = Empleado.query.get(id_empleado)
+    if empleado:
+        solicitud.estado = 'Rechazada'
+        solicitud.idEmpleado = id_empleado
+        db.session.commit()
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
+    else:
+        return "Empleado no encontrado", 404  # Manejo del caso de empleado no encontrado
 
 # Ruta para ver los cuidados de un empleado (perros asignados)
 @bp.route('/<int:id>/cuidados')
@@ -161,39 +181,6 @@ def perrosemple_nuevo():
         return redirect(url_for('empleado.perrosemple'))  # Redirigir a la lista de perros
     return render_template('empleados/perrosemple.html')
 
-@bp.route('/empleado/edit/<int:id>', methods=['GET', 'POST'])
-def edit_perro(id):
-    perro = Perro.query.get_or_404(id)
-    
-    if request.method == 'POST':
-        perro.nombre = request.form['nombre']
-        perro.raza = request.form['raza']
-        perro.edad = request.form['edad']
-        perro.estado = request.form['estado']
-        perro.estadoSalud = request.form['estadoSalud']
-        perro.color = request.form['color']
-        perro.fechaIngreso = request.form['fechaIngreso']
-        perro.descripcion = request.form['descripcion']
-        perro.tamaño = request.form['tamaño']
-        
-        imagen = request.files.get('imagen')
-        
-        if imagen:
-            filename = secure_filename(imagen.filename)
-            imagen_path = os.path.join('static', 'img_perros', filename)
-            full_imagen_path = os.path.join(os.path.dirname(__file__), '..', imagen_path)
-            
-            # Crear directorio si no existe
-            os.makedirs(os.path.dirname(full_imagen_path), exist_ok=True)
-            
-            imagen.save(full_imagen_path)
-            perro.imagen = filename
-
-        db.session.commit()
-        return redirect(url_for('empleado.perrosemple'))
-
-    return render_template('empleados/editperrosemple.html', perro=perro)
-
 @bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
 def editperrosemple(id):
     perro = Perro.query.get_or_404(id)
@@ -206,9 +193,9 @@ def editperrosemple(id):
         perro.color = request.form['color']
         perro.fechaIngreso = request.form['fechaIngreso']
         perro.descripcion = request.form['descripcion']
-        imagen = request.files.get('imagen')
         perro.tamaño = request.form['tamaño']  # Asegúrate de que este campo esté presente
 
+        imagen = request.files.get('imagen')
         if imagen:
             filename = secure_filename(imagen.filename)
             imagen_path = os.path.join('static', 'img_perros', filename)
