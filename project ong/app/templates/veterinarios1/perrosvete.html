@@ -50,7 +50,7 @@
 							<a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> Perros</a>
 						</li>
 						<li>
-							<a href="../empleados/solicitudesadopcionemple.html"><i class="zmdi zmdi-book zmdi-hc-fw"></i>solicitudes</a>
+							<a href="../empleados/solicitudesadopcionemple.html"><box-icon name='plus-medical' color='#ffffff'></box-icon>visitas medicas</a>
 						</li>
 					</ul>
 				</li>
@@ -203,5 +203,28 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+	<script>
+	    document.addEventListener('DOMContentLoaded', function() {
+	        const searchForm = document.getElementById('search-form');
+	        const searchInput = document.querySelector('input[name="search"]');
+	        const perroTable = document.getElementById('perro-table');
+
+	        searchForm.addEventListener('submit', function(event) {
+	            event.preventDefault();
+	            const query = searchInput.value;
+
+	            fetch(`{{ url_for('veterinario.perrosvete') }}?search=${query}`, {
+	                headers: {
+	                    'X-Requested-With': 'XMLHttpRequest'
+	                }
+	            })
+	            .then(response => response.text())
+	            .then(data => {
+	                perroTable.innerHTML = data;
+	            })
+	            .catch(error => console.error('Error:', error));
+	        });
+	    });
+	</script>
 </body>
 </html>

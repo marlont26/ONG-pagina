@@ -207,6 +207,27 @@ def deleteperrosemple(id):
 
     return redirect(url_for('perro.perrosemple'))
 
+@bp.route('/perrosvete')
+def perrosvete():
+    pagina = request.args.get('page', 1, type=int)
+    perros_por_pagina = 10  # Fijamos la cantidad de perros por página a 10
+    busqueda = request.args.get('search', '')
+
+    # Filtramos los perros basados en la consulta de búsqueda
+    if busqueda:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{busqueda}%') |
+            Perro.raza.ilike(f'%{busqueda}%') |
+            Perro.estadoSalud.ilike(f'%{busqueda}%')
+        ).paginate(page=pagina, per_page=perros_por_pagina)
+    else:
+        perros = Perro.query.paginate(page=pagina, per_page=perros_por_pagina)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('veterinarios1/tabla.html', perros=perros)
+
+    return render_template('veterinarios1/perrosvete.html', perros=perros)
+
     
 
 @bp.route('/editperrosvete/<int:id>', methods=['GET', 'POST'])
@@ -234,8 +255,14 @@ def editperrosvete(id):
         return redirect(url_for('perro.perrosvete'))
 
     return render_template('veterinarios1/editperrosvete.html', perro=perro)
+@bp.route('/deleteperrosvete/<int:id>')
+def deleteperrosvete(id):
+    perro = Perro.query.get_or_404(id)
+    
+    db.session.delete(perro)
+    db.session.commit()
 
-
+    return redirect(url_for('perro.perrosvete'))
 
 
 

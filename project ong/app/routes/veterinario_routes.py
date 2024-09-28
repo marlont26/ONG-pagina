@@ -130,3 +130,10 @@ def search_perros():
         perros = Perro.query.paginate(page=page, per_page=10)
     
     return render_template('veterinarios1/table.html', perros=perros)
+@bp.route('/deleteperrosvete/<int:id>', methods=['POST'])
+@login_required
+def deleteperrosvete(id):
+    perro = Perro.query.get_or_404(id)
+    db.session.delete(perro)
+    db.session.commit()
+    return redirect(url_for('veterinario.perrosvete'))

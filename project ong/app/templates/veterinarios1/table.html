@@ -25,9 +25,9 @@
                 <td>{{ perro.color }}</td>
                 <td>{{ perro.fechaIngreso }}</td>
                 <td>
-                    <a href="{{ url_for('perro.show', id=perro.idPerro) }}" class="btn btn-action btn-sm">Ver</a>
+                    
                     <a href="{{ url_for('perro.editperrosvete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>
-                    <a href="{{ url_for('perro.delete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Eliminar</a>
+                    <a href="{{ url_for('perro.deleteperrosvete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Eliminar</a>
                 </td>
             </tr>
         {% endfor %}
