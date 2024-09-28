@@ -13,33 +13,8 @@ def index():
     mensajes = MensajeContacto.query.all()
     return render_template('empleados/index.html', empleado=empleados, mensajes=mensajes)
 
-@bp.route('/add/empleados', methods=['GET', 'POST'])
-@bp.route('/addemple', methods=['GET', 'POST'])
-def add():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        apellido = request.form['apellido']
-        email = request.form['email']
-        telefono = request.form['telefono']
-        password = request.form['password']
-        cedula = request.form['cedula']
-
-        new_empleado = Empleado(
-            nombre=nombre,
-            apellido=apellido,
-            email=email,
-            telefono=telefono,
-            password=password,
-            cedula=cedula,
-        )
-        db.session.add(new_empleado)
-        db.session.commit()
-        
-        return redirect(url_for('main.baseadm'))
-    return render_template('empleados1/add.html')
-
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
-def edit_empleado(id):
+def edit_empleado(id):  # Cambiado de idEmple a id
     empleado = Empleado.query.get_or_404(id)
 
     if request.method == 'POST':
@@ -56,10 +31,10 @@ def edit_empleado(id):
     return render_template('empleados/edit.html', empleado=empleado)
 
 @bp.route('/delete/<int:id>')
-def delete(id):
-    empleado = Empleado.query.get_or_404(id)
+def delete(idEmple):
+    empleado = Empleado.query.get_or_404(idEmple)
     
-    SolicitudAdopcion.query.filter_by(idAdoptante=empleado.id).delete()
+    SolicitudAdopcion.query.filter_by(idAdoptante=empleado.idEmple).delete()
     
     db.session.delete(empleado)
     db.session.commit()
@@ -72,29 +47,41 @@ def solicitudesadopcionesemple():
     empleados = Empleado.query.all()
     return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes, empleados=empleados)
 
+import logging
+
 @bp.route('/aprobar/<int:id>', methods=['POST'])
 @login_required
 def aprobar(id):
+    logging.info(f'Intentando aprobar la solicitud con ID: {id}')
     solicitud = SolicitudAdopcion.query.get_or_404(id)
 
+    empleado = current_user.empleado
+    if not empleado:
+        flash('Empleado no encontrado.', 'error')
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
+
+    logging.info(f'Aprobando solicitud: {solicitud}')
     solicitud.estado = 'Aprobada'
-    solicitud.idEmpleado = current_user.id
+    solicitud.idEmpleado = empleado.idEmple
 
     perro = Perro.query.get_or_404(solicitud.idPerro)
     perro.estado = 'Adoptado'
 
     db.session.commit()
+    logging.info(f'Solicitud aprobada y perro marcado como adoptado: {perro}')
 
     flash('Solicitud aprobada con éxito.', 'success')
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
+
+
 @bp.route('/rechazar/<int:id>', methods=['POST'])
 @login_required
-def rechazar(id):
+def rechazar(id):  # Cambiado de idEmple a id
     solicitud = SolicitudAdopcion.query.get_or_404(id)
 
     solicitud.estado = 'Rechazada'
-    solicitud.idEmpleado = current_user.id
+    solicitud.idEmpleado = current_user.idEmple
 
     perro = Perro.query.get_or_404(solicitud.idPerro)
     perro.estado = 'En Adopción'
@@ -105,18 +92,10 @@ def rechazar(id):
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
 @bp.route('/<int:id>/cuidados')
-def cuidados(id):
-    empleado = Empleado.query.get_or_404(id)
-    cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
+def cuidados(idEmple):
+    empleado = Empleado.query.get_or_404(idEmple)
+    cuidados = Cuidado.query.filter_by(empleado_id=empleado.idEmple).all()
     return render_template('empleados/cuidados.html', empleado=empleado, cuidados=cuidados)
-
-@bp.route('/empleado/<int:id>/dashboard')
-def dashboard(id):
-    empleado = Empleado.query.get_or_404(id)
-    solicitudes_pendientes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
-    cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
-    perros = Perro.query.all()
-    return render_template('empleados/dashboard.html', empleado=empleado, solicitudes_pendientes=solicitudes_pendientes, cuidados=cuidados, perros=perros)
 
 @bp.route('/static-file')
 def static_file():

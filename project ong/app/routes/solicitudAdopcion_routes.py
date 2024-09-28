@@ -23,9 +23,8 @@ def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Aprobada'
     
-    empleado = Empleado.query.get(current_user.id)
-    if not empleado:
-        flash('Empleado no encontrado.', 'danger')
+    if current_user.rol != 'empleado':
+        flash('No tienes permiso para realizar esta acción.', 'danger')
         return redirect(url_for('solicitud_adopcion.index'))
     
     solicitud.idEmpleado = current_user.id
@@ -43,9 +42,8 @@ def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
     solicitud.estado = 'Rechazada'
     
-    empleado = Empleado.query.get(current_user.id)
-    if not empleado:
-        flash('Empleado no encontrado.', 'danger')
+    if current_user.rol != 'empleado':
+        flash('No tienes permiso para realizar esta acción.', 'danger')
         return redirect(url_for('solicitud_adopcion.index'))
     
     solicitud.idEmpleado = current_user.id

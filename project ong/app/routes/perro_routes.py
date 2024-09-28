@@ -67,7 +67,7 @@ def add():
         db.session.add(new_perro)
         db.session.commit()
         
-        return redirect(url_for('empleado.perrosemple'))  # Corrección aquí
+        return redirect(url_for('perro.perrosemple'))  # Cambiado de 'empleado.perrosemple'
     return render_template('perros/add.html')
 
 @bp.route('/editperro/<int:id>', methods=['GET', 'POST'])
