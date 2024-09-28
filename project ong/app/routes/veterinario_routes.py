@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Veterinario, Perro  # Asegúrate de importar Perro
 from flask_login import login_required
+from app import db
+from werkzeug.utils import secure_filename  # Importar secure_filename
+import os  # Importar os
 
 bp = Blueprint('veterinario', __name__)
 
@@ -14,7 +17,7 @@ def index():
 @login_required  # Solo usuarios autenticados pueden ver detalles
 def show(id):
     veterinario = Veterinario.query.get_or_404(id)
-    return render_template('veterinarios/show.html', veterinario=veterinario)
+    return render_template('veterinarios1/show.html', veterinario=veterinario)
 
 @bp.route('/perrosvete')
 @login_required  # Solo usuarios autenticados pueden acceder a esta ruta
@@ -45,11 +48,34 @@ def addperrosvete():
         nombre = request.form['nombre']
         raza = request.form['raza']
         estado_salud = request.form['estadoSalud']  # Asegúrate de que coincida con tu modelo
-        # Agregar otros campos según sea necesario
+        edad = request.form['edad']
+        estado = request.form['estado']
+        color = request.form['color']
+        fechaIngreso = request.form['fechaIngreso']
+        tamaño = request.form['tamaño']
+        descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
 
-        nuevo_perro = Perro(nombre=nombre, raza=raza, estadoSalud=estado_salud)
-        # Guarda el nuevo perro en la base de datos
-        # Recuerda añadir manejo de errores en producción
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            ruta_imagen = filename
+        else:
+            ruta_imagen = None
+
+        nuevo_perro = Perro(
+            nombre=nombre,
+            raza=raza,
+            estadoSalud=estado_salud,
+            edad=edad,
+            estado=estado,
+            color=color,
+            fechaIngreso=fechaIngreso,
+            tamaño=tamaño,
+            descripcion=descripcion,
+            imagen=ruta_imagen
+        )
         db.session.add(nuevo_perro)
         db.session.commit()
 
@@ -57,6 +83,50 @@ def addperrosvete():
         return redirect(url_for('veterinario.perrosvete'))
 
     # Renderizar la plantilla para añadir un perro
-    return render_template('veterinarios1/add_perro.html')  # Asegúrate de que este archivo exista
+    return render_template('veterinarios1/addperrosvete.html')  # Asegúrate de que este archivo exista
+
+@bp.route('/edit_perro/<int:id>', methods=['GET', 'POST'])
+@login_required  # Solo usuarios autenticados pueden acceder a esta ruta
+def editperrosvete(id):
+    perro = Perro.query.get_or_404(id)
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.edad = request.form['edad']
+        perro.estado = request.form['estado']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.tamaño = request.form['tamaño']
+        perro.descripcion = request.form['descripcion']
+        imagen = request.files.get('imagen')
+        
+        if imagen:
+            filename = secure_filename(imagen.filename)
+            imagen_path = os.path.join('static', 'img_perros', filename)
+            imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+            perro.imagen = filename
+        
+        db.session.commit()
+        return redirect(url_for('veterinario.perrosvete'))
+    
+    return render_template('veterinarios1/editperrosvete.html', perro=perro)
 
 # Eliminar funciones para agregar o eliminar veterinarios
+
+@bp.route('/search_perros', methods=['GET'])
+@login_required
+def search_perros():
+    search_query = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    
+    if search_query:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{search_query}%') |
+            Perro.raza.ilike(f'%{search_query}%') |
+            Perro.estadoSalud.ilike(f'%{search_query}%')
+        ).paginate(page=page, per_page=10)
+    else:
+        perros = Perro.query.paginate(page=page, per_page=10)
+    
+    return render_template('veterinarios1/table.html', perros=perros)

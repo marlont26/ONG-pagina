@@ -10,6 +10,7 @@
             <th>Color</th>
             <th>Fecha de Ingreso</th>
             <th>Acciones</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -25,7 +26,7 @@
                 <td>{{ perro.fechaIngreso }}</td>
                 <td>
                     <a href="{{ url_for('perro.show', id=perro.idPerro) }}" class="btn btn-action btn-sm">Ver</a>
-                    <a href="{{ url_for('perro.edit', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>
+                    <a href="{{ url_for('perro.editperrosvete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>
                     <a href="{{ url_for('perro.delete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Eliminar</a>
                 </td>
             </tr>
