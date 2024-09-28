@@ -12,6 +12,7 @@ class Perro(db.Model):
     imagen = db.Column(db.String(255))
     descripcion = db.Column(db.Text)
     tamaño = db.Column(db.String(255))
+    genero = db.Column(db.String(255))
     estado = db.Column(db.String(255))  # Asegúrate de que este campo exista
 
     # Relaciones
