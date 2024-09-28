@@ -112,7 +112,7 @@
 			</div>
 			<!-- Content page -->
 			<!-- Formulario de búsqueda -->
-			<form id="search-form" method="GET" action="{{ url_for('perro.perrosemple') }}" class="mb-4">
+			<form id="search-form" method="GET" action="{{ url_for('veterinario.perrosvete') }}" class="mb-4">
 				<div class="input-group">
 					<input type="text" name="search" class="form-control" placeholder="Buscar por nombre, raza, estado de salud..." value="{{ request.args.get('search', '') }}">
 					<div class="input-group-append">
@@ -121,30 +121,74 @@
 				</div>
 			</form>
 			<div class="container mt-5">
-			<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-	Launch static backdrop modal
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog">
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
-		<div class="modal-body">
-		  ...
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		  <button type="button" class="btn btn-primary">Understood</button>
-		</div>
-	  </div>
-	</div>
-  </div>
+			
+			<a href="{{ url_for('veterinario.addperrosvete') }}" class="btn btn-primary mb-3">Añadir Perro</a>
+			<div class="table-responsive" id="perro-table">
+				{% include 'veterinarios1/table.html' %}
+			</div>
 
+			<!-- Paginación -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					{% if perros.has_prev %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('perro.perrosvete', page=perros.prev_num, search=request.args.get('search', '')) }}" aria-label="Anterior">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					{% else %}
+						<li class="page-item disabled">
+							<span class="page-link">&laquo;</span>
+						</li>
+					{% endif %}
+
+					{% for page_num in perros.iter_pages() %}
+						{% if page_num %}
+							<li class="page-item {% if page_num == perros.page %}active{% endif %}">
+								<a class="page-link" href="{{ url_for('perro.perrosvete', page=page_num, search=request.args.get('search', '')) }}">{{ page_num }}</a>
+							</li>
+						{% else %}
+							<li class="page-item disabled"><span class="page-link">…</span></li>
+						{% endif %}
+					{% endfor %}
+
+					{% if perros.has_next %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('perro.perrosvete', page=perros.next_num, search=request.args.get('search', '')) }}" aria-label="Siguiente">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					{% else %}
+						<li class="page-item disabled">
+							<span class="page-link">&raquo;</span>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+	</section>
+    <!--paginacion para que no se sature -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchForm = document.getElementById('search-form');
+        searchForm.addEventListener('input', (event) => {
+            event.preventDefault();
+            fetch(searchForm.action + '?' + new URLSearchParams(new FormData(searchForm)), {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('perro-table').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+    </script>
+			
 			
 
 			<!--<a href="{{ url_for('perro.add') }}" class="btn btn-primary mb-3">Añadir Perro</a>-->

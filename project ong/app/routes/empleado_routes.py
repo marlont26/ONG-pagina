@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from flask_login import current_user,  login_required  # Añadir esta línea
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import current_user, login_required
 from app.models import Empleado, Cuidado, SolicitudAdopcion, Perro, MensajeContacto
 import os
 from werkzeug.utils import secure_filename
@@ -7,14 +7,12 @@ from app import db
 
 bp = Blueprint('empleado', __name__)
 
-# Ruta para listar todos los empleados
 @bp.route('/empleados')
 def index():
     empleados = Empleado.query.all()
     mensajes = MensajeContacto.query.all()
     return render_template('empleados/index.html', empleado=empleados, mensajes=mensajes)
 
-# Ruta para agregar un nuevo empleado   
 @bp.route('/add/empleados', methods=['GET', 'POST'])
 @bp.route('/addemple', methods=['GET', 'POST'])
 def add():
@@ -40,7 +38,6 @@ def add():
         return redirect(url_for('main.baseadm'))
     return render_template('empleados1/add.html')
 
-# Ruta para editar un empleado existente
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_empleado(id):
     empleado = Empleado.query.get_or_404(id)
@@ -58,75 +55,69 @@ def edit_empleado(id):
 
     return render_template('empleados/edit.html', empleado=empleado)
 
-# Ruta para eliminar un empleado
 @bp.route('/delete/<int:id>')
 def delete(id):
     empleado = Empleado.query.get_or_404(id)
+    
+    SolicitudAdopcion.query.filter_by(idAdoptante=empleado.id).delete()
+    
     db.session.delete(empleado)
     db.session.commit()
 
     return redirect(url_for('empleado.index'))
 
-# Ruta para ver las solicitudes de adopción pendientes
 @bp.route('/solicitudesadopcionesemple')
 def solicitudesadopcionesemple():
     solicitudes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
-    return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes)
+    empleados = Empleado.query.all()
+    return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes, empleados=empleados)
 
-# Ruta para aprobar una solicitud de adopción
 @bp.route('/aprobar/<int:id>', methods=['POST'])
 @login_required
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
-    
-    if not current_user.is_authenticated:
-        return "Usuario no autenticado", 401
 
-    id_empleado = current_user.id
+    solicitud.estado = 'Aprobada'
+    solicitud.idEmpleado = current_user.id
 
-    # Verifica si el empleado existe antes de asignar
-    empleado = Empleado.query.get(id_empleado)
-    if empleado:
-        solicitud.estado = 'Aprobada'
-        solicitud.idEmpleado = id_empleado
-        db.session.commit()
-        return redirect(url_for('empleado.solicitudesadopcionesemple'))
-    else:
-        return "Empleado no encontrado", 404
+    perro = Perro.query.get_or_404(solicitud.idPerro)
+    perro.estado = 'Adoptado'
 
-# Ruta para rechazar una solicitud de adopción
+    db.session.commit()
+
+    flash('Solicitud aprobada con éxito.', 'success')
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))
+
 @bp.route('/rechazar/<int:id>', methods=['POST'])
+@login_required
 def rechazar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
-    id_empleado = current_user.id  # Usar el ID del empleado autenticado
 
-    # Verifica si el empleado existe antes de asignar
-    empleado = Empleado.query.get(id_empleado)
-    if empleado:
-        solicitud.estado = 'Rechazada'
-        solicitud.idEmpleado = id_empleado
-        db.session.commit()
-        return redirect(url_for('empleado.solicitudesadopcionesemple'))
-    else:
-        return "Empleado no encontrado", 404  # Manejo del caso de empleado no encontrado
+    solicitud.estado = 'Rechazada'
+    solicitud.idEmpleado = current_user.id
 
-# Ruta para ver los cuidados de un empleado (perros asignados)
+    perro = Perro.query.get_or_404(solicitud.idPerro)
+    perro.estado = 'En Adopción'
+
+    db.session.commit()
+
+    flash('Solicitud rechazada con éxito.', 'success')
+    return redirect(url_for('empleado.solicitudesadopcionesemple'))
+
 @bp.route('/<int:id>/cuidados')
 def cuidados(id):
     empleado = Empleado.query.get_or_404(id)
     cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
     return render_template('empleados/cuidados.html', empleado=empleado, cuidados=cuidados)
 
-# Ruta para el panel de control del empleado (dashboard)
 @bp.route('/empleado/<int:id>/dashboard')
 def dashboard(id):
     empleado = Empleado.query.get_or_404(id)
     solicitudes_pendientes = SolicitudAdopcion.query.filter_by(estado='Pendiente').all()
     cuidados = Cuidado.query.filter_by(empleado_id=empleado.id).all()
-    perros = Perro.query.all()  # Para gestionar perros
+    perros = Perro.query.all()
     return render_template('empleados/dashboard.html', empleado=empleado, solicitudes_pendientes=solicitudes_pendientes, cuidados=cuidados, perros=perros)
 
-# Ruta para archivos estáticos con url_for (añadido)
 @bp.route('/static-file')
 def static_file():
     return render_template('empleados/index.html', static_url=url_for('templates', filename='empleados/index.html'))
@@ -134,10 +125,9 @@ def static_file():
 @bp.route('/perrosemple')
 def perrosemple():
     page = request.args.get('page', 1, type=int)
-    per_page = 10  # Fijar la cantidad de perros por página a 10
+    per_page = 10
     search_query = request.args.get('search', '')
 
-    # Filtrar perros basados en la consulta de búsqueda
     if search_query:
         perros = Perro.query.filter(
             Perro.nombre.ilike(f'%{search_query}%') |
@@ -155,7 +145,6 @@ def perrosemple():
 @bp.route('/empleado/perrosemple_nuevo', methods=['GET', 'POST'])
 def perrosemple_nuevo():
     if request.method == 'POST':
-        # Lógica para agregar un perro
         nombre = request.form['nombre']
         raza = request.form['raza']
         edad = request.form['edad']
@@ -178,7 +167,7 @@ def perrosemple_nuevo():
         db.session.add(new_perro)
         db.session.commit()
 
-        return redirect(url_for('empleado.perrosemple'))  # Redirigir a la lista de perros
+        return redirect(url_for('empleado.perrosemple'))
     return render_template('empleados/perrosemple.html')
 
 @bp.route('/editperrosemple/<int:id>', methods=['GET', 'POST'])
@@ -193,7 +182,7 @@ def editperrosemple(id):
         perro.color = request.form['color']
         perro.fechaIngreso = request.form['fechaIngreso']
         perro.descripcion = request.form['descripcion']
-        perro.tamaño = request.form['tamaño']  # Asegúrate de que este campo esté presente
+        perro.tamaño = request.form['tamaño']
 
         imagen = request.files.get('imagen')
         if imagen:
@@ -220,3 +209,8 @@ def deleteperrosemple(id):
     db.session.commit()
 
     return redirect(url_for('empleado.perrosemple'))
+
+@bp.route('/solicitudes/count')
+def count_solicitudes():
+    cantidad_solicitudes = SolicitudAdopcion.query.filter_by(estado='Pendiente').count()
+    return {'cantidad_solicitudes': cantidad_solicitudes}
