@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from app.models import Veterinario, Perro  # Asegúrate de importar Perro
 from flask_login import login_required
+from app import db  # Añadir esta importación al principio del archivo
 
 bp = Blueprint('veterinario', __name__)
 

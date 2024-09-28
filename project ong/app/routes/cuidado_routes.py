@@ -14,14 +14,14 @@ def add():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
         fecha = request.form['fecha']
-        perro_id = request.form['perro']
-        empleado_id = request.form['empleado']
+        idPerro = request.form['idPerro']  # Cambiado de 'perro'
+        idEmpleado = request.form['idEmpleado']  # Cambiado de 'empleado'
         
         new_cuidado = Cuidado(
             descripcion=descripcion,
             fecha=fecha,
-            perro_id=perro_id,
-            empleado_id=empleado_id
+            idPerro=idPerro,
+            idEmpleado=idEmpleado
         )
         db.session.add(new_cuidado)
         db.session.commit()
@@ -38,8 +38,8 @@ def edit(id):
     if request.method == 'POST':
         cuidado.descripcion = request.form['descripcion']
         cuidado.fecha = request.form['fecha']
-        cuidado.perro_id = request.form['perro']
-        cuidado.empleado_id = request.form['empleado']
+        cuidado.idPerro = request.form['idPerro']  # Cambiado de 'perro'
+        cuidado.idEmpleado = request.form['idEmpleado']  # Cambiado de 'empleado'
         
         db.session.commit()
         
