@@ -125,7 +125,7 @@
 					<i class="zmdi zmdi-male-alt"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
-					<p class="full-box">10</p>
+					<p class="full-box" id="cantidad-solicitudes">0</p> <!-- Contenedor para la cantidad de solicitudes -->
 					<small>CANTIDAD</small>
 				</div>
 			</article>
@@ -214,10 +214,24 @@
 				.catch(error => console.error('Error:', error));
 		}
 
-		// Actualizar la cantidad de perros cada 10 segundos
-		setInterval(actualizarCantidadPerros, 10000);
-		// Actualizar la cantidad de perros al cargar la página
+		function actualizarCantidadSolicitudes() {
+			fetch('{{ url_for("empleado.count_solicitudes") }}')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('cantidad-solicitudes').innerText = data.cantidad_solicitudes;
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		// Actualizar la cantidad de perros y solicitudes cada 10 segundos
+		setInterval(() => {
+			actualizarCantidadPerros();
+			actualizarCantidadSolicitudes();
+		}, 10000);
+
+		// Actualizar la cantidad de perros y solicitudes al cargar la página
 		actualizarCantidadPerros();
+		actualizarCantidadSolicitudes();
 		
 	</script>
 

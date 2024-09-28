@@ -12,7 +12,7 @@ class Empleado(Usuario, UserMixin):
 
     __mapper_args__ = {
         'polymorphic_identity': 'empleado',
-        'inherit_condition': (idEmple == Usuario.id)
+        'inherit_condition': (idEmple == Usuario.id)  # Cambio aquí
     }
 
     def get_id(self):

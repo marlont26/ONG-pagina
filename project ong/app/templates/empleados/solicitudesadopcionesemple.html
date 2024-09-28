@@ -46,7 +46,7 @@
                             <a href="{{ url_for('empleado.perrosemple') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> Perros</a>
                         </li>
                         <li>
-                            <a href="{{ url_for('empleado.solicitudesadopcionesemple') }}"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Solicitudes de Adopción</a>
+                            <a href="{{ url_for('solicitud_adopcion.index') }}"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Solicitudes de Adopción</a>
                         </li>
                         <li>
                             <a href="cuidadosemple.html"><box-icon name='plus-medical' color='#ffffff'></box-icon> Cuidados</a>
@@ -98,12 +98,18 @@
                         <td>{{ solicitud.idSolicitud }}</td>
                         <td>{{ solicitud.adoptante.nombre }}</td>
                         <td>{{ solicitud.perro.nombre }}</td>
-                        <td>{{ solicitud.estado }}</td>
                         <td>
-                            <form action="{{ url_for('empleado.aprobar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
+                            {% if solicitud.perro.estado == 'Adoptado' %}
+                                Adoptado
+                            {% else %}
+                                En Adopción
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ url_for('solicitud_adopcion.aprobar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
                                 <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
                             </form>
-                            <form action="{{ url_for('empleado.rechazar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
+                            <form action="{{ url_for('solicitud_adopcion.rechazar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
                                 <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
                             </form>
                         </td>

@@ -7,22 +7,22 @@ bp = Blueprint('visita_medica', __name__)
 @bp.route('/visitasmedicas')
 def index():
     visitas = VisitaMedica.query.all()
-    return render_template('visita_medica/index.html', visitas=visitas)
+    return render_template('visitasmedicas/index.html', visitas=visitas)
 
 @bp.route('/add/visitasmedicas', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
         fecha = request.form['fecha']
         descripcion = request.form['descripcion']
-        perro_id = request.form['perro_id']
-        idVeterinario = request.form['idVeterinario']
+        idPerro = request.form['idPerro']  # Asegúrate que este sea el nombre correcto del formulario
+        idVeterinario = request.form['idVeterinario']  # Asegúrate que este sea el nombre correcto del formulario
         
         new_visita = VisitaMedica(
             fecha=fecha,
             descripcion=descripcion,
-            perro_id=perro_id,
+            idPerro=idPerro,
             idVeterinario=idVeterinario
-            )
+        )
         db.session.add(new_visita)
         db.session.commit()
         
@@ -39,8 +39,8 @@ def edit(id):
     if request.method == 'POST':
         visita.fecha = request.form['fecha']
         visita.descripcion = request.form['descripcion']
-        visita.idPerro = request.form['idPerro']
-        visita.idVeterinario = request.form['idVeterinario']
+        visita.idPerro = request.form['perro_id']  # Asegúrate que este sea el nombre correcto del formulario
+        visita.idVeterinario = request.form['idVeterinario']  # Asegúrate que este sea el nombre correcto del formulario
         
         db.session.commit()
         
