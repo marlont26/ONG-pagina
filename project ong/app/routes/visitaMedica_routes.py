@@ -66,8 +66,3 @@ def delete(id):
     flash('Visita médica eliminada exitosamente.', 'success')
 
     return redirect(url_for('visita_medica.index'))
-
-@bp.route('/<int:id>')
-def show(id):
-    visita = VisitaMedica.query.get_or_404(id)
-    return render_template('visitasmedicas/show.html', visita=visita)

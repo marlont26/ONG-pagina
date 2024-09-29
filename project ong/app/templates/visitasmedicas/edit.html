@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Editar Perro</title>
+    <title>Editar Visita Médica</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet">
@@ -85,44 +85,41 @@
         <!-- Content page -->
         <div class="container-fluid">
             <div class="page-header">
-                <h1 class="text-titles">Editar visita <small>Medica</small></h1>
+                <h1 class="text-titles">Editar visita <small>Médica</small></h1>
             </div>
         </div>
 
         <div class="container mt-5">
             <div class="form-container">
-                
-                    <h1 class="mb-4">Edit Medical Visit</h1>
-                    <form method="POST" action="{{ url_for('visita_medica.edit', id=visita.idVisitaMedica) }}">
-                        <div class="mb-3">
-                            <label for="fecha" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ visita.fecha }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="motivo" class="form-label">Reason</label>
-                            <input type="text" class="form-control" id="motivo" name="motivo" value="{{ visita.motivo }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Description</label>
-                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ visita.descripcion }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="diagnostico" class="form-label">Diagnosis</label>
-                            <input type="text" class="form-control" id="diagnostico" name="diagnostico" value="{{ visita.diagnostico }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tratamiento" class="form-label">Treatment</label>
-                            <textarea class="form-control" id="tratamiento" name="tratamiento" rows="3" required>{{ visita.tratamiento }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="idPerro" class="form-label">Dog ID</label>
-                            <input type="number" class="form-control" id="idPerro" name="idPerro" value="{{ visita.idPerro }}" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <a href="{{ url_for('visita_medica.index') }}" class="btn btn-secondary">Cancel</a>
-                    </form>
-
-
+                <form method="POST" action="{{ url_for('visita_medica.edit', id=visita.idVisitaMedica) }}">
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" name="fecha" value="{{ visita.fecha }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="motivo" class="form-label">Motivo</label>
+                        <input type="text" class="form-control" id="motivo" name="motivo" value="{{ visita.motivo }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="diagnostico" class="form-label">Diagnóstico</label>
+                        <input type="text" class="form-control" id="diagnostico" name="diagnostico" value="{{ visita.diagnostico }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tratamiento" class="form-label">Tratamiento</label>
+                        <input type="text" class="form-control" id="tratamiento" name="tratamiento" value="{{ visita.tratamiento }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="idPerro" class="form-label">Perro</label>
+                        <select class="form-select" id="idPerro" name="idPerro" required>
+                            <option value="">Seleccionar Perro</option>
+                            {% for perro in perros %}
+                                <option value="{{ perro.idPerro }}" {% if perro.idPerro == visita.idPerro %}selected{% endif %}>{{ perro.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a href="{{ url_for('visita_medica.index') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
             </div>
         </div>
     </section>
@@ -215,16 +212,3 @@
     </script>
 </body>
 </html>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
