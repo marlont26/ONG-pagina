@@ -52,43 +52,61 @@ import logging
 @bp.route('/aprobar/<int:id>', methods=['POST'])
 @login_required
 def aprobar(id):
-    logging.info(f'Intentando aprobar la solicitud con ID: {id}')
     solicitud = SolicitudAdopcion.query.get_or_404(id)
-
-    empleado = current_user.empleado
+    
+    # Obtener el empleado correspondiente al usuario actual
+    empleado = Empleado.query.filter_by(email=current_user.email).first()
+    
     if not empleado:
-        flash('Empleado no encontrado.', 'error')
+        flash('Error: No se encontró el empleado correspondiente.', 'error')
         return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
-    logging.info(f'Aprobando solicitud: {solicitud}')
-    solicitud.estado = 'Aprobada'
-    solicitud.idEmpleado = empleado.idEmple
+    if solicitud.estado == 'Pendiente':
+        solicitud.estado = 'Aprobada'
+        solicitud.idEmpleado = empleado.idEmple  # Usamos el idEmple del empleado
 
-    perro = Perro.query.get_or_404(solicitud.idPerro)
-    perro.estado = 'Adoptado'
+        perro = Perro.query.get_or_404(solicitud.idPerro)
+        perro.estado = 'Adoptado'
 
-    db.session.commit()
-    logging.info(f'Solicitud aprobada y perro marcado como adoptado: {perro}')
+        try:
+            db.session.commit()
+            flash('Solicitud aprobada con éxito.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al aprobar la solicitud: {str(e)}', 'error')
+    else:
+        flash('La solicitud ya ha sido procesada.', 'warning')
 
-    flash('Solicitud aprobada con éxito.', 'success')
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
-
-
 
 @bp.route('/rechazar/<int:id>', methods=['POST'])
 @login_required
 def rechazar(id):  # Cambiado de idEmple a id
     solicitud = SolicitudAdopcion.query.get_or_404(id)
+    
+    # Obtener el empleado correspondiente al usuario actual
+    empleado = Empleado.query.filter_by(email=current_user.email).first()
+    
+    if not empleado:
+        flash('Error: No se encontró el empleado correspondiente.', 'error')
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
-    solicitud.estado = 'Rechazada'
-    solicitud.idEmpleado = current_user.idEmple
+    if solicitud.estado == 'Pendiente':
+        solicitud.estado = 'Rechazada'
+        solicitud.idEmpleado = empleado.idEmple  # Usamos el idEmple del empleado
 
-    perro = Perro.query.get_or_404(solicitud.idPerro)
-    perro.estado = 'En Adopción'
+        perro = Perro.query.get_or_404(solicitud.idPerro)
+        perro.estado = 'En Adopción'
 
-    db.session.commit()
+        try:
+            db.session.commit()
+            flash('Solicitud rechazada con éxito.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al rechazar la solicitud: {str(e)}', 'error')
+    else:
+        flash('La solicitud ya ha sido procesada.', 'warning')
 
-    flash('Solicitud rechazada con éxito.', 'success')
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
 @bp.route('/<int:id>/cuidados')
