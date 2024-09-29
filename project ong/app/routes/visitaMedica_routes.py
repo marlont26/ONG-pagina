@@ -17,10 +17,9 @@ def add():
         diagnostico = request.form['diagnostico']
         tratamiento = request.form['tratamiento']
         idPerro = request.form['idPerro']
-        idVeterinario = request.form['idVeterinario']
         
         # Validación de los datos antes de agregar
-        if not all([fecha, motivo, diagnostico, tratamiento, idPerro, idVeterinario]):
+        if not all([fecha, motivo, diagnostico, tratamiento, idPerro]):
             flash('Todos los campos son requeridos.', 'danger')
             return redirect(url_for('visita_medica.add'))
         
@@ -30,7 +29,6 @@ def add():
             diagnostico=diagnostico,
             tratamiento=tratamiento,
             idPerro=idPerro,
-            idVeterinario=idVeterinario
         )
         db.session.add(new_visita)
         db.session.commit()
@@ -39,8 +37,7 @@ def add():
         return redirect(url_for('visita_medica.index'))
     
     perros = Perro.query.all()
-    veterinarios = Veterinario.query.all()
-    return render_template('visitasmedicas/add.html', perros=perros, veterinarios=veterinarios)
+    return render_template('visitasmedicas/add.html', perros=perros)
 
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -52,15 +49,13 @@ def edit(id):
         visita.diagnostico = request.form['diagnostico']
         visita.tratamiento = request.form['tratamiento']
         visita.idPerro = request.form['idPerro']
-        visita.idVeterinario = request.form['idVeterinario']
         
         db.session.commit()
         flash('Visita médica actualizada exitosamente.', 'success')
         return redirect(url_for('visita_medica.index'))
 
     perros = Perro.query.all()
-    veterinarios = Veterinario.query.all()
-    return render_template('visitasmedicas/edit.html', visita=visita, perros=perros, veterinarios=veterinarios)
+    return render_template('visitasmedicas/edit.html', visita=visita, perros=perros)
 
 @bp.route('/delete/<int:id>')
 def delete(id):

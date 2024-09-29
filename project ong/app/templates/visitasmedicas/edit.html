@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-{% block title %}Editar Visita Médica{% endblock %}
-{% block content %}
+
     <h1>Editar Visita Médica</h1>
     <form method="POST">
         <label for="fecha">Fecha:</label>
@@ -30,4 +28,4 @@
         <button type="submit">Guardar Cambios</button>
     </form>
     <a href="{{ url_for('visita_medica.index') }}">Volver</a>
-{% endblock %}
+

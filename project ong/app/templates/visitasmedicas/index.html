@@ -91,44 +91,6 @@
                 <h1 class="text-titles">Veterinario <small>VIP</small></h1>
             </div>
         </div>
-        <div class="full-box text-center" style="padding: 30px 10px;">
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Perros
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-dog"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box" id="cantidad-perros">7</p>
-                    <small>Cantidad</small>
-                </div>
-            </article>
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Veterinarios
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-male-alt"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box">10</p>
-                    <small>Cantidad</small>
-                </div>
-            </article>
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Visitas Médicas
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-hospital"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box" id="cantidad-solicitudes">70</p>
-                    <small>Cantidad</small>
-                </div>
-            </article>
-        </div>
 
         <!-- Sección de Visitas Médicas -->
         <h1>Visitas Médicas</h1>
@@ -229,37 +191,3 @@
 
 
 
-
-
-
-<!--{% extends "base.html" %}
-{% block title %}Visitas Médicas{% endblock %}
-{% block content %}
-    <h1>Visitas Médicas</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Fecha</th>
-            <th>Descripción</th>
-            <th>Perro</th>
-            <th>Veterinario</th>
-            <th>Acciones</th>
-        </tr>
-        {% for visita in visitas %}
-        <tr>
-            <td>{{ visita.id }}</td>
-            <td>{{ visita.fecha }}</td>
-            <td>{{ visita.descripcion }}</td>
-            <td>{{ visita.perro.nombre }}</td>
-            <td>{{ visita.veterinario.nombre }} {{ visita.veterinario.apellido }}</td>
-            <td>
-                <a href="{{ url_for('visita_medica.show', id=visita.id) }}">Ver</a>
-                <a href="{{ url_for('visita_medica.edit', id=visita.id) }}">Editar</a>
-                <a href="{{ url_for('visita_medica.delete', id=visita.id) }}" onclick="return confirm('¿Estás seguro de eliminar esta visita?')">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="{{ url_for('visita_medica.add') }}">Agregar Nueva Visita</a>
-    <a href="{{ url_for('empleado.index') }}">Volver a Empleados</a>
-{% endblock %}-->
