@@ -142,6 +142,7 @@ def addperrosemple():
         color = request.form['color']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
+        genero = request.form['genero']
         imagen = request.files.get('imagen')
         tamaño = request.form['tamaño']
 
@@ -160,6 +161,7 @@ def addperrosemple():
             estadoSalud=estadoSalud,
             fechaIngreso=fechaIngreso,
             descripcion=descripcion,
+            genero=genero,
             estado=estado,
             color=color,
             imagen=ruta_imagen,  # Corrección aquí
