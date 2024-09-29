@@ -115,7 +115,6 @@
                     <th>Diagnóstico</th>
                     <th>Tratamiento</th>
                     <th>Perro</th>
-                    <th>Veterinario</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -128,7 +127,6 @@
                         <td>{{ visita.diagnostico }}</td>
                         <td>{{ visita.tratamiento }}</td>
                         <td>{{ visita.perro.nombre }}</td>
-                        <td>{{ visita.veterinario.nombre }}</td>
                         <td>
                             <a href="{{ url_for('visita_medica.edit', id=visita.idVisitaMedica) }}" class="btn btn-warning">Editar</a>
                             <a href="{{ url_for('visita_medica.delete', id=visita.idVisitaMedica) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta visita médica?');">Eliminar</a>
@@ -187,7 +185,3 @@
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
 </body>
 </html>
-
-
-
-
