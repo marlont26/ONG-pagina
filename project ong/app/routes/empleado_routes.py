@@ -56,7 +56,7 @@ def aprobar(id):
 
     if solicitud.estado == 'Pendiente':
         solicitud.estado = 'Aprobada'
-        solicitud.idEmpleado = current_user.idEmple
+        solicitud.idEmpleado = current_user.id  # Usamos el id del Usuario actual
 
         perro = Perro.query.get_or_404(solicitud.idPerro)
         perro.estado = 'Adoptado'
@@ -76,7 +76,7 @@ def rechazar(id):  # Cambiado de idEmple a id
 
     if solicitud.estado == 'Pendiente':
         solicitud.estado = 'Rechazada'
-        solicitud.idEmpleado = current_user.idEmple
+        solicitud.idEmpleado = current_user.id  # Usamos el id del Usuario actual
 
         perro = Perro.query.get_or_404(solicitud.idPerro)
         perro.estado = 'En Adopción'
