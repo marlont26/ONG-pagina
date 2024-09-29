@@ -4,7 +4,7 @@ class Cuidado(db.Model):
     __tablename__ = 'cuidado'
     idCuidado = db.Column(db.Integer, primary_key=True, autoincrement=True)
     idPerro = db.Column(db.Integer, db.ForeignKey('perro.idPerro'))
-    idEmpleado = db.Column(db.Integer, db.ForeignKey('empleado.idEmple'))  # Asegúrate de que 'idEmpleado' exista en 'empleado'
+    idEmpleado = db.Column(db.Integer, db.ForeignKey('empleado.idEmple'))
     descripcion = db.Column(db.String(255))
     fecha = db.Column(db.Date)
 
