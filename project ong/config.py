@@ -1,7 +1,12 @@
-class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@localhost:3306/ong'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'mysecretkey'
-    mysql://root:KepinrBFJqtYnOArjiWDmXszQALTUPXW@junction.proxy.rlwy.net:54034/
+import os
+from dotenv import load_dotenv
 
-KepinrBFJqtYnOArjiWDmXszQALTUPXW
+# Cargar variables de entorno desde el archivo .env
+load_dotenv()
+
+class Config:
+    # Cadena de conexión a la base de datos desde el archivo .env
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://root:@localhost:3306/ong')  # Valor por defecto
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Clave secreta desde el archivo .env
+    SECRET_KEY = os.getenv('SECRET_KEY', 'mysecretkey')  # Valor por defecto
