@@ -52,43 +52,41 @@ import logging
 @bp.route('/aprobar/<int:id>', methods=['POST'])
 @login_required
 def aprobar(id):
-    logging.info(f'Intentando aprobar la solicitud con ID: {id}')
     solicitud = SolicitudAdopcion.query.get_or_404(id)
 
-    empleado = current_user.empleado
-    if not empleado:
-        flash('Empleado no encontrado.', 'error')
-        return redirect(url_for('empleado.solicitudesadopcionesemple'))
+    if solicitud.estado == 'Pendiente':
+        solicitud.estado = 'Aprobada'
+        solicitud.idEmpleado = current_user.idEmple
 
-    logging.info(f'Aprobando solicitud: {solicitud}')
-    solicitud.estado = 'Aprobada'
-    solicitud.idEmpleado = empleado.idEmple
+        perro = Perro.query.get_or_404(solicitud.idPerro)
+        perro.estado = 'Adoptado'
 
-    perro = Perro.query.get_or_404(solicitud.idPerro)
-    perro.estado = 'Adoptado'
+        db.session.commit()
 
-    db.session.commit()
-    logging.info(f'Solicitud aprobada y perro marcado como adoptado: {perro}')
+        flash('Solicitud aprobada con éxito.', 'success')
+    else:
+        flash('La solicitud ya ha sido procesada.', 'warning')
 
-    flash('Solicitud aprobada con éxito.', 'success')
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
-
-
 
 @bp.route('/rechazar/<int:id>', methods=['POST'])
 @login_required
 def rechazar(id):  # Cambiado de idEmple a id
     solicitud = SolicitudAdopcion.query.get_or_404(id)
 
-    solicitud.estado = 'Rechazada'
-    solicitud.idEmpleado = current_user.idEmple
+    if solicitud.estado == 'Pendiente':
+        solicitud.estado = 'Rechazada'
+        solicitud.idEmpleado = current_user.idEmple
 
-    perro = Perro.query.get_or_404(solicitud.idPerro)
-    perro.estado = 'En Adopción'
+        perro = Perro.query.get_or_404(solicitud.idPerro)
+        perro.estado = 'En Adopción'
 
-    db.session.commit()
+        db.session.commit()
 
-    flash('Solicitud rechazada con éxito.', 'success')
+        flash('Solicitud rechazada con éxito.', 'success')
+    else:
+        flash('La solicitud ya ha sido procesada.', 'warning')
+
     return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
 @bp.route('/<int:id>/cuidados')

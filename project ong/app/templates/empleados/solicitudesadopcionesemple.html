@@ -98,19 +98,13 @@
                         <td>{{ solicitud.idSolicitud }}</td>
                         <td>{{ solicitud.adoptante.nombre }}</td>
                         <td>{{ solicitud.perro.nombre }}</td>
+                        <td>{{ solicitud.estado }}</td>
                         <td>
-                            {% if solicitud.perro.estado == 'Adoptado' %}
-                                Adoptado
-                            {% else %}
-                                En Adopción
-                            {% endif %}
-                        </td>
-                        <td>
-                            <form action="{{ url_for('solicitud_adopcion.aprobar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-success btn-sm">Aprobar</button>
+                            <form action="{{ url_for('empleado.aprobar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-success btn-sm" {% if solicitud.estado != 'Pendiente' %}disabled{% endif %}>Aprobar</button>
                             </form>
-                            <form action="{{ url_for('solicitud_adopcion.rechazar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                            <form action="{{ url_for('empleado.rechazar', id=solicitud.idSolicitud) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm" {% if solicitud.estado != 'Pendiente' %}disabled{% endif %}>Rechazar</button>
                             </form>
                         </td>
                     </tr>
