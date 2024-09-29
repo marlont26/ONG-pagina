@@ -7,6 +7,7 @@
             <th>Edad</th>
             <th>Estado de Salud</th>
             <th>Estado</th>
+            <th>Genero</th>
             <th>Color</th>
             <th>Fecha de Ingreso</th>
             <th>Acciones</th>
@@ -22,6 +23,7 @@
                 <td>{{ perro.estadoSalud }}</td>
                 <td>{{ perro.estado }}</td>
                 <td>{{ perro.color }}</td>
+                <td>{{ perro.genero }}</td>
                 <td>{{ perro.fechaIngreso }}</td>
                 <td>
                     <a href="{{ url_for('perro.show', id=perro.idPerro) }}" class="btn btn-action btn-sm">Ver</a>
