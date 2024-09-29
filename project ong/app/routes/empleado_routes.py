@@ -53,17 +53,27 @@ import logging
 @login_required
 def aprobar(id):
     solicitud = SolicitudAdopcion.query.get_or_404(id)
+    
+    # Obtener el empleado correspondiente al usuario actual
+    empleado = Empleado.query.filter_by(email=current_user.email).first()
+    
+    if not empleado:
+        flash('Error: No se encontró el empleado correspondiente.', 'error')
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
     if solicitud.estado == 'Pendiente':
         solicitud.estado = 'Aprobada'
-        solicitud.idEmpleado = current_user.id  # Usamos el id del Usuario actual
+        solicitud.idEmpleado = empleado.idEmple  # Usamos el idEmple del empleado
 
         perro = Perro.query.get_or_404(solicitud.idPerro)
         perro.estado = 'Adoptado'
 
-        db.session.commit()
-
-        flash('Solicitud aprobada con éxito.', 'success')
+        try:
+            db.session.commit()
+            flash('Solicitud aprobada con éxito.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al aprobar la solicitud: {str(e)}', 'error')
     else:
         flash('La solicitud ya ha sido procesada.', 'warning')
 
@@ -73,17 +83,27 @@ def aprobar(id):
 @login_required
 def rechazar(id):  # Cambiado de idEmple a id
     solicitud = SolicitudAdopcion.query.get_or_404(id)
+    
+    # Obtener el empleado correspondiente al usuario actual
+    empleado = Empleado.query.filter_by(email=current_user.email).first()
+    
+    if not empleado:
+        flash('Error: No se encontró el empleado correspondiente.', 'error')
+        return redirect(url_for('empleado.solicitudesadopcionesemple'))
 
     if solicitud.estado == 'Pendiente':
         solicitud.estado = 'Rechazada'
-        solicitud.idEmpleado = current_user.id  # Usamos el id del Usuario actual
+        solicitud.idEmpleado = empleado.idEmple  # Usamos el idEmple del empleado
 
         perro = Perro.query.get_or_404(solicitud.idPerro)
         perro.estado = 'En Adopción'
 
-        db.session.commit()
-
-        flash('Solicitud rechazada con éxito.', 'success')
+        try:
+            db.session.commit()
+            flash('Solicitud rechazada con éxito.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al rechazar la solicitud: {str(e)}', 'error')
     else:
         flash('La solicitud ya ha sido procesada.', 'warning')
 
