@@ -1,4 +1,238 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inicio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+</head>
+<body>
+    <!-- SideBar Menu -->
+    <section class="full-box cover dashboard-sideBar">
+        <div class="full-box dashboard-sideBar-bg btn-menu-dashboard"></div>
+        <div class="full-box dashboard-sideBar-ct">
+            <!-- SideBar Title -->
+            <div class="full-box text-uppercase text-center text-titles dashboard-sideBar-title">
+                HAPPY PAWS <i class="zmdi zmdi-close btn-menu-dashboard visible-xs"></i>
+            </div>
+            <!-- SideBar User info -->
+            <div class="full-box dashboard-sideBar-UserInfo">
+                <figure class="full-box">
+                    <img src="{{ url_for('static', filename='imagenes/avatar.jpg') }}" alt="UserIcon">
+                    <figcaption class="text-center text-titles">Veterinario</figcaption>
+                </figure>
+                <ul class="full-box list-unstyled text-center">
+                    <li>
+                        <a href="#!">
+                            <i class="zmdi zmdi-settings"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="btn-exit-system">
+                            <i class="zmdi zmdi-power"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- SideBar Menu -->
+            <ul class="list-unstyled full-box dashboard-sideBar-Menu">
+                <li>
+                    <a href="{{ url_for('veterinario.index') }}">
+                        <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-sideBar-SubMenu">
+                        <i class="zmdi zmdi-case zmdi-hc-fw"></i> Administración <i class="zmdi zmdi-caret-down pull-right"></i>
+                    </a>
+                    <ul class="list-unstyled full-box">
+                        <li>
+                            <a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> Perros</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('visita_medica.index') }}"><box-icon name='plus-medical' color='#ffffff'></box-icon> Visitas Médicas</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Content page-->
+    <section class="full-box dashboard-contentPage">
+        <!-- NavBar -->
+        <nav class="full-box dashboard-Navbar">
+            <ul class="full-box list-unstyled text-right">
+                <li class="pull-left">
+                    <a href="#!" class="btn-menu-dashboard"><i class="zmdi zmdi-more-vert"></i></a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-Notifications-area">
+                        <i class="zmdi zmdi-notifications-none"></i>
+                        <span class="badge">7</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-search">
+                        <i class="zmdi zmdi-search"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" class="btn-modal-help">
+                        <i class="zmdi zmdi-help-outline"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Content page -->
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1 class="text-titles">Veterinario <small>VIP</small></h1>
+            </div>
+        </div>
+        <div class="full-box text-center" style="padding: 30px 10px;">
+            <article class="full-box tile">
+                <div class="full-box tile-title text-center text-titles text-uppercase">
+                    Perros
+                </div>
+                <div class="full-box tile-icon text-center">
+                    <i class="zmdi zmdi-dog"></i>
+                </div>
+                <div class="full-box tile-number text-titles">
+                    <p class="full-box" id="cantidad-perros">7</p>
+                    <small>Cantidad</small>
+                </div>
+            </article>
+            <article class="full-box tile">
+                <div class="full-box tile-title text-center text-titles text-uppercase">
+                    Veterinarios
+                </div>
+                <div class="full-box tile-icon text-center">
+                    <i class="zmdi zmdi-male-alt"></i>
+                </div>
+                <div class="full-box tile-number text-titles">
+                    <p class="full-box">10</p>
+                    <small>Cantidad</small>
+                </div>
+            </article>
+            <article class="full-box tile">
+                <div class="full-box tile-title text-center text-titles text-uppercase">
+                    Visitas Médicas
+                </div>
+                <div class="full-box tile-icon text-center">
+                    <i class="zmdi zmdi-hospital"></i>
+                </div>
+                <div class="full-box tile-number text-titles">
+                    <p class="full-box" id="cantidad-solicitudes">70</p>
+                    <small>Cantidad</small>
+                </div>
+            </article>
+        </div>
+
+        <!-- Sección de Visitas Médicas -->
+        <h1>Visitas Médicas</h1>
+        <a href="{{ url_for('visita_medica.add') }}" class="btn btn-primary">Agregar Visita Médica</a>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Motivo</th>
+                    <th>Diagnóstico</th>
+                    <th>Tratamiento</th>
+                    <th>Perro</th>
+                    <th>Veterinario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visita in visitas %}
+                    <tr>
+                        <td>{{ visita.idVisitaMedica }}</td>
+                        <td>{{ visita.fecha }}</td>
+                        <td>{{ visita.motivo }}</td>
+                        <td>{{ visita.diagnostico }}</td>
+                        <td>{{ visita.tratamiento }}</td>
+                        <td>{{ visita.perro.nombre }}</td>
+                        <td>{{ visita.veterinario.nombre }}</td>
+                        <td>
+                            <a href="{{ url_for('visita_medica.edit', id=visita.idVisitaMedica) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ url_for('visita_medica.delete', id=visita.idVisitaMedica) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta visita médica?');">Eliminar</a>
+                            <a href="{{ url_for('visita_medica.show', id=visita.idVisitaMedica) }}" class="btn btn-info">Ver</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Notifications area -->
+    <section class="full-box Notifications-area">
+        <div class="full-box Notifications-bg btn-Notifications-area"></div>
+        <div class="full-box Notifications-body">
+            <div class="Notifications-body-title text-titles text-center">
+                Notificaciones <i class="zmdi zmdi-close btn-Notifications-area"></i>
+            </div>
+            <div class="list-group">
+                {% for mensaje_contacto in mensajes %}
+                <div class="list-group-item">
+                    <div class="row-action-primary">
+                        <i class="zmdi zmdi-alert-triangle"></i>
+                    </div>
+                    <div class="row-content">
+                        <div class="least-content">Hace un momento</div>
+                        <h4 class="list-group-item-heading">{{ mensaje_contacto.nombre }}</h4>
+                        <p class="list-group-item-text">{{ mensaje_contacto.mensaje }}</p>
+                    </div>
+                </div>
+                <div class="list-group-separator"></div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Dialog help -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-help">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ayuda</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Esto es un ejemplo de la sección de ayuda.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+<!--{% extends "base.html" %}
 {% block title %}Visitas Médicas{% endblock %}
 {% block content %}
     <h1>Visitas Médicas</h1>
@@ -28,4 +262,4 @@
     </table>
     <a href="{{ url_for('visita_medica.add') }}">Agregar Nueva Visita</a>
     <a href="{{ url_for('empleado.index') }}">Volver a Empleados</a>
-{% endblock %}
+{% endblock %}-->

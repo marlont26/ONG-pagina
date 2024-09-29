@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.models import VisitaMedica, Perro, Veterinario
 from app import db
 
@@ -13,19 +13,29 @@ def index():
 def add():
     if request.method == 'POST':
         fecha = request.form['fecha']
-        descripcion = request.form['descripcion']
-        idPerro = request.form['idPerro']  # Asegúrate que este sea el nombre correcto del formulario
-        idVeterinario = request.form['idVeterinario']  # Asegúrate que este sea el nombre correcto del formulario
+        motivo = request.form['motivo']
+        diagnostico = request.form['diagnostico']
+        tratamiento = request.form['tratamiento']
+        idPerro = request.form['idPerro']
+        idVeterinario = request.form['idVeterinario']
+        
+        # Validación de los datos antes de agregar
+        if not all([fecha, motivo, diagnostico, tratamiento, idPerro, idVeterinario]):
+            flash('Todos los campos son requeridos.', 'danger')
+            return redirect(url_for('visita_medica.add'))
         
         new_visita = VisitaMedica(
             fecha=fecha,
-            descripcion=descripcion,
+            motivo=motivo,
+            diagnostico=diagnostico,
+            tratamiento=tratamiento,
             idPerro=idPerro,
             idVeterinario=idVeterinario
         )
         db.session.add(new_visita)
         db.session.commit()
         
+        flash('Visita médica creada exitosamente.', 'success')
         return redirect(url_for('visita_medica.index'))
     
     perros = Perro.query.all()
@@ -38,12 +48,14 @@ def edit(id):
 
     if request.method == 'POST':
         visita.fecha = request.form['fecha']
-        visita.descripcion = request.form['descripcion']
-        visita.idPerro = request.form['idPerro']  # Asegúrate que este sea el nombre correcto del formulario
-        visita.idVeterinario = request.form['idVeterinario']  # Asegúrate que este sea el nombre correcto del formulario
+        visita.motivo = request.form['motivo']
+        visita.diagnostico = request.form['diagnostico']
+        visita.tratamiento = request.form['tratamiento']
+        visita.idPerro = request.form['idPerro']
+        visita.idVeterinario = request.form['idVeterinario']
         
         db.session.commit()
-        
+        flash('Visita médica actualizada exitosamente.', 'success')
         return redirect(url_for('visita_medica.index'))
 
     perros = Perro.query.all()
@@ -56,6 +68,7 @@ def delete(id):
     
     db.session.delete(visita)
     db.session.commit()
+    flash('Visita médica eliminada exitosamente.', 'success')
 
     return redirect(url_for('visita_medica.index'))
 
