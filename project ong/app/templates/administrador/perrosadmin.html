@@ -40,7 +40,7 @@
 			<!-- SideBar Menu -->
 			<ul class="list-unstyled full-box dashboard-sideBar-Menu">
 				<li>
-					<a href="{{ url_for('empleado.index') }}">
+					<a href="{{ url_for('perro.indexadmin') }}">
 
 						<i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Dashboard
 					</a>
@@ -51,7 +51,7 @@
 					</a>
 					<ul class="list-unstyled full-box">
 						<li>
-							<a href="{{ url_for('empleado.perrosemple') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros
+							<a href="{{ url_for('empleado.perrosadmin') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros
 							</a>
 							
 						</li>
@@ -105,16 +105,16 @@
 				<p class="lead">En este apartado puedes administrar todos los perros agregandolos, editandolos y eliminandolos funcion unica para el empleado</p>
 		  
 				<!-- Formulario de búsqueda -->
-				<form id="search-form" method="GET" action="{{ url_for('empleado.perrosemple') }}" class="mb-4">
+				<form id="search-form" method="GET" action="{{ url_for('empleado.perrosadmin') }}" class="mb-4">
 					<div class="input-group mb-3">
 					  <input type="text" name="search" class="form-control" placeholder="Buscar por nombre, raza, estado de salud..." value="{{ request.args.get('search', '') }}">
 					</div>
 				  </form>
 				<div class="row">
 				  <div class="col-md-12">
-					<a href="{{ url_for('perro.addperrosemple') }}" class="btn btn-primary mb-3 float-right">Añadir Perro <box-icon name='plus' type='solid' color='white'></box-icon></a>
+					<a href="{{ url_for('perro.addperrosadmin') }}" class="btn btn-primary mb-3 float-right">Añadir Perro <box-icon name='plus' type='solid' color='white'></box-icon></a>
 					<div class="table-responsive" id="perro-table">
-					  {% include 'empleados/table.html' %}
+					  {% include 'administrador/table.html' %}
 					</div>
 				  </div>
 				</div>
@@ -124,7 +124,7 @@
 				  <ul class="pagination justify-content-center">
 					{% if perros.has_prev %}
 					  <li class="page-item">
-						<a class="page-link" href="{{ url_for('perro.perrosemple', page=perros.prev_num, search=request.args.get('search', '')) }}" aria-label="Anterior">
+						<a class="page-link" href="{{ url_for('perro.perrosadmin', page=perros.prev_num, search=request.args.get('search', '')) }}" aria-label="Anterior">
 						  <span aria-hidden="true">&laquo;</span>
 						</a>
 					  </li>
@@ -137,7 +137,7 @@
 					{% for page_num in perros.iter_pages() %}
 					  {% if page_num %}
 						<li class="page-item {% if page_num == perros.page %}active{% endif %}">
-						  <a class="page-link" href="{{ url_for('perro.perrosemple', page=page_num, search=request.args.get('search', '')) }}">{{ page_num }}</a>
+						  <a class="page-link" href="{{ url_for('perro.perrosadmin', page=page_num, search=request.args.get('search', '')) }}">{{ page_num }}</a>
 						</li>
 					  {% else %}
 						<li class="page-item disabled"><span class="page-link">…</span></li>
@@ -146,7 +146,7 @@
 		  
 					{% if perros.has_next %}
 					  <li class="page-item">
-						<a class="page-link" href="{{ url_for('perro.perrosemple', page=perros.next_num, search=request.args.get('search', '')) }}" aria-label="Siguiente">
+						<a class="page-link" href="{{ url_for('perro.perrosadmin', page=perros.next_num, search=request.args.get('search', '')) }}" aria-label="Siguiente">
 						  <span aria-hidden="true">&raquo;</span>
 						</a>
 					  </li>
@@ -243,11 +243,11 @@
 		    <div class="modal-content">
 			    <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    	<h4 class="modal-title">Ayuda para Empleados</h4>
+			    	<h4 class="modal-title">Ayuda para admin</h4>
 			    </div>
 			    <div class="modal-body">
 			        <p>
-			        	¡Bienvenido al panel de empleados de Happy Paws! Ingresa tus credenciales para acceder al sistema y gestionar los registros de los perros, así como las visitas médicas y las solicitudes de adopción. Si necesitas ayuda, contacta al administrador. Gracias por tu apoyo en nuestra misión de ayudar a los perros necesitados.
+			        	¡Bienvenido al panel de admin de Happy Paws! Ingresa tus credenciales para acceder al sistema y gestionar los registros de los perros, así como las visitas médicas y las solicitudes de adopción. Si necesitas ayuda, contacta al administrador. Gracias por tu apoyo en nuestra misión de ayudar a los perros necesitados.
 			        </p>
 			    </div>
 		      	<div class="modal-footer">
