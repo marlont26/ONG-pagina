@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Acerca de Nostros</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
       :root {
         --nav-color: #ffffff;
@@ -21,16 +21,16 @@
     }
 
     .btn-outline-primary {
-        border-width: 2px;
-        color: var(--primary-color);
-        border-color: var(--primary-color);
-        transition: all 0.3s ease;
-        padding: 0.375rem 1rem;
-        font-size: 0.9rem;
-    }
+            border-width: 2px;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+            padding: 0.375rem 1rem;
+            font-size: 0.9rem;
+        }
     .btn-outline-primary:hover {
         background-color: var(--primary-color);
-        color: white;
+        color: rgb(232, 232, 232);
     }
   
     .main-content {
@@ -51,6 +51,17 @@
             border-bottom: none;
         }
 }
+  .btn-login {
+    border: 2px solid black; /* Borde negro */
+    color: black; /* Texto negro */
+  }
+  .btn-login:hover {
+    background-color: black;
+    color: white;
+  }
+  .btn-primary {
+    text-transform: none; /* Asegura que el texto no se transforme a mayúsculas */
+  }
 </style>
 </head>
 <body>
@@ -84,7 +95,7 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a href="{{url_for('auth.login')}}" class="btn btn-outline-primary me-2">Login</a>
+                <a href="{{url_for('auth.login')}}" class="btn btn-outline-primary btn-login me-2">Login</a>
                 <a href="{{url_for('usuario.register')}}" class="btn btn-primary">Register</a>
             </div>
         </div>
@@ -289,21 +300,5 @@
       </footer>
 
       <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-      <style>
-        .bi {
-          transition: transform 0.3s, color 0.3s;
-        }
-        
-        .bi:hover {
-          transform: scale(1.2);
-          color: #ff6f61; /* Un color llamativo en hover */
-        }
-      </style>
-      
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
-  
