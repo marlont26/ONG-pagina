@@ -9,6 +9,8 @@
             <th>Estado</th>
             <th>Color</th>
             <th>Fecha de Ingreso</th>
+            <th>tamaño</th>
+            <th>genero</th>
             <th>Acciones</th>
             
         </tr>
@@ -24,6 +26,8 @@
                 <td>{{ perro.estado }}</td>
                 <td>{{ perro.color }}</td>
                 <td>{{ perro.fechaIngreso }}</td>
+                <th>{{perro.tamaño}}</th>
+                <th>{{perro.genero}}</th>
                 <td>
                     
                     <a href="{{ url_for('perro.editperrosvete', id=perro.idPerro) }}" class="btn btn-action btn-sm">Editar</a>

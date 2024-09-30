@@ -55,6 +55,7 @@ def addperrosvete():
         tamaño = request.form['tamaño']
         descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
+        genero = request.form['genero']
 
         if imagen:
             filename = secure_filename(imagen.filename)
@@ -74,7 +75,8 @@ def addperrosvete():
             fechaIngreso=fechaIngreso,
             tamaño=tamaño,
             descripcion=descripcion,
-            imagen=ruta_imagen
+            imagen=ruta_imagen,
+            genero=genero
         )
         db.session.add(nuevo_perro)
         db.session.commit()
@@ -100,6 +102,7 @@ def editperrosvete(id):
         perro.tamaño = request.form['tamaño']
         perro.descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
+        perro.genero = request.form['genero']
         
         if imagen:
             filename = secure_filename(imagen.filename)

@@ -83,6 +83,8 @@ def edit(id):
         perro.color = request.form['color']
         perro.fechaIngreso = request.form['fechaIngreso']
         perro.descripcion = request.form['descripcion']
+        perro.tamaño = request.form['tamaño']
+        perro.genero = request.form['genero']
         
         db.session.commit()
         return redirect(url_for('perro.index'))
@@ -102,11 +104,7 @@ def delete(id):
     db.session.commit()
 
     return redirect(url_for('perro.index'))
-
-@bp.route('/showperro/<int:id>')
-def show(id):
-    perro = Perro.query.get_or_404(id)
-    return render_template('perros/show.html', perro=perro)
+    
 
 
 @bp.route('/perrosemple')
@@ -187,6 +185,7 @@ def editperrosemple(id):
         perro.descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
         perro.tamaño = request.form['tamaño']
+        perro.genero = request.form['genero']
 
         if imagen:
             filename = secure_filename(imagen.filename)
@@ -246,6 +245,8 @@ def editperrosvete(id):
         perro.descripcion = request.form['descripcion']
         imagen = request.files.get('imagen')
         perro.tamaño = request.form['tamaño']
+        perro.genero = request.form['genero']
+        
 
         if imagen:
             filename = secure_filename(imagen.filename)

@@ -24,12 +24,12 @@
                     <figcaption class="text-center text-titles">EMPLEADO</figcaption>
                 </figure>
                 <ul class="full-box list-unstyled text-center">
-                    <li>
-                        <a href="#!" class="btn-exit-system">
-                            <i class="zmdi zmdi-power"></i>
-                        </a>
-                    </li>
-                </ul>
+					<li>
+						<a href="{{ url_for('auth.logout') }}" class="btn-exit-system">
+							<i class="zmdi zmdi-power"></i>
+						</a>
+					</li>
+				</ul>
             </div>
             <!-- SideBar Menu -->
             <ul class="list-unstyled full-box dashboard-sideBar-Menu">
@@ -131,6 +131,7 @@
                         </select>
                     </div>
 
+
                     <div class="form-group mb-4">
                         <label for="color" class="form-label text-dark">Color</label>
                         <input type="text" class="form-control border-0 shadow-sm p-2" id="color" name="color" value="{{ perro.color }}" />
@@ -142,19 +143,25 @@
                         <label for="fechaIngreso" class="form-label text-dark">Fecha de Ingreso</label>
                         <input type="date" class="form-control border-0 shadow-sm p-2" id="fechaIngreso" name="fechaIngreso" value="{{ perro.fechaIngreso }}" />
                     </div>
+                    <div class="form-group mb-4">
+                        <label for="tamaño" class="form-label text-dark">Tamaño</label>
+                        <select class="form-select border-0 shadow-sm p-2" id="tamaño" name="tamaño">
+                            <option value="pequeño" {% if perro.tamaño == "pequeño" %}selected{% endif %}>Pequeño</option>
+                            <option value="mediano" {% if perro.tamaño == "mediano" %}selected{% endif %}>Mediano</option>
+                            <option value="grande" {% if perro.tamaño == "grande" %}selected{% endif %}>Grande</option>
+                        </select>
+                    </div> 
+                    <div class="form-group mb-4"></div>
+                        <label for="genero" class="form-label text-dark">Género</label>
+                        <select class="form-select border-0 shadow-sm p-2" id="genero" name="genero">
+                            <option value="macho" {% if perro.genero == "macho" %}selected{% endif %}>Macho</option>
+                            <option value="hembra" {% if perro.genero == "hembra" %}selected{% endif %}>Hembra</option>
+                        </select>
+                    </div>
 
                     <div class="form-group mb-4">
                         <label for="descripcion" class="form-label text-dark">Descripción</label>
                         <textarea class="form-control border-0 shadow-sm p-2" id="descripcion" name="descripcion" rows="4">{{ perro.descripcion }}</textarea>
-                    </div>
-
-                    <div class="form-group mb-4">
-                        <label for="tamaño" class="form-label text-dark">Tamaño</label>
-                        <select class="form-select border-0 shadow-sm p-2" id="tamaño" name="tamaño">
-                            <option value="Pequeño" {% if perro.tamaño == "pequeño" %}selected{% endif %}>Pequeño</option>
-                            <option value="Mediano" {% if perro.tamaño == "mediano" %}selected{% endif %}>Mediano</option>
-                            <option value="Grande" {% if perro.tamaño == "grande" %}selected{% endif %}>Grande</option>
-                        </select>
                     </div>
 
                     <div class="form-group mb-4">

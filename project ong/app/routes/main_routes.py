@@ -38,7 +38,7 @@ def baseusu():
 @bp.route('/indexv')
 def indexv():
     veterinarios = Usuario.query.filter_by(rol='veterinario').all()
-    return render_template('/veterinarios/indexv.html', usuarios=veterinarios)
+    return render_template('/veterinarios1/indexv.html', usuarios=veterinarios)
 
 @bp.route('/indexe')
 def indexe():

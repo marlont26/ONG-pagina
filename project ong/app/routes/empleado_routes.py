@@ -150,6 +150,8 @@ def perrosemple_nuevo():
         color = request.form['color']
         fechaIngreso = request.form['fechaIngreso']
         descripcion = request.form['descripcion']
+        tamaño = request.form['tamaño']
+        genero = request.form['genero']
 
         new_perro = Perro(
             nombre=nombre,
@@ -160,6 +162,8 @@ def perrosemple_nuevo():
             color=color,
             fechaIngreso=fechaIngreso,
             descripcion=descripcion,
+            tamaño=tamaño,
+            genero=genero   
         )
         db.session.add(new_perro)
         db.session.commit()
@@ -180,6 +184,7 @@ def editperrosemple(id):
         perro.fechaIngreso = request.form['fechaIngreso']
         perro.descripcion = request.form['descripcion']
         perro.tamaño = request.form['tamaño']
+        perro.genero = request.form['genero']
 
         imagen = request.files.get('imagen')
         if imagen:
