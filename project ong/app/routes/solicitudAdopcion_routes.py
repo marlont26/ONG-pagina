@@ -30,18 +30,21 @@ def aprobar(id):
         flash('Esta solicitud ya ha sido procesada.', 'warning')
         return redirect(url_for('solicitud_adopcion.index'))
     
-    solicitud.estado = 'Aprobada'
-    solicitud.idEmpleado = current_user.id
-
-    perro = Perro.query.get_or_404(solicitud.idPerro)
-    perro.estado = 'Adoptado'
-
     try:
+        solicitud.estado = 'Aprobada'
+        solicitud.idEmpleado = current_user.id
+
+        perro = Perro.query.get_or_404(solicitud.idPerro)
+        perro.estado = 'Adoptado'
+
+        db.session.add(solicitud)
+        db.session.add(perro)
         db.session.commit()
-        flash('Solicitud aprobada con éxito.', 'success')
+        
+        flash('Solicitud aprobada con éxito y el estado del perro ha sido actualizado a Adoptado.', 'success')
     except Exception as e:
         db.session.rollback()
-        flash('Ocurrió un error al aprobar la solicitud.', 'danger')
+        flash(f'Ocurrió un error al aprobar la solicitud: {str(e)}', 'danger')
         # Considera registrar el error para debugging
     
     return redirect(url_for('solicitud_adopcion.index'))
