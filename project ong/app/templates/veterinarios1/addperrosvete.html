@@ -71,16 +71,11 @@
 					</a>
 					<ul class="list-unstyled full-box">
 						<li>
-							<a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> perros
+							<a href="{{ url_for('veterinario.perrosvete') }}"><box-icon name='dog' type='solid' color='#ffffff'></box-icon> Perros
 							</a>
 						</li>
 						<li>
-							<a href="../empleados/solicitudesadopcionemple.html"><i class="zmdi zmdi-book zmdi-hc-fw"></i>visitas medicas</a>
-						</li>
-						<li>
-							<a href="cuidadosemple.html">
-								<box-icon name='plus-medical' color='#ffffff'></box-icon> cuidados
-							</a>
+							<a href="{{ url_for('visita_medica.index') }}"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Visitas Medicas</a>
 						</li>
 					</ul>
 				</li>
@@ -122,84 +117,84 @@
 		</div>
 
 		<div class="container mt-5">
-			<div class="form-container">
-				<form action="{{ url_for('veterinario.addperrosvete') }}" method="post" enctype="multipart/form-data">
-					<div class="form-group mb-4">
-						<label for="nombre" class="form-label text-dark">Nombre</label>
-						<input type="text" class="form-control border-0 shadow-sm p-2" id="nombre" name="nombre" placeholder="Introduce el nombre del canino" required />
-					</div>
+	<div class="form-container">
+		<form action="{{ url_for('veterinario.addperrosvete') }}" method="post" enctype="multipart/form-data">
+			<div class="form-group mb-4">
+				<label for="nombre" class="form-label text-dark">Nombre</label>
+				<input type="text" class="form-control border-0 shadow-sm p-2" id="nombre" name="nombreplaceholder="Introduce el nombre del canino" required />
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="raza" class="form-label text-dark">Raza</label>
-						<input type="text" class="form-control border-0 shadow-sm p-2" id="raza" name="raza" placeholder="Introduce la raza del canino" />
-					</div>
+			<div class="form-group mb-4">
+				<label for="raza" class="form-label text-dark">Raza</label>
+				<input type="text" class="form-control border-0 shadow-sm p-2" id="raza" name="razaplaceholder="Introduce la raza del canino" />
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="edad" class="form-label text-dark">Edad</label>
-						<input type="number" class="form-control border-0 shadow-sm p-2" id="edad" name="edad" placeholder="Introduce la edad" />
-					</div>
+			<div class="form-group mb-4">
+				<label for="edad" class="form-label text-dark">Edad</label>
+				<input type="number" class="form-control border-0 shadow-sm p-2" id="edad" name="edadplaceholder="Introduce la edad" />
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="estadoSalud" class="form-label text-dark">Estado de Salud</label>
-						<select class="form-select border-0 shadow-sm p-2" id="estadoSalud" name="estadoSalud">
-							<option value="bueno">Bueno</option>
-							<option value="regular">Regular</option>
-							<option value="malo">Malo</option>
-							<option value="muy_malo">Muy Malo</option>
-						</select>
-					</div>
+			<div class="form-group mb-4">
+				<label for="estadoSalud" class="form-label text-dark">Estado de Salud</label>
+				<select class="form-select border-0 shadow-sm p-2" id="estadoSalud" name="estadoSalud">
+					<option value="bueno">Bueno</option>
+					<option value="regular">Regular</option>
+					<option value="malo">Malo</option>
+					<option value="muy_malo">Muy Malo</option>
+				</select>
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="estado" class="form-label text-dark">Estado</label>
-						<select class="form-select border-0 shadow-sm p-2" id="estado" name="estado">
-							<option value="en adopcion">EN ADOPCIÓN</option>
-							<option value="en proceso de adopcion">EN PROCESO DE ADOPCIÓN</option>
-							<option value="adoptado">ADOPTADO</option>
-						</select>
-					</div>
+			<div class="form-group mb-4">
+				<label for="estado" class="form-label text-dark">Estado</label>
+				<select class="form-select border-0 shadow-sm p-2" id="estado" name="estado">
+					<option value="en adopcion">EN ADOPCIÓN</option>
+					<option value="en proceso de adopcion">EN PROCESO DE ADOPCIÓN</option>
+					<option value="adoptado">ADOPTADO</option>
+				</select>
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="color" class="form-label text-dark">Color</label>
-						<input type="text" class="form-control border-0 shadow-sm p-2" id="color" name="color" placeholder="Introduce el color del canino" />
-					</div>
+			<div class="form-group mb-4">
+				<label for="color" class="form-label text-dark">Color</label>
+				<input type="text" class="form-control border-0 shadow-sm p-2" id="color" name="colorplaceholder="Introduce el color del canino" />
+			</div>
 
-					<div class="form-group mb-4">
-						<label for="fechaIngreso" class="form-label text-dark">Fecha de Ingreso</label>
-						<input type="date" class="form-control border-0 shadow-sm p-2" id="fechaIngreso" name="fechaIngreso" />
-					</div>
-					<div class="form-group mb-4">
-						<label for="tamaño" class="form-label text-dark">Tamaño</label>
-						<select class="form-select border-0 shadow-sm p-2" id="tamaño" name="tamaño">  <!-- Corrección aquí -->
-							<option value="Pequeño">Pequeño</option>
-							<option value="Mediano">Mediano</option>
-							<option value="Grande">Grande</option>
-						</select>
-					</div>
-					<div class="form-group mb-4">
-						<label for="genero" class="form-label text-dark">Género</label>
-						<select class="form-select border-0 shadow-sm p-2" id="genero" name="genero">  <!-- Corrección aquí -->
-							<option value="Macho">Macho</option>
-							<option value="Hembra">Hembra</option>
-						</select>
-					</div>
+			<div class="form-group mb-4">
+				<label for="fechaIngreso" class="form-label text-dark">Fecha de Ingreso</label>
+				<input type="date" class="form-control border-0 shadow-sm p-2" id="fechaIngresoname="fechaIngreso" />
+			</div>
+			<div class="form-group mb-4">
+				<label for="tamaño" class="form-label text-dark">Tamaño</label>
+				<select class="form-select border-0 shadow-sm p-2" id="tamaño" name="tamaño">  <!-- Corrección aquí -->
+					<option value="Pequeño">Pequeño</option>
+					<option value="Mediano">Mediano</option>
+					<option value="Grande">Grande</option>
+				</select>
+			</div>
+			<div class="form-group mb-4">
+				<label for="genero" class="form-label text-dark">Género</label>
+				<select class="form-select border-0 shadow-sm p-2" id="genero" name="genero">  <!-- Corrección aquí -->
+					<option value="Macho">Macho</option>
+					<option value="Hembra">Hembra</option>
+				</select>
+			</div>
 					
 
-					<div class="form-group mb-4">
-						<label for="descripcion" class="form-label text-dark">Descripción</label>
-						<textarea class="form-control border-0 shadow-sm p-2" id="descripcion" name="descripcion" rows="4" placeholder="Añade una descripción del canino"></textarea>
-					</div>
-
-					<div class="form-group mb-4">
-						<label for="imagen" class="form-label text-dark">Imagen:</label>
-						<input type="file" class="form-control-file" id="imagen" name="imagen">
-					</div>
-
-					<div class="text-center">
-						<button type="submit" class="btn btn-dark btn-lg px-5">Añadir</button>
-					</div>
-				</form>
+			<div class="form-group mb-4">
+				<label for="descripcion" class="form-label text-dark">Descripción</label>
+				<textarea class="form-control border-0 shadow-sm p-2" id="descripcion" name="descripcionrows="4" placeholder="Añade una descripción del canino"></textarea>
 			</div>
-		</div>
+
+			<div class="form-group mb-4">
+				<label for="imagen" class="form-label text-dark">Imagen:</label>
+				<input type="file" class="form-control-file" id="imagen" name="imagen">
+			</div>
+
+			<div class="text-center">
+				<button type="submit" class="btn btn-dark btn-lg px-5">Añadir</button>
+			</div>
+		</form>
+	</div>
+</div>
 
 	<!-- Notifications area -->
 	<section class="full-box Notifications-area">
