@@ -98,20 +98,13 @@
             padding: 0 15px;
         }
         .main-content {
-        transition: margin-left 0.3s ease, width 0.3s ease;
-        padding-left: 20px; /* Ajusta este valor según necesites */
+            transition: margin-left 0.3s ease, width 0.3s ease;
         }
-
         .main-content.sidebar-open {
             margin-left: 250px;
-            width: calc(100% - 250px);
+            padding-left: 40px;
         }
-        
         #sidebarToggle {
-            position: fixed;
-            left: 20px;
-            top: calc(var(--nav-height) + 20px);
-            z-index: 1001;
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -163,25 +156,43 @@
             margin-bottom: 10px;
             color: var(--primary-color);
         }
+        .search-filter-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 1rem;
+        }
+        #searchInput {
+            max-width: 300px;
+            margin-left: 10px;
+        }
         @media (max-width: 767.98px) {
-            .navbar-nav {
-                margin-bottom: 1rem;
+            .search-filter-container {
+                flex-direction: row;
+                align-items: center;
             }
-            .navbar .d-flex {
-                flex-direction: column;
-                width: 100%;
+            #searchInput {
+                flex-grow: 1;
+                max-width: none;
             }
-            .navbar .d-flex .btn {
-                width: 100%;
-                margin-bottom: 0.5rem;
+            #sidebarToggle {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+            .navbar-collapse {
+                background-color: var(--nav-color);
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .navbar-nav .nav-link {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+            }
+            .navbar-nav .nav-item:last-child .nav-link {
+                border-bottom: none;
             }
         }
-        #searchContainer {
-            transition: margin-left 0.3s ease;
-}
-        .sidebar-open #searchContainer {
-            margin-left: 0;
-}
     </style>
 </head>
 <body>
@@ -205,9 +216,6 @@
                         <a class="nav-link" href="{{ url_for('perro.index') }}">Adopciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Cómo ayudar</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.about') }}">Sobre nosotros</a>
                     </li>
                     <li class="nav-item">
@@ -227,11 +235,6 @@
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar Toggle Button -->
-            <button id="sidebarToggle" class="btn btn-primary rounded-circle">
-                <i class="bi bi-filter"></i>
-            </button>
-
             <!-- Sidebar -->
             <div class="sidebar" id="sidebar">
                 <h3 class="mb-4 text-center">Filtros</h3>
@@ -268,10 +271,11 @@
             <!-- Main content -->
             <div class="col-12 main-content" id="mainContent">
                 <div class="py-4">
-                    <div class="row mb-4">
-                        <div id="searchContainer" class="col-12 col-md-8 col-lg-6 mx-auto">
-                            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Buscar perros...">
-                        </div>
+                    <div class="search-filter-container">
+                        <button id="sidebarToggle" class="btn btn-primary rounded-circle">
+                            <i class="bi bi-filter"></i>
+                        </button>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar perros...">
                     </div>
 
                     <div class="row" id="dogContainer">
@@ -404,19 +408,13 @@
         function adjustCardLayout() {
             const isSidebarOpen = sidebar.classList.contains('show');
             const containerWidth = mainContent.offsetWidth;
-                dogCards.forEach(card => {
-                    if (isSidebarOpen) {
-            // Aquí puedes ajustar el ancho como desees
+            dogCards.forEach(card => {
+                if (isSidebarOpen) {
                     card.style.width = `${(containerWidth - 250) / 3 - 20}px`;
-                    } else {
-                card.style.width = '';
+                } else {
+                    card.style.width = '';
                 }
             });
-            if (isSidebarOpen) {
-                searchContainer.style.marginLeft = '0';
-            } else {
-                searchContainer.style.marginLeft = '';
-    }
         }
 
         searchInput.addEventListener('input', filterDogs);
@@ -445,6 +443,9 @@
                 adjustCardLayout();
             }
         });
+
+        // Adjust layout on window resize
+        window.addEventListener('resize', adjustCardLayout);
 
         // Inicializar filtros y layout
         filterDogs();
