@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Solicitudes de Adopción{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-titles">Solicitudes de Adopción</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Perro</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solicitud in solicitudes %}
+            <tr>
+                <td>{{ solicitud.id }}</td>
+                <td>{{ solicitud.perro.nombre }}</td>
+                <td>{{ solicitud.usuario.nombre }}</td>
+                <td>{{ solicitud.fecha }}</td>
+                <td>{{ solicitud.estado }}</td>
+                <td>
+                    {% if solicitud.estado == 'pendiente' %}
+                    <form action="{{ url_for('solicitud_adopcion.aceptar_solicitud', id=solicitud.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

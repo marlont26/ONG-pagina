@@ -93,9 +93,10 @@
         </div>
         
         <div class="scrollable-content">
-            <a href="{{ url_for('visita_medica.add') }}" class="btn btn-primary mb-3">
-                <i class="zmdi zmdi-plus"></i> Agregar Visita Médica
+            <a href="{{ url_for('visita_medica.add') }}" class="btn btn-transparent mb-3">
+                Agregar Visita Médica
             </a>
+            
             
             <table class="table table-striped">
                 <thead>
@@ -194,32 +195,19 @@
     padding: 10px; /* Espaciado dentro de las celdas */
 }
 
-.btn {
-    font-size: 16px; /* Aumenta el tamaño de la fuente de los botones */
-    padding: 10px 20px; /* Espaciado dentro de los botones */
-}
-
-.btn-primary {
-    background-color: #007bff; /* Color de fondo del botón */
-    border: none; /* Sin borde */
-}
-
-.btn-primary:hover {
-    background-color: #0056b3; /* Color al pasar el mouse */
-}
-
-.btn-primary {
-    background-color: #007bff; /* Color de fondo */
-    color: #ffffff; /* Color del texto */
+.btn-transparent {
+    background-color: transparent; /* Fondo transparente */
+    color: #007bff; /* Color del texto */
     font-size: 16px; /* Tamaño de la fuente */
     padding: 12px 24px; /* Espaciado interno */
-    border: none; /* Sin borde */
+    border: 2px solid #007bff; /* Borde azul */
     border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
 }
 
-.btn-primary:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+.btn-transparent:hover {
+    background-color: #007bff; /* Color de fondo al pasar el mouse */
+    color: #ffffff; /* Color del texto al pasar el mouse */
 }
 
 
