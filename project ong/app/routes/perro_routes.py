@@ -27,6 +27,122 @@ def index():
 
     return render_template('/vistasusuario/perros.html', perros=perros)
 
+
+@bp.route('/administrador')
+def indexadmin():
+    mensajes = MensajeContacto.query.all()
+    return render_template('administrador/indexadmin.html',mensajes=mensajes)
+
+@bp.route('/perrosemple')
+def perrosadmin():
+    page = request.args.get('page', 1, type=int)
+    per_page = 10  # Fijar la cantidad de perros por página a 5
+    search_query = request.args.get('search', '')
+
+    # Filtrar perros basados en la consulta de búsqueda
+    if search_query:
+        perros = Perro.query.filter(
+            Perro.nombre.ilike(f'%{search_query}%') |
+            Perro.raza.ilike(f'%{search_query}%') |
+            Perro.estadoSalud.ilike(f'%{search_query}%')
+        ).paginate(page=page, per_page=per_page)  # Usar per_page
+    else:
+        perros = Perro.query.paginate(page=page, per_page=per_page)  # Usar per_page
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('administrador/table.html', perros=perros)
+
+    return render_template('administrador/perrosadmin.html', perros=perros)
+    # End Generation Here
+
+
+@bp.route('/add/perroadmin', methods=['GET', 'POST'])
+def addperrosadmin():
+    if request.method == 'POST':
+        try:
+            nombre = request.form['nombre']
+            raza = request.form['raza']
+            edad = request.form['edad']
+            estado = request.form['estado']
+            estadoSalud = request.form['estadoSalud']
+            tamaño = request.form['tamaño']
+            color = request.form['color']
+            genero = request.form['genero']
+            fechaIngreso = request.form['fechaIngreso']
+            descripcion = request.form['descripcion']
+            imagen = request.files.get('imagen')
+
+            if imagen:
+                filename = secure_filename(imagen.filename)
+                imagen_path = os.path.join('static', 'img_perros', filename)
+                imagen.save(os.path.join(os.path.dirname(__file__), '..', imagen_path))
+                ruta_imagen = filename
+            else:
+                ruta_imagen = None
+            
+            new_perro = Perro( 
+                nombre=nombre,
+                raza=raza,
+                edad=edad,
+                estadoSalud=estadoSalud,
+                fechaIngreso=fechaIngreso,
+                descripcion=descripcion,
+                estado=estado,
+                color=color,
+                imagen=ruta_imagen,
+                tamaño=tamaño,
+                genero=genero
+            )
+            db.session.add(new_perro)
+            db.session.commit()
+            return redirect(url_for('perro.perrosadmin'))
+        
+        except Exception as e:
+            # Manejar el error (puedes agregar un mensaje de error aquí)
+            flash('Error al agregar el perro: {}'.format(str(e)), 'danger')
+            return redirect(url_for('perro.addperrosadmin'))
+
+    return render_template('perros/addperrosadmin.html')
+
+
+
+
+@bp.route('/editperroadmin/<int:id>', methods=['GET', 'POST'])
+def editperroadmin(id):
+    perro = Perro.query.get_or_404(id)
+
+    if request.method == 'POST':
+        perro.nombre = request.form['nombre']
+        perro.raza = request.form['raza']
+        perro.edad = request.form['edad']
+        perro.estadoSalud = request.form['estadoSalud']
+        perro.estado = request.form['estado']
+        perro.color = request.form['color']
+        perro.fechaIngreso = request.form['fechaIngreso']
+        perro.descripcion = request.form['descripcion']
+        perro.tamaño = request.form['tamaño']
+        perro.genero = request.form['genero']
+        
+        db.session.commit()
+        return redirect(url_for('perro.perrosadmin'))
+
+    return render_template('perros/editperrosadmin.html', perro=perro)
+
+
+@bp.route('/deleteperrosadmin/<int:id>')
+def deleteperrosadmin(id):
+    perro = Perro.query.get_or_404(id)
+    
+    db.session.delete(perro)
+    db.session.commit()
+
+    return redirect(url_for('perro.perrosadmin'))
+
+
+
+
+
+
 @bp.route('/add/perro', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
