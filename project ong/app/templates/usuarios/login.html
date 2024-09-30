@@ -5,15 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Login</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Fondo claro */
+            color: #333; /* Texto oscuro */
+        }
+        .card {
+            background-color: #fff; /* Fondo blanco */
+            border: 1px solid #dee2e6; /* Borde gris claro */
+            border-radius: 0.5rem; /* Bordes redondeados */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        }
+        .card-header {
+            background-color: #343a40; /* Header oscuro */
+            color: #fff; /* Texto blanco */
+            border-top-left-radius: 0.5rem; /* Redondeo de bordes */
+            border-top-right-radius: 0.5rem; /* Redondeo de bordes */
+        }
+        .form-label {
+            font-weight: 600; /* Etiquetas en negrita */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Color azul para los botones */
+            border: none; /* Sin bordes en botones */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+        }
+        .footer-text {
+            color: #6c757d; /* Texto gris claro */
+        }
+    </style>
 </head>
 <body>
     
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="card-title">Iniciar Sesión</h3>
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <h3 class="card-title mb-0">Iniciar Sesión</h3>
                 </div>
 
                 <!-- Flash messages -->
@@ -27,7 +58,6 @@
                     {% endwith %}
     
                     <form action="{{ url_for('auth.login') }}" method="POST">
-                        
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico:</label>
                             <input type="email" id="email" name="email" class="form-control" required>
@@ -41,13 +71,14 @@
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </form>                    
                 </div>
-                <div class="card-footer text-center">
-                    <p>¿No tienes cuenta? <a href="{{ url_for('usuario.register') }}">Regístrate</a></p>
+                <div class="card-footer text-center footer-text">
+                    <p>¿No tienes cuenta? <a href="{{ url_for('usuario.register') }}" class="text-primary">Regístrate</a></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

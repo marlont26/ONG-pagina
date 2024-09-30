@@ -5,35 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Fondo claro */
+            color: #333; /* Texto oscuro */
+        }
+        .card {
+            background-color: #fff; /* Fondo blanco */
+            border: 1px solid #dee2e6; /* Borde gris claro */
+            border-radius: 0.5rem; /* Bordes redondeados */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        }
+        .card-header {
+            background-color: #343a40; /* Header oscuro */
+            color: #fff; /* Texto blanco */
+            border-top-left-radius: 0.5rem; /* Redondeo de bordes */
+            border-top-right-radius: 0.5rem; /* Redondeo de bordes */
+        }
+        .form-label {
+            font-weight: 600; /* Etiquetas en negrita */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Color azul para los botones */
+            border: none; /* Sin bordes en botones */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+        }
+        .footer-text {
+            color: #6c757d; /* Texto gris claro */
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header text-center">
                         <h2 class="mb-0">Registrarse</h2>
                     </div>
                     <div class="card-body p-4">
                         <form action="{{ url_for('usuario.register') }}" method="POST">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" name="nombre" required><br><br>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                            </div>
                     
-                            <label for="apellido">Apellido:</label>
-                            <input type="text" id="apellido" name="apellido" required><br><br>
+                            <div class="mb-3">
+                                <label for="apellido" class="form-label">Apellido:</label>
+                                <input type="text" id="apellido" name="apellido" class="form-control" required>
+                            </div>
                     
-                            <label for="email">Correo electrónico:</label>
-                            <input type="email" id="email" name="email" required><br><br>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico:</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
                     
-                            <label for="password">Contraseña:</label>
-                            <input type="password" id="password" name="password" class="form-control" required>
-                            <small class="text-muted">Nota: Para roles de empleado, veterinario y administrador, use la contraseña por defecto proporcionada.</small><br><br>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña:</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
                     
-                            <label for="telefono">Teléfono:</label>
-                            <input type="text" id="telefono" name="telefono" required><br><br>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono:</label>
+                                <input type="text" id="telefono" name="telefono" class="form-control" required>
+                            </div>
                     
-                            <label for="cedula">Cédula:</label>
-                            <input type="text" id="cedula" name="cedula" required><br><br>
+                            <div class="mb-3">
+                                <label for="cedula" class="form-label">Cédula:</label>
+                                <input type="text" id="cedula" name="cedula" class="form-control" required>
+                            </div>
                     
                             <div class="mb-3">
                                 <label for="rol" class="form-label">Rol:</label>
@@ -45,10 +87,10 @@
                                 </select>
                             </div>
                     
-                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
                         </form>     
                     </div>
-                    <div class="card-footer text-center">
+                    <div class="card-footer text-center footer-text">
                         <small>¿Ya tienes una cuenta? <a href="{{ url_for('auth.login') }}" class="text-primary">Inicia sesión aquí</a></small>
                     </div>
                 </div>
