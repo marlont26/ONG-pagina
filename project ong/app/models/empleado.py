@@ -3,7 +3,7 @@ from app.models.usuario import Usuario
 
 class Empleado(Usuario):
     __tablename__ = 'empleado'
-    id = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    idEmple = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
     
     # Relaciones específicas de Empleado
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='empleado')
