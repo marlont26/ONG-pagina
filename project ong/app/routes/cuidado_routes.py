@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Cuidado, Empleado, Perro
+from flask import Blueprint, render_template, request, redirect, url_for
+from app.models import Cuidado, Empleado, Perro, Usuario
 from app import db
 
 bp = Blueprint('cuidado', __name__)
@@ -28,7 +28,7 @@ def add():
         
         return redirect(url_for('cuidado.index'))
     perros = Perro.query.all()
-    empleados = Empleado.query.all()
+    empleados = Empleado.query.join(Usuario).all()
     return render_template('cuidados/add.html', perros=perros, empleados=empleados)
 
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
