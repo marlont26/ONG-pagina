@@ -1,6 +1,3 @@
-{% extends "base.html" %}
-{% block title %}Agregar Cuidado{% endblock %}
-{% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">Agregar Cuidado</h1>
     <form action="{{ url_for('cuidado.add') }}" method="post">
@@ -31,4 +28,3 @@
         <button type="submit" class="btn btn-primary">Añadir Cuidado</button>
     </form>
 </div>
-{% endblock %}

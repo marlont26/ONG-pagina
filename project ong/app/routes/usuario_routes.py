@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
 from app.models.usuario import Usuario
+from app.models.empleado import Empleado
 from app import db
 
 # Crear el Blueprint para el usuario
@@ -50,6 +51,13 @@ def register():
         
         # Guardar el nuevo usuario en la base de datos
         db.session.add(nuevo_usuario)
+        db.session.flush()  # Esto asigna un ID al nuevo usuario
+
+        # Si el rol es 'empleado', crear también una entrada en la tabla Empleado
+        if rol == 'empleado':
+            nuevo_empleado = Empleado(idEmple=nuevo_usuario.id)
+            db.session.add(nuevo_empleado)
+
         db.session.commit()
 
         flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
