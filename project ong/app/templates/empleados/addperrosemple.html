@@ -123,8 +123,8 @@
 				<ul class="full-box list-unstyled text-center">
 					
 					<li>
-						<a href="#!" class="btn-exit-system">
-							<i class="zmdi zmdi-power"></i>
+						<a href="{{ url_for('auth.logout') }}" class="btn-exit-system">
+							<i class="zmdi zmdi-sign-in"></i>
 						</a>
 					</li>
 				</ul>
@@ -360,7 +360,6 @@
 	</div>
 	<!--====== Scripts -->
 	<script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
