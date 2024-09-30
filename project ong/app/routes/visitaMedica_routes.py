@@ -66,3 +66,9 @@ def delete(id):
     flash('Visita médica eliminada exitosamente.', 'success')
 
     return redirect(url_for('visita_medica.index'))
+
+@bp.route('/count_visitas')
+def count_visitas():
+    cantidad_visitas = VisitaMedica.query.count()
+    return {'cantidad_visitas': cantidad_visitas}
+
