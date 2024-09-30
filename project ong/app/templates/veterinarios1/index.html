@@ -29,15 +29,12 @@
 				</figure>
 				<ul class="full-box list-unstyled text-center">
 					<li>
-						<a href="#!">
-							<i class="zmdi zmdi-settings"></i>
+						<a href="{{ url_for('auth.logout') }}" class="btn-exit-system">
+							<i class="zmdi zmdi-sign-in"></i>
 						</a>
 					</li>
-					<li>
-						<a href="#!" class="btn-exit-system">
-							<i class="zmdi zmdi-power"></i>
-						</a>
-					</li>
+					
+					
 				</ul>
 			</div>
 			<!-- SideBar Menu -->
@@ -109,19 +106,6 @@
 					<small>Cantidad</small>
 				</div>
 			</article>
-			
-			<article class="full-box tile">
-				<div class="full-box tile-title text-center text-titles text-uppercase">
-					Veterinarios
-				</div>
-				<div class="full-box tile-icon text-center">
-					<i class="zmdi zmdi-male-alt"></i>
-				</div>
-				<div class="full-box tile-number text-titles">
-					<p class="full-box">10</p>
-					<small>Cantidad</small>
-				</div>
-			</article>
 			<article class="full-box tile">
 				<div class="full-box tile-title text-center text-titles text-uppercase">
 					Visitas Médicas
@@ -130,7 +114,7 @@
 					<i class="zmdi zmdi-hospital"></i>
 				</div>
 				<div class="full-box tile-number text-titles">
-					<p class="full-box" id="cantidad-solicitudes">70</p>
+					<p class="full-box" id="cantidad-visitas">0</p> <!-- Cambiado a 0 inicialmente -->
 					<small>Cantidad</small>
 				</div>
 			</article>
@@ -185,7 +169,6 @@
 	</div>
 	<!--====== Scripts -->
 	<script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/sweetalert2.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
@@ -222,6 +205,27 @@
 		// Actualizar la cantidad de perros y solicitudes al cargar la página
 		actualizarCantidadPerros();
 		actualizarCantidadSolicitudes();
+	</script>
+
+	<script>
+		$.material.init();
+
+		function actualizarCantidadVisitas() {
+			fetch('{{ url_for("visita_medica.count_visitas") }}')
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('cantidad-visitas').innerText = data.cantidad_visitas;
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		// Actualizar la cantidad de visitas médicas cada 10 segundos
+		setInterval(() => {
+			actualizarCantidadVisitas();
+		}, 10000);
+
+		// Actualizar la cantidad de visitas médicas al cargar la página
+		actualizarCantidadVisitas();
 	</script>
 
 </body>
