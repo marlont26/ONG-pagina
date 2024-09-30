@@ -9,13 +9,12 @@ class Usuario(db.Model, UserMixin):
     nombre = db.Column(db.String(50))
     apellido = db.Column(db.String(50))
     email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(255))  # Asegúrate de que este campo sea lo suficientemente largo para almacenar la contraseña encriptada
+    password = db.Column(db.String(255))
     telefono = db.Column(db.String(20))
     cedula = db.Column(db.String(20))
-    rol = db.Column(db.String(20))  # Asegúrate de que este campo exista
-    solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='adoptante', lazy=True)
+    rol = db.Column(db.String(20)) 
     
-    # Eliminamos la relación empleado de aquí
+    solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='adoptante', lazy=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
