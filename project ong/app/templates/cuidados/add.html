@@ -1,6 +1,3 @@
-{% extends "base.html" %}
-{% block title %}Agregar Cuidado{% endblock %}
-{% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">Agregar Cuidado</h1>
     <form action="{{ url_for('cuidado.add') }}" method="post">
@@ -16,7 +13,7 @@
             <label for="idEmpleado" class="form-label">Empleado</label>
             <select class="form-select" id="idEmpleado" name="idEmpleado" required>
                 {% for empleado in empleados %}
-                <option value="{{ empleado.idEmpleado }}">{{ empleado.nombre }}</option>
+                <option value="{{ empleado.idEmple }}">{{ empleado.usuario.nombre }} {{ empleado.usuario.apellido }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -31,4 +28,3 @@
         <button type="submit" class="btn btn-primary">Añadir Cuidado</button>
     </form>
 </div>
-{% endblock %}

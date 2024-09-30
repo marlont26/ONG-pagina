@@ -8,4 +8,8 @@ class Empleado(Usuario):
     # Relaciones específicas de Empleado
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='empleado')
     cuidados = db.relationship('Cuidado', back_populates='empleado')    
-    
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'empleado',
+    }
+
