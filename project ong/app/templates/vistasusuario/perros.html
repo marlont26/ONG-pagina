@@ -8,18 +8,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --nav-color: #d5dbf6;
-            --primary-color: #5c6bc0;
-            --secondary-color: #3f51b5;
-            --accent-color: #484848;
-            --background-color: #f0f2ff;
+            --nav-color: #ffffff;
+            --primary-color: #333333;
+            --secondary-color: #666666;
+            --accent-color: #000000;
+            --background-color: #f8f9fa;
             --card-background: #ffffff;
             --text-color: #333333;
-            --nav-height: 81px;
+            --nav-height: 70px;
         }
         body {
             background-color: var(--background-color);
-            padding-top: var(--nav-height);
+            padding-top: calc(var(--nav-height) + 20px);
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -28,21 +28,20 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .card-img-top {
-            height: 350px;
+            height: 250px;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
         .dog-card {
             transition: transform 0.3s, box-shadow 0.3s;
-            max-width: 430px; /* Reducir el ancho máximo de las tarjetas */
-            margin: 0 auto; /* Centrar las tarjetas */
+            margin-bottom: 20px;
         }
         .dog-card .card {
             background: var(--card-background);
             border: none;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
         }
-
         .dog-card:hover .card-img-top {
             transform: scale(1.05);
         }
@@ -56,8 +55,8 @@
             color: var(--primary-color);
             border-color: var(--primary-color);
             transition: all 0.3s ease;
-            padding: 0.375rem 1rem; /* Reducir el padding horizontal del botón */
-            font-size: 0.9rem; /* Reducir ligeramente el tamaño de la fuente */
+            padding: 0.375rem 1rem;
+            font-size: 0.9rem;
         }
         .btn-outline-primary:hover {
             background-color: var(--primary-color);
@@ -66,60 +65,75 @@
         #searchInput {
             border-radius: 30px;
             border: 2px solid var(--primary-color);
-            padding: 8px 20px 8px 40px; /* Reducir el padding vertical */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%235c6bc0" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+            padding: 8px 20px 8px 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23333333" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
             background-repeat: no-repeat;
             background-position: 15px center;
             transition: all 0.3s ease;
-            font-size: 0.9rem; /* Reducir el tamaño de la fuente */
-            height: 40px; /* Establecer una altura fija más pequeña */
+            font-size: 0.9rem;
+            height: 40px;
         }
         #searchInput:focus {
-            box-shadow: 0 0 0 0.25rem rgba(92, 107, 192, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.25);
             border-color: var(--primary-color);
         }
         .sidebar {
             background-color: var(--nav-color);
-            border-right: 1px solid #c1c8e4;
+            border-right: 1px solid #e0e0e0;
             height: calc(100vh - var(--nav-height));
             position: fixed;
             top: var(--nav-height);
-            left: 0;
+            left: -250px;
             width: 250px;
             padding-top: 20px;
-            transition: transform 0.3s ease;
+            transition: left 0.3s ease;
             overflow-y: auto;
             z-index: 1000;
+        }
+        .sidebar.show {
+            left: 0;
         }
         .filter-section {
             margin-bottom: 20px;
             padding: 0 15px;
         }
         .main-content {
+        transition: margin-left 0.3s ease, width 0.3s ease;
+        padding-left: 20px; /* Ajusta este valor según necesites */
+        }
+
+        .main-content.sidebar-open {
             margin-left: 250px;
-            padding: 20px;
+            width: calc(100% - 250px);
+        }
+        
+        #sidebarToggle {
+            position: fixed;
+            left: 20px;
+            top: calc(var(--nav-height) + 20px);
+            z-index: 1001;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        #sidebarToggle:hover {
+            background-color: var(--secondary-color);
         }
         @media (max-width: 767.98px) {
             .sidebar {
-                transform: translateX(-100%);
-                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+                left: -100%;
+                width: 80%;
+                max-width: 300px;
             }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            #sidebarToggle {
-                position: fixed;
-                left: 10px;
-                top: calc(var(--nav-height) + 10px);
-                z-index: 1001;
-                background-color: var(--primary-color);
-                color: white;
-                border: none;
-                padding: 10px 15px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            }
-            .main-content {
+            .main-content.sidebar-open {
                 margin-left: 0;
             }
         }
@@ -149,57 +163,77 @@
             margin-bottom: 10px;
             color: var(--primary-color);
         }
+        @media (max-width: 767.98px) {
+            .navbar-nav {
+                margin-bottom: 1rem;
+            }
+            .navbar .d-flex {
+                flex-direction: column;
+                width: 100%;
+            }
+            .navbar .d-flex .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+        #searchContainer {
+            transition: margin-left 0.3s ease;
+}
+        .sidebar-open #searchContainer {
+            margin-left: 0;
+}
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-md fixed-top">
         <link href="{{url_for('static',filename='home/styles.css')}}" rel="stylesheet">
-        <div class="container-fluid px-4 py-4">
-          <a class="navbar-brand" href="#">
-            <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50"
-              height="50">
-            HappyPaws
-          </a> 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ url_for('main.baseusu') }}">Home Usu</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg" href="{{ url_for('perro.index') }}">adopciones</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg" href="">Como ayudar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('main.about') }}">Sobre nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('main.contacts') }}">contactanos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-lg " href="{{ url_for('main.donaciones') }}">Donaciones</a>
-              </li>
-            </ul>
-          </div>
-          <a href="{{url_for('auth.login')}}" class="login-button">Login</a>
-          <a href="{{url_for('usuario.register')}}" class="login-button">Register</a>
+        <div class="container-fluid px-4 py-2">
+            <a class="navbar-brand" href="#">
+                <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50" height="50">
+                HappyPaws
+            </a> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('main.baseusu') }}">Home Usu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('perro.index') }}">Adopciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">Cómo ayudar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.about') }}">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.contacts') }}">Contáctanos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.donaciones') }}">Donaciones</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{url_for('auth.login')}}" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="{{url_for('usuario.register')}}" class="btn btn-primary">Register</a>
+                </div>
+            </div>
         </div>
-      </nav>
+    </nav>
 
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Toggle Button -->
-            <button id="sidebarToggle" class="btn btn-primary d-md-none">
-                <i class="bi bi-list"></i>
+            <button id="sidebarToggle" class="btn btn-primary rounded-circle">
+                <i class="bi bi-filter"></i>
             </button>
 
             <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar" id="sidebar">
+            <div class="sidebar" id="sidebar">
                 <h3 class="mb-4 text-center">Filtros</h3>
                 <div class="filter-section">
                     <h5>Raza</h5>
@@ -232,17 +266,17 @@
             </div>
 
             <!-- Main content -->
-            <div class="col-md-9 col-lg-10 main-content">
+            <div class="col-12 main-content" id="mainContent">
                 <div class="py-4">
                     <div class="row mb-4">
-                        <div class="col-md-6 mx-auto">
+                        <div id="searchContainer" class="col-12 col-md-8 col-lg-6 mx-auto">
                             <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Buscar perros...">
                         </div>
                     </div>
 
                     <div class="row" id="dogContainer">
                         {% for perro in perros.items %}
-                        <div class="col-sm-6 col-lg-4 mb-4 dog-card" data-breed="{{ perro.raza }}" data-age="{{ perro.edad }}" data-size="{{ perro.tamaño }}">
+                        <div class="col-sm-6 col-lg-4 col-xl-3 dog-card" data-breed="{{ perro.raza }}" data-age="{{ perro.edad }}" data-size="{{ perro.tamaño }}">
                             <div class="card h-100 shadow border-0 rounded-3 overflow-hidden">
                                 <div class="position-relative overflow-hidden">
                                     {% if perro.imagen %}
@@ -256,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body d-flex flex-column">
-                                    <h3 class="card-title mb-3 text-primary">{{ perro.nombre }}</h3>
+                                    <h3 class="card-title mb-3">{{ perro.nombre }}</h3>
                                     <p class="card-text mb-2"><i class="bi bi-calendar-heart me-2 text-secondary"></i>{{ perro.edad }} años</p>
                                     <p class="card-text mb-3"><i class="bi bi-tag-fill me-2 text-secondary"></i>{{ perro.raza }}</p>
                                     <a href="{{ url_for('perro.detalleperro', id=perro.idPerro) }}" class="btn btn-outline-primary mt-auto">Ver detalles</a>
@@ -324,6 +358,7 @@
         const sizeFilter = document.getElementById('sizeFilter');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
 
         // Establecer el valor inicial del filtro de edad a 0
         ageFilter.value = 0;
@@ -366,6 +401,24 @@
             });
         }
 
+        function adjustCardLayout() {
+            const isSidebarOpen = sidebar.classList.contains('show');
+            const containerWidth = mainContent.offsetWidth;
+                dogCards.forEach(card => {
+                    if (isSidebarOpen) {
+            // Aquí puedes ajustar el ancho como desees
+                    card.style.width = `${(containerWidth - 250) / 3 - 20}px`;
+                    } else {
+                card.style.width = '';
+                }
+            });
+            if (isSidebarOpen) {
+                searchContainer.style.marginLeft = '0';
+            } else {
+                searchContainer.style.marginLeft = '';
+    }
+        }
+
         searchInput.addEventListener('input', filterDogs);
         breedFilter.addEventListener('change', filterDogs);
         ageFilter.addEventListener('input', function() {
@@ -375,21 +428,27 @@
         sizeFilter.addEventListener('change', filterDogs);
 
         // Sidebar toggle functionality
-        sidebarToggle.addEventListener('click', function() {
+        sidebarToggle.addEventListener('click', function(event) {
+            event.stopPropagation();
             sidebar.classList.toggle('show');
+            mainContent.classList.toggle('sidebar-open');
+            adjustCardLayout();
         });
 
-        // Close sidebar when clicking outside on mobile
+        // Close sidebar when clicking outside
         document.addEventListener('click', function(event) {
             const isClickInsideSidebar = sidebar.contains(event.target);
             const isClickOnToggleButton = sidebarToggle.contains(event.target);
-            if (!isClickInsideSidebar && !isClickOnToggleButton && window.innerWidth < 768) {
+            if (!isClickInsideSidebar && !isClickOnToggleButton && sidebar.classList.contains('show')) {
                 sidebar.classList.remove('show');
+                mainContent.classList.remove('sidebar-open');
+                adjustCardLayout();
             }
         });
 
-        // Inicializar filtros
+        // Inicializar filtros y layout
         filterDogs();
+        adjustCardLayout();
     });
     </script>
 </body>
