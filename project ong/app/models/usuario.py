@@ -14,7 +14,8 @@ class Usuario(db.Model, UserMixin):
     cedula = db.Column(db.String(20))
     rol = db.Column(db.String(20))  # Asegúrate de que este campo exista
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='adoptante', lazy=True)
-    empleado = db.relationship('Empleado', backref='usuario', uselist=False)
+    
+    # Eliminamos la relación empleado de aquí
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
