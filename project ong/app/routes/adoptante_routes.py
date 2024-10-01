@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from app.models import Usuario
+from app.models.usuario import Usuario
 
 bp = Blueprint('adoptante', __name__)
 

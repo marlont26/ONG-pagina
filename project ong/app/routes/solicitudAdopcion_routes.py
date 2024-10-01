@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from app.models import SolicitudAdopcion, Empleado, Perro, Usuario
+from app.models.solicitudAdopcion import SolicitudAdopcion
+from app.models.perro import Perro
+
+
 from app import db
 
 bp = Blueprint('solicitud_adopcion', __name__)

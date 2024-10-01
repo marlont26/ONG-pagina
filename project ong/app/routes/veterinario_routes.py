@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import Veterinario, Perro  # Asegúrate de importar Perro
+from app.models.perro import Perro
 from flask_login import login_required
+from app.models.veterinario import Veterinario
 from app import db
-from werkzeug.utils import secure_filename  # Importar secure_filename
-import os  # Importar os
+from werkzeug.utils import secure_filename
+import os
 
 bp = Blueprint('veterinario', __name__)
 

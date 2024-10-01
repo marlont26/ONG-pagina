@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import VisitaMedica, Perro, Veterinario
+from app.models.visitaMedica import VisitaMedica
+
 from app import db
 
 bp = Blueprint('visita_medica', __name__)

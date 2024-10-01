@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from app.models import Empleado, Cuidado, SolicitudAdopcion, Perro, MensajeContacto
+from app.models.empleado import Empleado
+from app.models.cuidado import Cuidado
+from app.models.perro import Perro
+from app.models.mensaje_contacto import MensajeContacto
+
 import os
 from werkzeug.utils import secure_filename
 from app import db

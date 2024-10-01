@@ -1,5 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import Cuidado, Empleado, Perro, Usuario
+from app.models.cuidado import Cuidado
+from app.models.perro import Perro
+from app.models.empleado import Empleado
+from app.models.usuario import Usuario
+
+
+
 from app import db
 
 bp = Blueprint('cuidado', __name__)

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from app.models import MensajeContacto
+from app.models.mensaje_contacto import MensajeContacto
 from app import db
 
 bp = Blueprint('mensaje', __name__)
