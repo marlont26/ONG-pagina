@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Acerca de Nosotros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-color: #ffffff;
+            --nav-height: 70px;
+        }    
+        .navbar {
+            background-color: var(--nav-color) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn-outline-primary {
+            border-width: 2px;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: all 0.3s ease;
+            padding: 0.375rem 1rem;
+            font-size: 0.9rem;
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: rgb(232, 232, 232);
+        }
+        .main-content {
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }  
+    .navbar {
+        background-color: var(--nav-color) !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-primary {
+        border-width: 2px;
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+        transition: all 0.3s ease;
+        padding: 0.375rem 1rem;
+        font-size: 0.9rem;
+    }
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+  
+    .main-content {
+        transition: margin-left 0.3s ease, width 0.3s ease;
+    }
+    @media (max-width: 767.98px) {
+
+        .navbar-collapse {
+            background-color: var(--nav-color);
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .navbar-nav .nav-link {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .navbar-nav .nav-item:last-child .nav-link {
+            border-bottom: none;
+        }
+    }
+    .carousel-item {
+    height: 50vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+    .carousel-item img {
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+    .carousel-item {
+        height: 60vh;
+    }
+        .imagenteam {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+        }
+      }
+    .btn-login {
+    border: 2px solid black; /* Borde negro */
+    color: black; /* Texto negro */
+  }
+    .btn-login:hover {
+    background-color: black;
+    color: white;
+  }
+    .btn-primary {
+    text-transform: none; /* Asegura que el texto no se transforme a mayúsculas */
+  }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-md fixed-top">
+    <link href="{{url_for('static',filename='home/styles.css')}}" rel="stylesheet">
+    <div class="container-fluid px-4 py-2">
+        <a class="navbar-brand" href="#">
+            <img src="https://i.pinimg.com/originals/cb/83/63/cb8363735ab174defb79b1b6f164a5e2.jpg" alt="logo" width="50" height="50">
+            HappyPaws
+        </a> 
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('main.baseusu') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('perro.index') }}">Adopciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.about') }}">Sobre nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.contacts') }}">Contáctanos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.donaciones') }}">Donaciones</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a href="{{url_for('auth.login')}}" class="btn btn-outline-primary me-2">Login</a>
+                <a href="{{url_for('usuario.register')}}" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="container" id="aboutini">
+        <div class="row row-50">
+            <div class="col-lg-6 pr-xl-5"><img src="{{ url_for('static', filename='images/aboutperro.jpg') }}" alt="" width="540" height="440" class="img-fluid"/>
+            </div>
+            <div class="col-lg-6">
+                <h3 style="font-size: 32px; margin-top: 12px;">Sobre Nosotros</h3>
+                <div class="text-with-divider">
+                    <div class="divider"></div>
+                    <h4 class="text-opacity-70" style="font-size: 28px;">"No importa si es de raza, adopta uno sin casa."</h4>
+                </div>
+                <p style="font-size: 19px;">En Happy paws nos encargamos de rescatar, rehabilitar y darles un refugio a los perritos en estado de maltrato o abandono.</p>
+                <p style="font-size: 19px;">Nuestro santuario les da a los peluditos un lugar en el cual puedan correr libremente mientras nos encargamos de buscarles un hogar digno donde les brinden todo el amor y los cuidados que requieran</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section-lg bg-default">
+        <div class="container">
+            <h3 class="text-center">Nuestra Misión</h3>
+            <br>
+            <br>
+            <div class="row row-30 row-md-40 row-xl-60">
+                <div class="col-md-6 col-lg-4">
+                    <div class="box-icon-modern">
+                        <div class="box-icon-inner decorate-triangle">
+                            <img src="{{ url_for('static', filename='images/huella.png') }}" alt="huellaIcono" width="120px" height="100px"> 
+                        </div>
+                        <div class="box-icon-caption">
+                            <h4><a href="#">Búsqueda &amp; Rescate</a></h4>
+                            <p>Buscamos perros sin hogar o que estén en situación de maltrato</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box-icon-modern">
+                        <div class="box-icon-inner decorate-circle">
+                            <img src="{{ url_for('static', filename='images/botiquin.png') }}" alt="BotiquinIcon" width="100px" height="100px">
+                        </div>
+                        <div class="box-icon-caption">
+                            <h4><a href="#">Cuidado &amp; Protección</a></h4>
+                            <p>Los cuidamos, rehabilitamos y les damos un refugio.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="box-icon-modern">
+                        <div class="box-icon-inner decorate-rectangle">
+                            <img src="{{ url_for('static', filename='images/casa-de-perro.png') }}" alt="HogarIco" width="100px" height="100px">
+                        </div>
+                        <div class="box-icon-caption">
+                            <h4><a href="#">Búsqueda de un hogar</a></h4>
+                            <p>Buscamos una familia que pueda acogerlo y cuidarlo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-lg bg-gray-1">
+        <div class="container">
+            <h3 class="text-center">Nuestro Equipo</h3>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-classic">
+                        <div class="team-classic-figure"><img src="{{ url_for('static', filename='images/marlon.jpg') }}" class="imagenteam" alt=""/>
+                            <ul class="team-classic-soc-list">
+                                <li><a class="icon icon-md fa-facebook" href="https://www.facebook.com/profile.php?id=61555413751799&mibextid=ZbWKwL"></a></li>
+                                <li><a class="icon icon-md fa-instagram" href="https://www.instagram.com/itx._.torres?igsh=bzFzdDczdzR2MDlx"></a></li>
+                                <li><a class="icon icon-md fa-twitter" href="#"></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-classic-caption">
+                            <h4><a class="team-name" href="#">Marlon Torres</a></h4>
+                            <p>Executive director</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-classic">
+                        <div class="team-classic-figure"><img src="{{ url_for('static', filename='images/Screenshot_2.png') }}" class="imagenteam" alt=""/>
+                            <ul class="team-classic-soc-list">
+                                <li><a class="icon icon-md fa-facebook" href="https://www.facebook.com/stiven.rodri.9?mibextid=ZbWKwL"></a></li>
+                                <li><a class="icon icon-md fa-instagram" href="#"></a></li>
+                                <li><a class="icon icon-md fa-twitter" href="#"></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-classic-caption">
+                            <h4><a class="team-name" href="#">Raúl Puerto</a></h4>
+                            <p>Adoption program Director</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-classic">
+                        <div class="team-classic-figure"><img src="{{ url_for('static', filename='images/samuel.jpeg') }}" class="imagenteam" alt=""/>
+                            <ul class="team-classic-soc-list">
+                                <li><a class="icon icon-md fa-facebook" href="https://www.facebook.com/samuel.estradaavila"></a></li>
+                                <li><a class="icon icon-md fa-instagram" href="#"></a></li>
+                                <li><a class="icon icon-md fa-twitter" href="#"></a></li>
+                            </ul>
+                        </div>
+                        <div class="team-classic-caption">
+                            <h4><a class="team-name" href="#">Samuel Estrada</a></h4>
+                            <p>Educational program Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center text-lg-start text-white" style="background-color: #343a40;">
+        <!-- Sección: Redes Sociales -->
+        <section class="d-flex justify-content-center p-4 border-bottom">
+            <!-- Redes sociales -->
+            <div>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="#" class="text-white me-4" style="font-size: 24px; text-decoration: none;">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </div>
+        </section>
+      
+        <!-- Sección: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <!-- Columna 1 -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Contenido -->
+                        <h6 class="text-uppercase fw-bold">HappyPaws</h6>
+                        <p>
+                            Rescatamos y rehabilitamos perros en situaciones difíciles, brindándoles una segunda oportunidad de vida.
+                        </p>
+                    </div>
+                    <!-- Columna 2 -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Enlaces Rápidos</h6>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Home</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Perros</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Adoptantes</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Donaciones</a>
+                        </p>
+                    </div>
+                    <!-- Columna 3 -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Ayuda</h6>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Preguntas Frecuentes</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Soporte Técnico</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Contáctanos</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-white" style="text-decoration: none;">Políticas de Privacidad</a>
+                        </p>
+                    </div>
+                    <!-- Columna 4 -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Contacto -->
+                        <h6 class="text-uppercase fw-bold">Contacto</h6>
+                        <p><i class="bi bi-house-door me-3"></i> Medellín, Colombia</p>
+                        <p><i class="bi bi-envelope me-3"></i> info@happypaws.org</p>
+                        <p><i class="bi bi-phone me-3"></i> +57 300 123 4567</p>
+                        <p><i class="bi bi-printer me-3"></i> +57 300 123 4567</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+      
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+            © <script>document.write(new Date().getFullYear());</script> Todos los derechos reservados:
+            <a class="text-white fw-bold" href="#" style="text-decoration: none;">HappyPaws.org</a>
+        </div>
+    </footer>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
