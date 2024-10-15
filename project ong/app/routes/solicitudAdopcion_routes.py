@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from app.models import SolicitudAdopcion, Empleado, Perro, Usuario
+from app.models import SolicitudAdopcion, Empleado, Perro
 from app import db
 
 bp = Blueprint('solicitud_adopcion', __name__)
@@ -8,17 +8,14 @@ bp = Blueprint('solicitud_adopcion', __name__)
 @bp.route('/solicitudesadopciones')
 @login_required
 def index():
-    solicitudes = SolicitudAdopcion.query.all()
-    return render_template('solicitudesadopciones/index.html', solicitudes=solicitudes)
-
-@bp.route('/aceptar_solicitud/<int:id>', methods=['POST'])
-@login_required
-def aceptar_solicitud(id):
-    solicitud = SolicitudAdopcion.query.get_or_404(id)
-    solicitud.estado = 'aceptada'
-    db.session.commit()
-    flash('Solicitud de adopción aceptada exitosamente.', 'success')
-    return redirect(url_for('solicitud_adopcion.index'))
+    estado = request.args.get('estado', None)
+    
+    if estado:
+        solicitudes = SolicitudAdopcion.query.filter_by(estado=estado).all()
+    else:
+        solicitudes = SolicitudAdopcion.query.all()
+    
+    return render_template('empleados/solicitudesadopcionesemple.html', solicitudes=solicitudes)
 
 @bp.route('/aprobar/<int:id>', methods=['POST'])
 @login_required
