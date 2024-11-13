@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="display-4 mb-4">Agregar Autor</h1>
+    <form action="{{ url_for('author.add') }}" method="post" class="form-group p-4 border rounded shadow-sm">
+        <div class="mb-3">
+            <label for="nameAuthor" class="form-label">Nombre:</label>
+            <input type="text" id="nameAuthor" name="nameAuthor" class="form-control rounded-pill" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="nationalityAuthor" class="form-label">Nacionalidad:</label>
+            <input type="text" id="nationalityAuthor" name="nationalityAuthor" class="form-control rounded-pill" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary rounded-pill">Agregar Autor</button>
+    </form>
+{% endblock %}
+

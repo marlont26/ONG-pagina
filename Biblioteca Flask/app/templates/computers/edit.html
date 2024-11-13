@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>Editar Computadora</h1>
+  <form action="{{ url_for('computers.update', id=computer.idComputer) }}" method="post">
+    <div class="form-group">
+      <label for="brandComputer">Marca</label>
+      <input type="text" class="form-control" id="brandComputer" name="brandComputer" value="{{ computer.brandComputer }}" required>
+    </div>
+    <div class="form-group">
+      <label for="modelComputer">Modelo</label>
+      <input type="text" class="form-control" id="modelComputer" name="modelComputer" value="{{ computer.modelComputer }}" required>
+    </div>
+    <div class="form-group">
+      <label for="statusComputer">Estado</label>
+      <select class="form-control" id="statusComputer" name="statusComputer" required>
+        <option value="Active" {% if computer.statusComputer == 'Active' %}selected{% endif %}>Activo</option>
+        <option value="Inactive" {% if computer.statusComputer == 'Inactive' %}selected{% endif %}>Inactivo</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}
+
+
+
