@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo_pagina %}Bienvenido a mi aplicativo{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h1 class="h4">Iniciar sesión</h1>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{{ url_for('auth.login') }}">
+                            <div class="form-group mb-3">
+                                <label for="nameUser" class="form-label">Usuario</label>
+                                <input type="text" name="nameUser" id="nameUser" class="form-control" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="passwordUser" class="form-label">Contraseña</label>
+                                <input type="password" name="passwordUser" id="passwordUser" class="form-control" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                                </button>
+                                <a href="{{ url_for('user.add') }}" class="btn btn-secondary btn-block">
+                                    <i class="bi bi-person-plus"></i> Crear Cuenta
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

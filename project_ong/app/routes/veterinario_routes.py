@@ -17,7 +17,7 @@ def index():
 @bp.route('/show/<int:id>')
 @login_required  # Solo usuarios autenticados pueden ver detalles
 def show(id):
-    veterinario = Veterinario.query.get_or_404(id)
+    veterinario = Veterinario.query.get_or_404(id) 
     return render_template('veterinarios1/show.html', veterinario=veterinario)
 
 @bp.route('/perrosvete')

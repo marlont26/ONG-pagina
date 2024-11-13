@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="display-4 mb-4">Agregar Préstamo</h1>
+<form action="{{ url_for('loan.add') }}" method="POST" class="form-group p-4 border rounded shadow-sm">
+    <div class="mb-3">
+        <label for="bookId" class="form-label">Libro:</label>
+        <select name="bookId" id="bookId" class="form-select rounded-pill" required>
+            {% for book in books %}
+                <option value="{{ book.idBook }}">{{ book.titleBook }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="userId" class="form-label">Usuario:</label>
+        <select name="userId" id="userId" class="form-select rounded-pill" required>
+            {% for user in users %}
+                <option value="{{ user.idUser }}">{{ user.nameUser }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="returnDate" class="form-label">Fecha de Devolución:</label>
+        <input type="date" id="returnDate" name="returnDate" class="form-control rounded-pill" required>
+    </div>
+    <button type="submit" class="btn btn-primary rounded-pill">Agregar Préstamo</button>
+</form>
+<a href="{{ url_for('loan.index') }}" class="btn btn-secondary rounded-pill">Volver a la lista de préstamos</a>
+{% endblock %}

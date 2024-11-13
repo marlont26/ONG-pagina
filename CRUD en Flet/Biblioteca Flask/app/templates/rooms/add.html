@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Agregar Sala</h1>
+    <form action="{{ url_for('room.add') }}" method="post">
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción:</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Sala</button>
+    </form>
+</div>
+{% endblock %}
+
