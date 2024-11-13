@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Editar Libro</h1>
+<form action="{{ url_for('book.edit', id=book.idBook) }}" method="post" class="form-group">
+    <label for="titleBook">Título:</label>
+    <input type="text" id="titleBook" name="titleBook" value="{{ book.titleBook }}" required class="form-control">
+   
+    <label for="authorId">Autor:</label>
+    <select id="authorId" name="authorId" class="form-control">
+        {% for author in authors %}
+            <option value="{{ author.idAuthor }}" {% if author.idAuthor == book.authorId %}selected{% endif %}>{{ author.nameAuthor }}</option>
+        {% endfor %}
+    </select>
+    
+    <button type="submit" class="btn btn-primary">Actualizar Libro</button>
+</form>
+{% endblock %}
+

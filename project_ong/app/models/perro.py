@@ -13,9 +13,24 @@ class Perro(db.Model):
     descripcion = db.Column(db.Text)
     tamaño = db.Column(db.String(255))
     genero = db.Column(db.String(100))
-    estado = db.Column(db.String(255))  # Asegúrate de que este campo exista
+    estado = db.Column(db.String(255))  
 
     # Relaciones
     visitas_medicas = db.relationship('VisitaMedica', back_populates='perro')
     solicitudes_adopcion = db.relationship('SolicitudAdopcion', back_populates='perro')
     cuidados = db.relationship('Cuidado', back_populates='perro')
+
+    def to_json(self):
+        return {
+            "idPerro": self.idPerro,
+            "nombre": self.nombre,
+            "raza" : self.raza,
+            "edad" : self.edad,
+            "estadoSalud" : self.estadoSalud,
+            "color" : self.color,
+            "fechaIngreso" : self.fechaIngreso,
+            "imagen" : self.imagen,
+            "descripcion" : self.descripcion,
+            "tamaño" : self.tamaño,
+            "genero" : self.genero,
+        }

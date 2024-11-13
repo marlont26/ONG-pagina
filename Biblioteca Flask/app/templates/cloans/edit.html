@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Editar Préstamo de Computadora</h1>
+<form action="{{ url_for('cloans.edit', id=loan.idLoan) }}" method="post">
+    <div class="form-group">
+        <label for="computerId">Computadora:</label>
+        <select id="computerId" name="computerId" class="form-select rounded-pill" required>
+            {% for computer in computers %}
+                <option value="{{ computer.idComputer }}" {% if loan.computerId == computer.idComputer %}selected{% endif %}>
+                    {{ computer.brandComputer }} - {{ computer.modelComputer }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="userId">Usuario:</label>
+        <select id="userId" name="userId" class="form-select rounded-pill" required>
+            {% for user in users %}
+                <option value="{{ user.idUser }}" {% if loan.userId == user.idUser %}selected{% endif %}>
+                    {{ user.nameUser }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="loanDate">Fecha de Préstamo:</label>
+        <input type="datetime-local" class="form-control" id="loanDate" name="loanDate" value="{{ loan.loanDate.strftime('%Y-%m-%dT%H:%M') }}">
+    </div>
+    <div class="form-group">
+        <label for="returnDate">Fecha de Devolución:</label>
+        <input type="datetime-local" class="form-control" id="returnDate" name="returnDate" value="{{ loan.returnDate.strftime('%Y-%m-%dT%H:%M') }}">
+    </div>
+    <div class="form-group">
+        <label for="status">Estado:</label>
+        <select class="form-control" id="status" name="status">
+            <option value="Active" {% if loan.status == 'Active' %}selected{% endif %}>Activo</option>
+            <option value="Returned" {% if loan.status == 'Returned' %}selected{% endif %}>Devuelto</option>
+            <option value="Overdue" {% if loan.status == 'Overdue' %}selected{% endif %}>Atrasado</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
+<a href="{{ url_for('cloans.index') }}" class="btn btn-secondary">Volver a la lista de préstamos</a>
+{% endblock %}

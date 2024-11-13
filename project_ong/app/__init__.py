@@ -20,7 +20,7 @@ def create_app():
         from .models.usuario import Usuario
         return Usuario.query.get(int(usuario_idusuario))
 
-    from app.routes import adoptante_routes, cuidado_routes, empleado_routes, perro_routes, solicitudAdopcion_routes, veterinario_routes, visitaMedica_routes, main_routes, mensaje_contacto_routes, usuario_routes
+    from app.routes import adoptante_routes, cuidado_routes, empleado_routes, perro_routes, solicitudAdopcion_routes, veterinario_routes, visitaMedica_routes, main_routes, mensaje_contacto_routes, usuario_routes, perros_json_routes, usuario_json_routes
     # Registrar blueprints
     app.register_blueprint(mensaje_contacto_routes.bp)
     app.register_blueprint(usuario_routes.bp)
@@ -32,6 +32,8 @@ def create_app():
     app.register_blueprint(veterinario_routes.bp)
     app.register_blueprint(visitaMedica_routes.bp)
     app.register_blueprint(main_routes.bp)
+    app.register_blueprint(perros_json_routes.bp)
+    app.register_blueprint(usuario_json_routes.bp)
 
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)

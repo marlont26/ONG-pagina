@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Editar Préstamo</h1>
+<form method="POST">
+    <div class="form-group">
+        <label for="returnDate">Fecha de Devolución:</label>
+        <input type="date" name="returnDate" id="returnDate" class="form-control" value="{{ loan.returnDate.strftime('%Y-%m-%d') }}" required>
+    </div>
+    <div class="form-group">
+        <label for="fine">Multa:</label>
+        <input type="number" step="0.01" name="fine" id="fine" class="form-control" value="{{ loan.fine }}" required>
+    </div>
+    <div class="form-group">
+        <label for="status">Estado:</label>
+        <select name="status" id="status" class="form-control" required>
+            <option value="Active" {% if loan.status == 'Active' %}selected{% endif %}>Activo</option>
+            <option value="Returned" {% if loan.status == 'Returned' %}selected{% endif %}>Devuelto</option>
+            <option value="Overdue" {% if loan.status == 'Overdue' %}selected{% endif %}>Atrasado</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar Préstamo</button>
+</form>
+<a href="{{ url_for('loan.index') }}" class="btn btn-secondary">Volver a la lista de préstamos</a>
+{% endblock %}

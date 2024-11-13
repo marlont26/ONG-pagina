@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Lista de Libros</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Acciones</th>
+        </tr>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.idBook }}</td>
+                <td>{{ book.titleBook }}</td>
+                <td>{{ book.author.nameAuthor }}</td>
+                <td>
+                    <a href="{{ url_for('book.edit', id=book.idBook) }}">Editar</a>
+                    <a href="{{ url_for('book.delete', id=book.idBook) }}">Eliminar</a>                 
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('book.add') }}">Agregar Libro</a>
+    <br>
+    <a href="{{ url_for('author.index') }}">Ir a Autor</a> 
+
+{% endblock %}
+

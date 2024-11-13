@@ -142,11 +142,6 @@ def deleteperrosadmin(id):
 
     return redirect(url_for('perro.perrosadmin'))
 
-
-
-
-
-
 @bp.route('/add/perro', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':

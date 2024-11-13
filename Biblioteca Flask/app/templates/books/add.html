@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1 class="display-4 mb-4">Agregar Libro</h1>
+    <form action="{{ url_for('book.add') }}" method="post" class="form-group p-4 border rounded shadow-sm">
+        <div class="mb-3">
+            <label for="titleBook" class="form-label">Título:</label>
+            <input type="text" id="titleBook" name="titleBook" class="form-control rounded-pill" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="authorId" class="form-label">Autor:</label>
+            <select id="authorId" name="authorId" class="form-select rounded-pill">
+                {% for author in data %}
+                    <option value="{{ author.idAuthor }}">{{ author.nameAuthor }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary rounded-pill">Agregar Libro</button>
+    </form>
+
+{% endblock %}
+    
