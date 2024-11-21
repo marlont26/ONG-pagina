@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Lista de Préstamos</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Fecha de Préstamo</th>
+            <th>Fecha de Devolución</th>
+            <th>Estado</th>
+            <th>Multa</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for loan in loans %}
+        <tr>
+            <td>{{ loan.idLoan }}</td>
+            <td>{{ loan.book.titleBook }}</td>
+            <td>{{ loan.user.nameUser }}</td>
+            <td>{{ loan.loanDate.strftime('%Y-%m-%d') }}</td>
+            <td>{{ loan.returnDate.strftime('%Y-%m-%d') }}</td>
+            <td>{{ loan.status }}</td>
+            <td>{{ loan.fine }}</td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('loan.edit', id=loan.idLoan) }}" class="btn btn-sm btn-primary">
+                        Editar
+                    </a>
+                    <a href="{{ url_for('loan.delete', id=loan.idLoan) }}" class="btn btn-sm btn-danger">
+                        Eliminar
+                    </a>
+                    {% if loan.status == 'Active' %}
+                    <a href="{{ url_for('loan.return_book', id=loan.idLoan) }}" class="btn btn-sm btn-success">
+                        Devolver
+                    </a>
+                    {% else %}
+                    <span class="btn btn-sm btn-secondary disabled">
+                        Devolver
+                    </span>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('loan.add') }}" class="btn btn-primary">Agregar Préstamo</a>
+{% endblock %}

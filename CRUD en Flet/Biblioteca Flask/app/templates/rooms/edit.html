@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Editar Sala</h1>
+    <form action="{{ url_for('room.edit', id=room.id) }}" method="post">
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ room.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción:</label>
+            <input type="text" class="form-control" id="description" name="description" value="{{ room.description }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+    <a href="{{ url_for('room.index') }}" class="btn btn-secondary mt-3">Volver a la lista de salas</a>
+</div>
+{% endblock %}
+

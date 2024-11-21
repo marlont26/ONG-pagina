@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Lista de Autores</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Nacionalidad</th>
+            <th>Acciones</th>
+        </tr>
+        {% for author in data %}
+            <tr>
+                <td>{{ author.idAuthor }}</td>
+                <td>{{ author.nameAuthor }}</td>
+                <td>{{ author.nationalityAuthor }}</td>
+                <td>
+                    <a href="{{ url_for('author.edit', id=author.idAuthor) }}">Editar</a>
+                    <a href="{{ url_for('author.list', id=author.idAuthor) }}">Listar Libros del Autor</a>
+                    <a href="{{ url_for('author.delete', id=author.idAuthor) }}">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('author.add') }}">Agregar Autor</a>
+    <br>
+    <a href="{{ url_for('book.index') }}">Ir a Libro</a>
+{% endblock %}
+
