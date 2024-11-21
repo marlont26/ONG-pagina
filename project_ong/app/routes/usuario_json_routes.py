@@ -22,7 +22,6 @@ def get_usuarios():
 @bp.route('/addusuario', methods=['POST'])
 def add_usuario():
     data = request.json
-    
     usuario_existente = Usuario.query.filter_by(email=data['email']).first()
     if usuario_existente:
         return jsonify({'message': 'El correo electrónico ya está registrado'}), 400

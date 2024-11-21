@@ -51,7 +51,7 @@ async def update_user(user_id, new_name, new_password):
             response = await client.put(f"http://localhost:80/Usersockets/update/{user_id}", json={"nameUser": new_name, "passwordUser": new_password})
         
         if response.status_code == 200:
-            print("Usuario actualizado:", response.json())
+            print("usuario actualizado:", response.json())
         else:
             print("Error al actualizar el usuario:", response.status_code)
     except Exception as e:
@@ -63,7 +63,7 @@ async def delete_user(user_id):
             response = await client.delete(f"http://localhost:80/Usersockets/delete/{user_id}")
         
         if response.status_code == 200:
-            print("Usuario eliminado:", response.json())
+            print("usuario eliminado:", response.json())
         else:
             print("Error al eliminar el usuario:", response.status_code)
     except Exception as e:
