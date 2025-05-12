@@ -1,4 +1,4 @@
-from app import db
+ from app import db
 
 class VisitaMedica(db.Model):
     __tablename__ = 'visita_medica'
